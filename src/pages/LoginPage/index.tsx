@@ -1,7 +1,13 @@
-import { Grid } from "@mui/material";
+import { FC, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { loginUser } from "../../features/authSlice";
+import { useAppDispatch, useAppSelector } from "../../store";
+import { ClipLoader } from "react-spinners";
+import Loader from "../../components/Loader";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+import { schema } from "../../schema";
+import { IAuth } from "../../types/authTypes";
 
 import {
 	Content,
@@ -19,54 +25,86 @@ import {
 	FooterLink,
 	InputFieldStyles,
 	ErrorMsg,
+	Container,
+	LoginFont,
 } from "./styles";
 
-const schema = yup.object({
-	email: yup.string().email("Please enter a vaild email").required("Email is required"),
-	password: yup.string().required("Password is required").min(6, "Your password has to be at least 6 characters"),
-});
+const LoginPage: FC = () => {
+	const dispatch = useAppDispatch();
+	let navigate = useNavigate();
+	const { isAuth, user, isLoading, isLoadingBtn } = useAppSelector((state: IAuth) => state.auth);
 
-const LoginPage = () => {
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 	} = useForm({ resolver: yupResolver(schema) });
 
-	const onSubmit = (data: any) => {
-		console.log(data);
-	};
-	return (
-		<Grid container md={12} direction="column" justifyContent="center" alignItems="center" sx={{ height: "100vh" }}>
-			<Content>
-				<TopMessages>
-					<Header>Welcome Back</Header>
-					<SubHeader>Enter your credentials to access your account</SubHeader>
-				</TopMessages>
-				<form onSubmit={handleSubmit(onSubmit)}>
-					<InputContent>
-						<EmailInput>
-							<InputFieldStyles placeholder="Email" disableUnderline={true} {...register("email")} />
-							<ErrorMsg>{errors.email?.message}</ErrorMsg>
-						</EmailInput>
-						<PasswordInput>
-							<InputFieldStyles placeholder="Password" disableUnderline={true} {...register("password")} />
-							<ErrorMsg>{errors.password?.message}</ErrorMsg>
-						</PasswordInput>
-						<ForgotPassword>
-							<ForgotPasswordText>Forgot password?</ForgotPasswordText>
-						</ForgotPassword>
-						<LoginButton disableElevation disableFocusRipple type="submit">
-							Login
-						</LoginButton>
-					</InputContent>
-				</form>
+	useEffect(() => {
+		const getData = () => {
+			if (isAuth === true && user?.role === "admin") {
+				navigate("/dashboard");
+			}
+		};
+		return getData();
+	}, [isAuth, navigate, user]);
 
-				<Footer>
-					<FooterText>New to Olive?</FooterText> <FooterLink>Create an account</FooterLink>
-				</Footer>
-			</Content>
-		</Grid>
+	const onSubmit = (data: any) => {
+		if (data) {
+			dispatch(loginUser(data));
+		}
+	};
+
+	return (
+		<>
+			{isLoading && <Loader backgroundcolor="#fff" />}
+			{!isLoading && (
+				<Container
+					container
+					md={12}
+					direction="column"
+					justifyContent="center"
+					alignItems="center"
+					sx={{ height: "100vh" }}
+				>
+					<Content>
+						<TopMessages>
+							<Header>Welcome Back</Header>
+							<SubHeader>Enter your credentials to access your account</SubHeader>
+						</TopMessages>
+						<form onSubmit={handleSubmit(onSubmit)}>
+							<InputContent>
+								<EmailInput>
+									<InputFieldStyles placeholder="Email" disableUnderline={true} {...register("email")} />
+									<ErrorMsg>{errors.email?.message}</ErrorMsg>
+								</EmailInput>
+								<PasswordInput>
+									<InputFieldStyles placeholder="Password" disableUnderline={true} {...register("password")} />
+									<ErrorMsg>{errors.password?.message}</ErrorMsg>
+								</PasswordInput>
+								<ForgotPassword>
+									<ForgotPasswordText>Forgot password?</ForgotPasswordText>
+								</ForgotPassword>
+								<LoginButton
+									disableElevation
+									disableFocusRipple
+									type="submit"
+									disabled={isLoadingBtn === true}
+									isLoading={isLoadingBtn}
+								>
+									{!isLoadingBtn && <LoginFont>Login</LoginFont>}
+									{isLoadingBtn && <ClipLoader color="#fff" size={32} />}
+								</LoginButton>
+							</InputContent>
+						</form>
+
+						<Footer>
+							<FooterText>New to Olive?</FooterText> <FooterLink>Create an account</FooterLink>
+						</Footer>
+					</Content>
+				</Container>
+			)}
+		</>
 	);
 };
 
