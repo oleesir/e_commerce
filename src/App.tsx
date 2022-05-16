@@ -6,15 +6,19 @@ import LandingPage from "./pages/LandingPage";
 import PrivateRoute from "./PrivateRoute";
 import AdminDashboard from "./pages/AdminDashboard";
 import UnAuthorized from "./pages/UnAuthorized";
+import AdminLayout from "./pages/AdminLayout";
+import Orders from "./pages/Orders";
+import Products from "./pages/Products";
+import Users from "./pages/Users";
 import "./App.css";
 
 declare module "@mui/material/styles" {
 	interface BreakpointOverrides {
-		xs: false; // removes the `xs` breakpoint
-		sm: false;
-		md: false;
-		lg: false;
-		xl: false;
+		xs: true; // removes the `xs` breakpoint
+		sm: true;
+		md: true;
+		lg: true;
+		xl: true;
 		mobile: true; // adds the `mobile` breakpoint
 		tablet: true;
 		laptop: true;
@@ -31,11 +35,19 @@ const theme = createTheme({
 	},
 	breakpoints: {
 		values: {
+			xs: 0,
+			sm: 600,
+			md: 900,
+			lg: 1200,
+			xl: 1536,
 			mobile: 0,
 			tablet: 768,
 			laptop: 1024,
 			desktop: 1200,
 		},
+	},
+	typography: {
+		fontFamily: "Roboto",
 	},
 });
 
@@ -47,8 +59,19 @@ const App = () => {
 					<Routes>
 						<Route path="/" element={<LandingPage />} />
 						<Route path="/login" element={<LoginPage />} />
-						<Route element={<PrivateRoute allowedRoles={["admin"]} />}>
-							<Route path="/dashboard" element={<AdminDashboard />} />
+						<Route path="/admin" element={<AdminLayout />}>
+							<Route element={<PrivateRoute allowedRoles={["admin"]} />}>
+								<Route path="dashboard" element={<AdminDashboard />} />
+							</Route>
+							<Route element={<PrivateRoute allowedRoles={["admin"]} />}>
+								<Route path="orders" element={<Orders />} />
+							</Route>
+							<Route element={<PrivateRoute allowedRoles={["admin"]} />}>
+								<Route path="products" element={<Products />} />
+							</Route>
+							<Route element={<PrivateRoute allowedRoles={["admin"]} />}>
+								<Route path="users" element={<Users />} />
+							</Route>
 						</Route>
 						<Route path="/unauthorized" element={<UnAuthorized />} />
 					</Routes>
