@@ -43,7 +43,7 @@ const LoginPage: FC = () => {
 	useEffect(() => {
 		const getData = () => {
 			if (isAuth === true && user?.role === "admin") {
-				navigate("/dashboard");
+				navigate("/admin/dashboard");
 			}
 		};
 		return getData();
