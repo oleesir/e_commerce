@@ -4,7 +4,6 @@ import { Grid, Typography } from "@mui/material";
 
 const AdminDashboard = () => {
 	const { isAuth, user } = useAppSelector((state: any) => state.auth);
-	console.log("DASHBOARD USER", user);
 
 	return (
 		<Grid container md={12} direction="column">

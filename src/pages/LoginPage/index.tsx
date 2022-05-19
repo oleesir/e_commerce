@@ -1,14 +1,15 @@
 import { FC, useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { loginUser } from "../../features/authSlice";
 import { useAppDispatch, useAppSelector } from "../../store";
 import { ClipLoader } from "react-spinners";
+import { clearServerMessage } from "../../features/authSlice";
 import Loader from "../../components/Loader";
+import getGoogleOAuthURL from "../../utils/getGoogleUrl";
+import { LoginInput } from "../../types/authTypes";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { schema } from "../../schema";
-import { IAuth } from "../../types/authTypes";
-
+import * as yup from "yup";
 import {
 	Content,
 	TopMessages,
@@ -26,19 +27,28 @@ import {
 	InputFieldStyles,
 	ErrorMsg,
 	Container,
-	LoginFont,
+	GoogleBtn,
+	ServerErrorMsg,
+	ServerErrContent,
 } from "./styles";
 
 const LoginPage: FC = () => {
 	const dispatch = useAppDispatch();
 	let navigate = useNavigate();
-	const { isAuth, user, isLoading, isLoadingBtn } = useAppSelector((state: IAuth) => state.auth);
+	const { isAuth, user, isLoading, isLoadingBtn, error } = useAppSelector((state: any) => state.auth);
+	const schema = yup.object({
+		email: yup.string().required("Email is required").email("Email is invalid"),
+		password: yup.string().required("Password is required").min(8, "Password must be at least 8 characters."),
+	});
 
 	const {
-		register,
 		handleSubmit,
+		setValue,
+		trigger,
+		control,
+		watch,
 		formState: { errors },
-	} = useForm({ resolver: yupResolver(schema) });
+	} = useForm<LoginInput>({ resolver: yupResolver(schema) });
 
 	useEffect(() => {
 		const getData = () => {
@@ -55,6 +65,16 @@ const LoginPage: FC = () => {
 		}
 	};
 
+	const clearServerError = (e: any) => {
+		setValue(e?.target?.name, e?.target?.value);
+		dispatch(clearServerMessage());
+	};
+
+	console.log("ERRORS", error);
+
+	console.log("WATCHING", watch("email"));
+	// const { onChange, ...restProps } = register("email");
+	console.log("QWERTY", error);
 	return (
 		<>
 			{isLoading && <Loader backgroundcolor="#fff" />}
@@ -72,15 +92,45 @@ const LoginPage: FC = () => {
 							<Header>Welcome Back</Header>
 							<SubHeader>Enter your credentials to access your account</SubHeader>
 						</TopMessages>
+						<ServerErrContent>{error && <ServerErrorMsg>{error?.message}</ServerErrorMsg>}</ServerErrContent>
+
 						<form onSubmit={handleSubmit(onSubmit)}>
 							<InputContent>
 								<EmailInput>
-									<InputFieldStyles placeholder="Email" disableUnderline={true} {...register("email")} />
-									<ErrorMsg>{errors.email?.message}</ErrorMsg>
+									<Controller
+										name="email"
+										control={control}
+										render={({ field }) => (
+											<InputFieldStyles
+												{...field}
+												InputProps={{ disableUnderline: true }}
+												variant="standard"
+												placeholder="Email"
+												error={!!errors.email}
+												onChange={clearServerError}
+												helperText={errors.email ? errors.email?.message : ""}
+											/>
+										)}
+									/>
 								</EmailInput>
 								<PasswordInput>
-									<InputFieldStyles placeholder="Password" disableUnderline={true} {...register("password")} />
-									<ErrorMsg>{errors.password?.message}</ErrorMsg>
+									<Controller
+										name="password"
+										control={control}
+										render={({ field }) => (
+											<InputFieldStyles
+												{...field}
+												InputProps={{ disableUnderline: true }}
+												variant="standard"
+												placeholder="Password"
+												error={!!errors.password}
+												onChange={clearServerError}
+												helperText={errors.password ? errors.password?.message : ""}
+											/>
+										)}
+									/>
+
+									{/* {errors.password && errors?.password?.message && <ErrorMsg>{errors?.password?.message}</ErrorMsg>} */}
 								</PasswordInput>
 								<ForgotPassword>
 									<ForgotPasswordText>Forgot password?</ForgotPasswordText>
@@ -92,9 +142,17 @@ const LoginPage: FC = () => {
 									disabled={isLoadingBtn === true}
 									isLoading={isLoadingBtn}
 								>
-									{!isLoadingBtn && <LoginFont>Login</LoginFont>}
+									{!isLoadingBtn && "Login"}
 									{isLoadingBtn && <ClipLoader color="#fff" size={32} />}
 								</LoginButton>
+
+								<GoogleBtn
+									isLoading={isLoadingBtn}
+									startIcon={<img src={"/google.svg"} style={{ width: "25px" }} alt="google logo" />}
+									href={getGoogleOAuthURL()}
+								>
+									Sign In With Google
+								</GoogleBtn>
 							</InputContent>
 						</form>
 

@@ -1,6 +1,6 @@
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import { Grid } from "@mui/material";
+import { Grid, TextField } from "@mui/material";
 import Input from "@mui/material/Input";
 import { styled } from "@mui/system";
 
@@ -36,14 +36,18 @@ export const Content = styled("div")(({ theme }) => ({
 	},
 }));
 
-export const InputFieldStyles = styled(Input)((props) => ({
+export const InputFieldStyles = styled(TextField)((props) => ({
 	width: "100%",
 	borderRadius: "2px",
-	border: "2px solid #c0c0c0",
 	fontSize: "20px",
 	padding: "5px",
 	"input::placeholder": {
 		fontSize: "20px",
+	},
+
+	"& .MuiInputBase-root": {
+		border: "2px solid #c0c0c0",
+		padding: "10px 5px",
 	},
 }));
 
@@ -97,12 +101,29 @@ export const ForgotPasswordText = styled(Typography)((props) => ({
 export const LoginButton = styled(Button)<InputProps>(({ isLoading }) => ({
 	width: "100%",
 	padding: "10px",
+	fontSize: "16px",
 	backgroundColor: "#1976D2",
 	marginBottom: "20px",
+	textTransform: "none",
+	color: "#fff",
 	cursor: "pointer",
 	opacity: isLoading === true ? 0.5 : 1,
 	"&:hover": {
 		backgroundColor: "#1976D2",
+	},
+}));
+
+export const GoogleBtn = styled(Button)<InputProps>(({ isLoading }) => ({
+	width: "100%",
+	padding: "10px",
+	fontSize: "16px",
+	backgroundColor: "transparent",
+	marginBottom: "20px",
+	cursor: "pointer",
+	textTransform: "none",
+	border: "1px solid #1976D2",
+	"&:hover": {
+		backgroundColor: "transparent",
 	},
 }));
 
@@ -132,4 +153,16 @@ export const ErrorMsg = styled(Typography)((props) => ({
 	marginTop: "5px",
 	color: "#C62828",
 	fontSize: "10px",
+}));
+
+export const ServerErrorMsg = styled(Typography)((props) => ({
+	marginTop: "5px",
+	color: "#C62828",
+	fontSize: "15px",
+}));
+
+export const ServerErrContent = styled("div")((props) => ({
+	width: "100%",
+	textAlign: "center",
+	marginBottom: "10px",
 }));
