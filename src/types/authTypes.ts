@@ -16,7 +16,7 @@ export type AuthState = {
 	isLoading: boolean;
 	isLoadingBtn: boolean;
 	isAuth: boolean;
-	errors: any;
+	error: any;
 };
 
 export type IAuth = {

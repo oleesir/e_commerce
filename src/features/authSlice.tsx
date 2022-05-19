@@ -9,7 +9,7 @@ export const initialState: AuthState = {
 	isLoading: false,
 	isLoadingBtn: false,
 	isAuth: false,
-	errors: null,
+	error: null,
 };
 
 export const loginUser = createAsyncThunk("auth/login", async (formData: LoginInfo, { rejectWithValue }) => {
@@ -35,6 +35,10 @@ const authSlice = createSlice({
 	initialState,
 	reducers: {
 		// standard reducer logic, with auto-generated action types per reducer
+		clearServerMessage: (state: any) => {
+			state.error = null;
+			return state;
+		},
 	},
 	extraReducers: (builder) => {
 		builder.addCase(loginUser.pending, (state) => {
@@ -50,7 +54,7 @@ const authSlice = createSlice({
 
 		builder.addCase(loginUser.rejected, (state, action) => {
 			state.isLoadingBtn = false;
-			state.errors = action.payload;
+			state.error = action.payload;
 		});
 
 		builder.addCase(loadUser.pending, (state) => {
@@ -67,9 +71,10 @@ const authSlice = createSlice({
 		builder.addCase(loadUser.rejected, (state, action) => {
 			state.isLoading = false;
 			state.isAuth = false;
-			state.errors = action.payload;
+			state.error = action.payload;
 		});
 	},
 });
 
+export const { clearServerMessage } = authSlice.actions;
 export default authSlice.reducer;
