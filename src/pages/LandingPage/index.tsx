@@ -1,9 +1,15 @@
 import React from "react";
-import { useAppSelector } from "../../store";
+import { Grid } from "@mui/material";
+import { Outlet } from "react-router-dom";
+import NavBar from "../../components/NavBar";
+
 const LandingPage = () => {
-	const { isAuth, user, isLoading, isLoadingBtn } = useAppSelector((state: any) => state.auth);
-	console.log("USER", user);
-	return <h1>LANDING PAGE</h1>;
+	return (
+		<Grid container md={12} flexDirection="column">
+			<NavBar />
+			<Outlet />
+		</Grid>
+	);
 };
 
 export default LandingPage;
