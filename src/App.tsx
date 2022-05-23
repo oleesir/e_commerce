@@ -2,14 +2,20 @@ import React from "react";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
+import HomePage from "./pages/HomePage";
 import LandingPage from "./pages/LandingPage";
 import PrivateRoute from "./PrivateRoute";
 import AdminDashboard from "./pages/AdminDashboard";
 import UnAuthorized from "./pages/UnAuthorized";
 import AdminLayout from "./pages/AdminLayout";
+import Account from "./pages/Account";
+import SignupPage from "./pages/SignupPage";
+import Favourites from "./pages/Favourites";
+import Categories from "./pages/Categories";
 import Orders from "./pages/Orders";
 import Products from "./pages/Products";
 import Users from "./pages/Users";
+import Search from "./pages/Search";
 import "./App.css";
 
 declare module "@mui/material/styles" {
@@ -54,14 +60,19 @@ const App = () => {
 			<div className="App">
 				<Router>
 					<Routes>
-						<Route path="/" element={<LandingPage />} />
 						<Route path="/login" element={<LoginPage />} />
+						<Route path="/signup" element={<SignupPage />} />
+						<Route path="/" element={<LandingPage />}>
+							<Route path="home" element={<HomePage />} />
+							<Route path="account" element={<Account />} />
+							<Route path="orders" element={<Orders />} />
+							<Route path="favourites" element={<Favourites />} />
+							<Route path="categories" element={<Categories />} />
+							<Route path="/search" element={<Search />} />
+						</Route>
 						<Route path="/admin" element={<AdminLayout />}>
 							<Route element={<PrivateRoute allowedRoles={["admin"]} />}>
 								<Route path="dashboard" element={<AdminDashboard />} />
-							</Route>
-							<Route element={<PrivateRoute allowedRoles={["admin"]} />}>
-								<Route path="orders" element={<Orders />} />
 							</Route>
 							<Route element={<PrivateRoute allowedRoles={["admin"]} />}>
 								<Route path="products" element={<Products />} />

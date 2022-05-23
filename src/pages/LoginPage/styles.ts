@@ -1,7 +1,6 @@
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { Grid, TextField } from "@mui/material";
-import Input from "@mui/material/Input";
 import { styled } from "@mui/system";
 
 type InputProps = {
@@ -39,15 +38,14 @@ export const Content = styled("div")(({ theme }) => ({
 export const InputFieldStyles = styled(TextField)((props) => ({
 	width: "100%",
 	borderRadius: "2px",
-	fontSize: "20px",
-	padding: "5px",
 	"input::placeholder": {
 		fontSize: "20px",
 	},
 
 	"& .MuiInputBase-root": {
 		border: "2px solid #c0c0c0",
-		padding: "10px 5px",
+		fontSize: "20px",
+		padding: "5px",
 	},
 }));
 

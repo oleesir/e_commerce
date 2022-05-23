@@ -44,9 +44,7 @@ const LoginPage: FC = () => {
 	const {
 		handleSubmit,
 		setValue,
-		trigger,
 		control,
-		watch,
 		formState: { errors },
 	} = useForm<LoginInput>({ resolver: yupResolver(schema) });
 
@@ -59,7 +57,7 @@ const LoginPage: FC = () => {
 		return getData();
 	}, [isAuth, navigate, user]);
 
-	const onSubmit = (data: any) => {
+	const onSubmit = (data: LoginInput) => {
 		if (data) {
 			dispatch(loginUser(data));
 		}
@@ -70,11 +68,6 @@ const LoginPage: FC = () => {
 		dispatch(clearServerMessage());
 	};
 
-	console.log("ERRORS", error);
-
-	console.log("WATCHING", watch("email"));
-	// const { onChange, ...restProps } = register("email");
-	console.log("QWERTY", error);
 	return (
 		<>
 			{isLoading && <Loader backgroundcolor="#fff" />}
