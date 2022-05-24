@@ -2,8 +2,8 @@ import { Box, TextField, Button, Link, Menu, MenuItem, Toolbar, IconButton } fro
 import { styled } from "@mui/system";
 
 export const Wrapper = styled(Box)(() => ({
-	backgroundColor: "transparent",
-	"& .MuiAppBar-root": { backgroundColor: "transparent" },
+	backgroundColor: "#fff",
+	"& .MuiAppBar-root": { backgroundColor: "#fff" },
 }));
 
 export const ToolBar = styled(Toolbar)(({ theme }) => ({
