@@ -61,7 +61,7 @@ const TemporaryDrawer = () => {
 			<React.Fragment>
 				<>
 					<MenuOutlinedIcon
-						fontSize="large"
+						fontSize="medium"
 						onClick={toggleDrawer(true)}
 						sx={{ display: { xs: "block", md: "none" }, color: "#072F40", mr: "5px" }}
 					/>
@@ -69,13 +69,10 @@ const TemporaryDrawer = () => {
 
 				<Drawer anchor="left" open={toggleState} onClose={toggleDrawer(false)}>
 					<Logo>
-						<CloseOutlinedIcon fontSize="large" onClick={toggleDrawer(false)} sx={{ mr: "5px", ml: "9px" }} />
+						<CloseOutlinedIcon fontSize="medium" onClick={toggleDrawer(false)} sx={{ mr: "5px", ml: "9px" }} />
 						<Link href="/home">
 							<Typography variant="h5" color="textPrimary" sx={{ display: "inline-block" }}>
 								Olive
-								<Typography variant="h6" color="textPrimary" sx={{ display: "inline-block" }}>
-									Shop
-								</Typography>
 							</Typography>
 						</Link>
 					</Logo>

@@ -12,7 +12,6 @@ import KeyboardArrowUpOutlinedIcon from "@mui/icons-material/KeyboardArrowUpOutl
 import SearchIcon from "@mui/icons-material/Search";
 import NoAccountsOutlinedIcon from "@mui/icons-material/NoAccountsOutlined";
 import TemporaryDrawer from "./Drawer";
-import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -60,7 +59,7 @@ const NavBar = () => {
 
 	return (
 		<Wrapper sx={{ flexGrow: 1 }}>
-			<AppBar position="static">
+			<AppBar position="fixed">
 				{location.pathname === "/search" ? (
 					<SearchToolBar>
 						<SearchIconBtn onClick={back}>
@@ -97,9 +96,6 @@ const NavBar = () => {
 							<LogoLink href="/home">
 								<Typography variant="h5" color="textPrimary" sx={{ display: "inline-block" }}>
 									Olive
-									<Typography variant="h6" color="textPrimary" sx={{ display: "inline-block" }}>
-										Shop
-									</Typography>
 								</Typography>
 							</LogoLink>
 						</Logo>

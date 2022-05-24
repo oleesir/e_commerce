@@ -1,6 +1,4 @@
-import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import { Grid, TextField } from "@mui/material";
+import { Grid, TextField,Typography,Button } from "@mui/material";
 import { styled } from "@mui/system";
 
 type InputProps = {
