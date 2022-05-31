@@ -9,12 +9,13 @@ import {
 	ProductPriceCart,
 	AddShoppingCart,
 	FavouriteItem,
+	ProductImg,
 } from "./styles";
 const Card = () => {
 	return (
 		<Grid item md={3} sm={6} xs={6}>
 			<Product>
-				<img src="iphone.jpeg" alt="product" style={{ width: "100%", height: "150px", cursor: "pointer" }} />
+				<ProductImg src="iphone.jpeg" alt="product" />
 				<ProductBody>
 					<ProductName>Apple Iphone X 64gb Silver Free Pouch And Tempered Glass...</ProductName>
 					<ProductPriceCart>

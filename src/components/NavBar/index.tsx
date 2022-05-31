@@ -1,4 +1,4 @@
-import * as React from "react";
+import { FC, useEffect, useState, MouseEvent } from "react";
 import AppBar from "@mui/material/AppBar";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
@@ -11,9 +11,11 @@ import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import KeyboardArrowUpOutlinedIcon from "@mui/icons-material/KeyboardArrowUpOutlined";
 import SearchIcon from "@mui/icons-material/Search";
 import NoAccountsOutlinedIcon from "@mui/icons-material/NoAccountsOutlined";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import TemporaryDrawer from "./Drawer";
 import InputAdornment from "@mui/material/InputAdornment";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useAppSelector } from "../../store";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import {
@@ -35,14 +37,17 @@ import {
 	IcBtn,
 } from "./styles";
 
-const NavBar = () => {
+const NavBar: FC = () => {
 	let location = useLocation();
 	let navigate = useNavigate();
-	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
+	const { isAuth } = useAppSelector((state: any) => state.auth);
+
+	useEffect(() => {}, [isAuth]);
 
 	console.log("LOCATION", location);
-	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+	const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
 		setAnchorEl(event.currentTarget);
 	};
 	const handleClose = () => {
@@ -123,7 +128,13 @@ const NavBar = () => {
 									aria-haspopup="true"
 									aria-expanded={open ? "true" : undefined}
 									onClick={handleClick}
-									startIcon={<PersonOffOutlinedIcon fontSize="medium" />}
+									startIcon={
+										isAuth === true ? (
+											<PersonOutlineOutlinedIcon fontSize="medium" />
+										) : (
+											<PersonOffOutlinedIcon fontSize="medium" />
+										)
+									}
 									endIcon={anchorEl ? <KeyboardArrowUpOutlinedIcon /> : <KeyboardArrowDownIcon />}
 								>
 									Account
@@ -174,14 +185,25 @@ const NavBar = () => {
 									/>
 								</IcBtn>
 								<IconBtn>
-									<NoAccountsOutlinedIcon
-										fontSize="medium"
-										sx={{
-											color: "#072F40",
-											cursor: "pointer",
-											display: { xs: "flex", md: "none" },
-										}}
-									/>
+									{isAuth === true ? (
+										<AccountCircleOutlinedIcon
+											fontSize="medium"
+											sx={{
+												color: "#072F40",
+												cursor: "pointer",
+												display: { xs: "flex", md: "none" },
+											}}
+										/>
+									) : (
+										<NoAccountsOutlinedIcon
+											fontSize="medium"
+											sx={{
+												color: "#072F40",
+												cursor: "pointer",
+												display: { xs: "flex", md: "none" },
+											}}
+										/>
+									)}
 								</IconBtn>
 								<IconBtn>
 									<ShoppingCartOutlinedIcon

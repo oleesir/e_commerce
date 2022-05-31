@@ -8,8 +8,9 @@ import { clearServerMessage } from "../../features/authSlice";
 import Loader from "../../components/Loader";
 import getGoogleOAuthURL from "../../utils/getGoogleUrl";
 import { LoginInput } from "../../types/authTypes";
+import { loginSchema } from "../../schemas/authSchema";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+
 import {
 	Content,
 	TopMessages,
@@ -25,7 +26,6 @@ import {
 	FooterText,
 	FooterLink,
 	InputFieldStyles,
-	ErrorMsg,
 	Container,
 	GoogleBtn,
 	ServerErrorMsg,
@@ -36,22 +36,22 @@ const LoginPage: FC = () => {
 	const dispatch = useAppDispatch();
 	let navigate = useNavigate();
 	const { isAuth, user, isLoading, isLoadingBtn, error } = useAppSelector((state: any) => state.auth);
-	const schema = yup.object({
-		email: yup.string().required("Email is required").email("Email is invalid"),
-		password: yup.string().required("Password is required").min(8, "Password must be at least 8 characters."),
-	});
 
 	const {
 		handleSubmit,
 		setValue,
 		control,
 		formState: { errors },
-	} = useForm<LoginInput>({ resolver: yupResolver(schema) });
+	} = useForm<LoginInput>({ resolver: yupResolver(loginSchema) });
 
 	useEffect(() => {
 		const getData = () => {
 			if (isAuth === true && user?.role === "admin") {
 				navigate("/admin/dashboard");
+			}
+
+			if (isAuth === true) {
+				navigate("/home");
 			}
 		};
 		return getData();
@@ -150,7 +150,9 @@ const LoginPage: FC = () => {
 						</form>
 
 						<Footer>
-							<FooterText>New to Olive?</FooterText> <FooterLink>Create an account</FooterLink>
+							<FooterText>
+								New to Olive? <FooterLink href="/signup">Create an account</FooterLink>
+							</FooterText>
 						</Footer>
 					</Content>
 				</Container>

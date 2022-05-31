@@ -6,9 +6,12 @@ export type UserInfo = {
 	role: string;
 };
 
-export type LoginInfo = {
-	email: string | null;
-	password: string | null;
+export type SignupInput = {
+	firstName: string;
+	lastName: string;
+	email: string;
+	address: string;
+	password: string;
 };
 
 export type AuthState = {
