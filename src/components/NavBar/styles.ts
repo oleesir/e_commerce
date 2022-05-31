@@ -40,6 +40,7 @@ export const NavBtn = styled(Button)(() => ({
 	fontSize: "16px",
 	backgroundColor: "#1976D2",
 	textTransform: "none",
+	fontWeight: 400,
 	color: "#fff",
 	cursor: "pointer",
 	"&:hover": {
@@ -52,6 +53,7 @@ export const SearchBtn = styled(Button)(() => ({
 	fontSize: "16px",
 	backgroundColor: "#1976D2",
 	textTransform: "none",
+	fontWeight: 400,
 	color: "#fff",
 	marginLeft: "5px",
 	cursor: "pointer",

@@ -62,9 +62,9 @@ const App = () => {
 			<div className="App">
 				<Router>
 					<Routes>
-						<Route path="/login" element={<LoginPage />} />
-						<Route path="/signup" element={<SignupPage />} />
 						<Route path="/" element={<LandingPage />}>
+							<Route path="login" element={<LoginPage />} />
+							<Route path="signup" element={<SignupPage />} />
 							<Route path="home" element={<HomePage />} />
 							<Route path="account" element={<Account />} />
 							<Route path="orders" element={<Orders />} />

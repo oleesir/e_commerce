@@ -6,13 +6,13 @@ type InputProps = {
 };
 
 export const Container = styled(Grid)(({ theme }) => ({
-	[theme.breakpoints.down("md")]: {
+	[theme.breakpoints.down("laptop")]: {
 		width: "100%",
 		paddingLeft: "50px",
 		paddingRight: "50px",
 	},
 
-	[theme.breakpoints.only("sm")]: {
+	[theme.breakpoints.only("mobile")]: {
 		width: "100%",
 		paddingLeft: "20px",
 		paddingRight: "20px",
@@ -26,13 +26,8 @@ export const Content = styled("div")(({ theme }) => ({
 	padding: "20px",
 	width: "30%",
 	borderRadius: "5px",
-	[theme.breakpoints.down("md")]: {
-		width: "100%",
-		paddingLeft: "50px",
-		paddingRight: "50px",
-	},
 
-	[theme.breakpoints.down("md")]: {
+	[theme.breakpoints.down("laptop")]: {
 		width: "100%",
 		padding: 0,
 	},
@@ -76,7 +71,7 @@ export const InputContent = styled("div")((props) => ({
 	width: "100%",
 }));
 
-export const EmailInput = styled("div")((props) => ({
+export const InputField = styled("div")((props) => ({
 	width: "100%",
 	marginBottom: "25px",
 }));
@@ -119,10 +114,10 @@ export const GoogleBtn = styled(Button)<InputProps>(({ isLoading }) => ({
 	width: "100%",
 	padding: "10px",
 	fontSize: "16px",
-	fontWeight: 400,
 	backgroundColor: "transparent",
 	marginBottom: "20px",
 	cursor: "pointer",
+	fontWeight: 400,
 	textTransform: "none",
 	border: "1px solid #1976D2",
 	"&:hover": {

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import AuthService from "../services/auth.services";
-import { AuthState, LoginInfo } from "../types/authTypes";
+import { AuthState, LoginInput, SignupInput } from "../types/authTypes";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { HTTP_STATUS } from "../constant";
 
@@ -12,7 +12,16 @@ export const initialState: AuthState = {
 	error: null,
 };
 
-export const loginUser = createAsyncThunk("auth/login", async (formData: LoginInfo, { rejectWithValue }) => {
+export const signupUser = createAsyncThunk("auth/signup", async (formData: SignupInput, { rejectWithValue }) => {
+	try {
+		const res = await AuthService.signupUser(formData);
+		return res.data.data;
+	} catch (error: any) {
+		return rejectWithValue(error.response?.data);
+	}
+});
+
+export const loginUser = createAsyncThunk("auth/login", async (formData: LoginInput, { rejectWithValue }) => {
 	try {
 		const res = await AuthService.signinUser(formData);
 		return res.data.data;
@@ -41,6 +50,22 @@ const authSlice = createSlice({
 		},
 	},
 	extraReducers: (builder) => {
+		builder.addCase(signupUser.pending, (state) => {
+			state.isLoadingBtn = true;
+			state.isAuth = false;
+		});
+
+		builder.addCase(signupUser.fulfilled, (state, action) => {
+			state.isLoadingBtn = false;
+			state.isAuth = true;
+			state.user = action.payload;
+		});
+
+		builder.addCase(signupUser.rejected, (state, action) => {
+			state.isLoadingBtn = false;
+			state.error = action.payload;
+		});
+
 		builder.addCase(loginUser.pending, (state) => {
 			state.isLoadingBtn = true;
 			state.isAuth = false;

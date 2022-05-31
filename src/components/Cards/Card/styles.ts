@@ -66,6 +66,10 @@ export const AddShoppingCart = styled(AddShoppingCartOutlinedIcon)(({ theme }) =
 	cursor: "pointer",
 	[theme.breakpoints.down("md")]: {
 		fontSize: "21px",
+		marginRight: "6px",
+	},
+	[theme.breakpoints.down("sm")]: {
+		marginLeft: "10px",
 	},
 }));
 
@@ -73,7 +77,21 @@ export const FavouriteItem = styled(FavoriteBorderOutlinedIcon)(({ theme }) => (
 	fontSize: "22px",
 	color: "#072F40",
 	cursor: "pointer",
+	marginLeft: "10px",
 	[theme.breakpoints.down("md")]: {
 		fontSize: "21px",
+		marginLeft: "10px",
+	},
+	[theme.breakpoints.down("sm")]: {
+		marginLeft: "5px",
+	},
+}));
+
+export const ProductImg = styled("img")(({ theme }) => ({
+	width: "100%",
+	height: "200px",
+	cursor: "pointer",
+	[theme.breakpoints.down("sm")]: {
+		height: "150px",
 	},
 }));
