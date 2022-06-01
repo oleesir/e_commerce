@@ -51,7 +51,7 @@ const LoginPage: FC = () => {
 			}
 
 			if (isAuth === true) {
-				navigate("/home");
+				navigate("/");
 			}
 		};
 		return getData();
@@ -122,8 +122,6 @@ const LoginPage: FC = () => {
 											/>
 										)}
 									/>
-
-									{/* {errors.password && errors?.password?.message && <ErrorMsg>{errors?.password?.message}</ErrorMsg>} */}
 								</PasswordInput>
 								<ForgotPassword>
 									<ForgotPasswordText>Forgot password?</ForgotPasswordText>

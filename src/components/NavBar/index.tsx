@@ -7,7 +7,6 @@ import PersonOffOutlinedIcon from "@mui/icons-material/PersonOffOutlined";
 import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
-import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import KeyboardArrowUpOutlinedIcon from "@mui/icons-material/KeyboardArrowUpOutlined";
 import SearchIcon from "@mui/icons-material/Search";
 import NoAccountsOutlinedIcon from "@mui/icons-material/NoAccountsOutlined";
@@ -15,7 +14,8 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import TemporaryDrawer from "./Drawer";
 import InputAdornment from "@mui/material/InputAdornment";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { useAppSelector } from "../../store";
+import { logoutUser } from "../../features/authSlice";
+import { useAppSelector, useAppDispatch } from "../../store";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import {
@@ -35,14 +35,16 @@ import {
 	SearchIconBtn,
 	SearchToolBar,
 	IcBtn,
+	LogoutBtn,
 } from "./styles";
 
 const NavBar: FC = () => {
 	let location = useLocation();
 	let navigate = useNavigate();
+	const dispatch = useAppDispatch();
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
-	const { isAuth } = useAppSelector((state: any) => state.auth);
+	const { isAuth, user } = useAppSelector((state: any) => state.auth);
 
 	useEffect(() => {}, [isAuth]);
 
@@ -60,6 +62,16 @@ const NavBar: FC = () => {
 
 	const back = () => {
 		return navigate(-1);
+	};
+
+	const logout = () => {
+		dispatch(logoutUser());
+		handleClose();
+	};
+
+	const login = () => {
+		navigate("/login");
+		handleClose();
 	};
 
 	return (
@@ -83,7 +95,7 @@ const NavBar: FC = () => {
 							variant="standard"
 							placeholder="Search products,brands and categories"
 						/>
-						<SearchIconBtn>
+						<>
 							<SearchIcon
 								fontSize="medium"
 								sx={{
@@ -91,14 +103,14 @@ const NavBar: FC = () => {
 									cursor: "pointer",
 								}}
 							/>
-						</SearchIconBtn>
+						</>
 						;
 					</SearchToolBar>
 				) : (
 					<ToolBar>
 						<Logo>
 							<TemporaryDrawer />
-							<LogoLink href="/home">
+							<LogoLink href="/">
 								<Typography variant="h5" color="textPrimary" sx={{ display: "inline-block" }}>
 									Olive
 								</Typography>
@@ -137,7 +149,8 @@ const NavBar: FC = () => {
 									}
 									endIcon={anchorEl ? <KeyboardArrowUpOutlinedIcon /> : <KeyboardArrowDownIcon />}
 								>
-									Account
+									{isAuth === true && `Hi, ${user?.firstName}`}
+									{isAuth === false && "Account"}
 								</NavBtn>
 								<MenuStyle
 									id="basic-menu"
@@ -167,8 +180,22 @@ const NavBar: FC = () => {
 										</NavLink>
 									</MenuItemStyle>
 									<MenuItemStyle onClick={handleClose}>
-										<LogoutOutlinedIcon sx={{ mr: "2px" }} />
-										Logout
+										<NavLink href="/favourites">
+											<FavoriteBorderOutlinedIcon sx={{ mr: "5px" }} />
+											<Typography sx={{ display: "inline" }}> Pending Reviews</Typography>
+										</NavLink>
+									</MenuItemStyle>
+									<MenuItemStyle>
+										{isAuth && (
+											<LogoutBtn disableElevation disableFocusRipple onClick={logout}>
+												Logout
+											</LogoutBtn>
+										)}
+										{!isAuth && (
+											<LogoutBtn disableElevation disableFocusRipple onClick={login}>
+												Login
+											</LogoutBtn>
+										)}
 									</MenuItemStyle>
 								</MenuStyle>
 							</>

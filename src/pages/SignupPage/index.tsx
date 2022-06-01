@@ -44,7 +44,7 @@ const SignupPage: FC = () => {
 	useEffect(() => {
 		const getData = () => {
 			if (isAuth === true) {
-				navigate("/home");
+				navigate("/");
 			}
 		};
 		return getData();

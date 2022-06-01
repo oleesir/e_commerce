@@ -62,6 +62,21 @@ export const SearchBtn = styled(Button)(() => ({
 	},
 }));
 
+export const LogoutBtn = styled(Button)(() => ({
+	padding: "5px 35px",
+	width: "100%",
+	fontSize: "18px",
+	textTransform: "none",
+	fontWeight: 400,
+	color: "#1976D2",
+	marginLeft: "5px",
+	cursor: "pointer",
+	"&:hover": {
+		backgroundColor: "#1976D2",
+		color: "#fff",
+	},
+}));
+
 export const InputFieldStyles = styled(TextField)((props) => ({
 	width: "100%",
 	borderRadius: "2px",
@@ -100,7 +115,7 @@ export const MenuItemStyle = styled(MenuItem)(() => ({
 	},
 	"&.MuiMenuItem-gutters": {
 		paddingLeft: "5px",
-		paddingRight: 0,
+		paddingRight: "5px",
 	},
 }));
 

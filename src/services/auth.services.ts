@@ -11,6 +11,9 @@ const AuthService = {
 	loggedIn() {
 		return axios.get("/auth/loggedin");
 	},
+	logout() {
+		return axios.get("/auth/logout");
+	},
 };
 
 export default AuthService;
