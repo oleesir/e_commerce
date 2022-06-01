@@ -62,14 +62,14 @@ const App = () => {
 			<div className="App">
 				<Router>
 					<Routes>
-						<Route path="/" element={<LandingPage />}>
-							<Route path="login" element={<LoginPage />} />
-							<Route path="signup" element={<SignupPage />} />
-							<Route path="home" element={<HomePage />} />
-							<Route path="account" element={<Account />} />
-							<Route path="orders" element={<Orders />} />
-							<Route path="favourites" element={<Favourites />} />
-							<Route path="categories" element={<Categories />} />
+						<Route element={<LandingPage />}>
+							<Route path="/" element={<HomePage />} />
+							<Route path="/login" element={<LoginPage />} />
+							<Route path="/signup" element={<SignupPage />} />
+							<Route path="/account" element={<Account />} />
+							<Route path="/orders" element={<Orders />} />
+							<Route path="/favourites" element={<Favourites />} />
+							<Route path="/categories" element={<Categories />} />
 							<Route path="/search" element={<Search />} />
 						</Route>
 						<Route path="/admin" element={<AdminLayout />}>
