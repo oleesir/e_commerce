@@ -142,7 +142,7 @@ const LoginPage: FC = () => {
 									startIcon={<img src={"/google.svg"} style={{ width: "25px" }} alt="google logo" />}
 									href={getGoogleOAuthURL()}
 								>
-									Sign In With Google
+									Sign in with Google
 								</GoogleBtn>
 							</InputContent>
 						</form>

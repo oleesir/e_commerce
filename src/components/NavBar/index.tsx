@@ -9,8 +9,6 @@ import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import KeyboardArrowUpOutlinedIcon from "@mui/icons-material/KeyboardArrowUpOutlined";
 import SearchIcon from "@mui/icons-material/Search";
-import NoAccountsOutlinedIcon from "@mui/icons-material/NoAccountsOutlined";
-import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import TemporaryDrawer from "./Drawer";
 import InputAdornment from "@mui/material/InputAdornment";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -37,6 +35,7 @@ import {
 	IcBtn,
 	LogoutBtn,
 } from "./styles";
+import TopDrawer from "./TopDrawer";
 
 const NavBar: FC = () => {
 	let location = useLocation();
@@ -110,6 +109,7 @@ const NavBar: FC = () => {
 					<ToolBar>
 						<Logo>
 							<TemporaryDrawer />
+
 							<LogoLink href="/">
 								<Typography variant="h5" color="textPrimary" sx={{ display: "inline-block" }}>
 									Olive
@@ -162,25 +162,25 @@ const NavBar: FC = () => {
 									}}
 								>
 									<MenuItemStyle onClick={handleClose}>
-										<NavLink href="/account">
+										<NavLink href={isAuth === true ? "/account" : "/login"}>
 											<PersonOutlineOutlinedIcon sx={{ mr: "5px" }} />
 											<Typography sx={{ display: "inline" }}>My Account</Typography>
 										</NavLink>
 									</MenuItemStyle>
 									<MenuItemStyle onClick={handleClose}>
-										<NavLink href="/orders">
+										<NavLink href={isAuth === true ? "/orders" : "/login"}>
 											<Inventory2OutlinedIcon sx={{ mr: "5px" }} />
 											<Typography sx={{ display: "inline" }}>Orders</Typography>
 										</NavLink>
 									</MenuItemStyle>
 									<MenuItemStyle onClick={handleClose}>
-										<NavLink href="/favourites">
+										<NavLink href={isAuth === true ? "/favourites" : "/login"}>
 											<FavoriteBorderOutlinedIcon sx={{ mr: "5px" }} />
 											<Typography sx={{ display: "inline" }}> Favourites</Typography>
 										</NavLink>
 									</MenuItemStyle>
 									<MenuItemStyle onClick={handleClose}>
-										<NavLink href="/favourites">
+										<NavLink href={isAuth === true ? "/favourites" : "/login"}>
 											<FavoriteBorderOutlinedIcon sx={{ mr: "5px" }} />
 											<Typography sx={{ display: "inline" }}> Pending Reviews</Typography>
 										</NavLink>
@@ -211,27 +211,7 @@ const NavBar: FC = () => {
 										}}
 									/>
 								</IcBtn>
-								<IconBtn>
-									{isAuth === true ? (
-										<AccountCircleOutlinedIcon
-											fontSize="medium"
-											sx={{
-												color: "#072F40",
-												cursor: "pointer",
-												display: { xs: "flex", md: "none" },
-											}}
-										/>
-									) : (
-										<NoAccountsOutlinedIcon
-											fontSize="medium"
-											sx={{
-												color: "#072F40",
-												cursor: "pointer",
-												display: { xs: "flex", md: "none" },
-											}}
-										/>
-									)}
-								</IconBtn>
+								<TopDrawer />
 								<IconBtn>
 									<ShoppingCartOutlinedIcon
 										fontSize="medium"
