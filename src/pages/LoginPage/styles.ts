@@ -6,16 +6,13 @@ type InputProps = {
 };
 
 export const Container = styled(Grid)(({ theme }) => ({
+	paddingLeft: "50px",
+	paddingRight: "50px",
+
 	[theme.breakpoints.down("md")]: {
 		width: "100%",
-		paddingLeft: "50px",
-		paddingRight: "50px",
-	},
-
-	[theme.breakpoints.only("sm")]: {
-		width: "100%",
-		paddingLeft: "20px",
-		paddingRight: "20px",
+		paddingLeft: "10px",
+		paddingRight: "10px",
 	},
 }));
 
@@ -26,11 +23,11 @@ export const Content = styled("div")(({ theme }) => ({
 	padding: "20px",
 	width: "30%",
 	borderRadius: "5px",
-	[theme.breakpoints.down("md")]: {
-		width: "100%",
-		paddingLeft: "50px",
-		paddingRight: "50px",
-	},
+	// [theme.breakpoints.down("md")]: {
+	// 	width: "100%",
+	// 	paddingLeft: "50px",
+	// 	paddingRight: "50px",
+	// },
 
 	[theme.breakpoints.down("md")]: {
 		width: "100%",
@@ -38,17 +35,30 @@ export const Content = styled("div")(({ theme }) => ({
 	},
 }));
 
-export const InputFieldStyles = styled(TextField)((props) => ({
+export const InputFieldStyles = styled(TextField)(({ theme }) => ({
 	width: "100%",
 	borderRadius: "2px",
 	"input::placeholder": {
-		fontSize: "20px",
+		fontSize: "18px",
 	},
 
 	"& .MuiInputBase-root": {
 		border: "2px solid #c0c0c0",
-		fontSize: "20px",
+		fontSize: "18px",
 		padding: "5px",
+	},
+
+	[theme.breakpoints.down("sm")]: {
+		width: "100%",
+		padding: 0,
+		"input::placeholder": {
+			fontSize: "15px",
+		},
+		"& .MuiInputBase-root": {
+			border: "1px solid #c0c0c0",
+			fontSize: "15px",
+			padding: "4px",
+		},
 	},
 }));
 
@@ -62,9 +72,12 @@ export const TopMessages = styled("div")((props) => ({
 	marginBottom: "30px",
 }));
 
-export const Header = styled(Typography)((props) => ({
+export const Header = styled(Typography)(({ theme }) => ({
 	color: "#072F40",
 	fontSize: "25px",
+	[theme.breakpoints.down("sm")]: {
+		fontSize: "22px",
+	},
 }));
 
 export const SubHeader = styled(Typography)((props) => ({

@@ -184,7 +184,7 @@ const SignupPage: FC = () => {
 									startIcon={<img src={"/google.svg"} style={{ width: "25px" }} alt="google logo" />}
 									href={getGoogleOAuthURL()}
 								>
-									Signup With Google
+									Signup with Google
 								</GoogleBtn>
 							</InputContent>
 						</form>
