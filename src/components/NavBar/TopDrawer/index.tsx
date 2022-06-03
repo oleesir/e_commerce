@@ -36,6 +36,11 @@ const TopDrawer = () => {
 		setToggleState(open);
 	};
 
+	const logout = () => {
+		dispatch(logoutUser());
+		setToggleState(false);
+	};
+
 	const list = () => (
 		<Box role="presentation" onClick={toggleDrawer(false)} onKeyDown={toggleDrawer(false)} sx={{ width: "300px" }}>
 			<List>
@@ -64,9 +69,6 @@ const TopDrawer = () => {
 
 	const navToLogin = () => {
 		navigate("/login");
-	};
-	const logout = () => {
-		dispatch(logoutUser);
 	};
 
 	return (
@@ -110,7 +112,14 @@ const TopDrawer = () => {
 						<UserEmail>{user?.email}</UserEmail>
 					</AccountView>
 					{list()}
-					<LogoutBtn disableElevation disableFocusRipple onClick={logout}>
+
+					<LogoutBtn
+						disableElevation
+						disableFocusRipple
+						onClick={logout}
+						// onClick={toggleDrawer(false)}
+						onKeyDown={toggleDrawer(false)}
+					>
 						Logout
 					</LogoutBtn>
 				</Drawer>
