@@ -4,13 +4,14 @@ import { styled } from "@mui/system";
 export const Wrapper = styled(Box)(() => ({
 	backgroundColor: "#fff",
 	"& .MuiAppBar-root": { backgroundColor: "#fff" },
+	"& .MuiToolbar-root": { paddingLeft: 0, paddingRight: 0 },
 }));
 
 export const ToolBar = styled(Toolbar)(({ theme }) => ({
 	display: "flex",
 	justifyContent: "space-around",
 	alignItems: "center",
-	padding: "15px 40px",
+	padding: "15px 50px",
 	[theme.breakpoints.down("md")]: {
 		justifyContent: "space-between",
 		padding: "10px 5px",

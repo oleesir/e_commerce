@@ -16,6 +16,7 @@ import Orders from "./pages/Orders";
 import Products from "./pages/Products";
 import Users from "./pages/Users";
 import Search from "./pages/Search";
+import SingleProduct from "./pages/SingleProduct";
 import "./App.css";
 
 declare module "@mui/material/styles" {
@@ -66,6 +67,7 @@ const App = () => {
 							<Route path="/" element={<HomePage />} />
 							<Route path="/login" element={<LoginPage />} />
 							<Route path="/signup" element={<SignupPage />} />
+							<Route path="/product" element={<SingleProduct />} />
 							<Route path="/account" element={<Account />} />
 							<Route path="/orders" element={<Orders />} />
 							<Route path="/favourites" element={<Favourites />} />

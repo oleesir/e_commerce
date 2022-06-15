@@ -89,7 +89,7 @@ export const FavouriteItem = styled(FavoriteBorderOutlinedIcon)(({ theme }) => (
 
 export const ProductImg = styled("img")(({ theme }) => ({
 	width: "100%",
-	height: "200px",
+	height: "250px",
 	cursor: "pointer",
 	[theme.breakpoints.down("sm")]: {
 		height: "150px",
