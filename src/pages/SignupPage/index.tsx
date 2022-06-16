@@ -65,14 +65,7 @@ const SignupPage: FC = () => {
 		<>
 			{isLoading && <Loader backgroundcolor="#fff" />}
 			{!isLoading && (
-				<Container
-					container
-					md={12}
-					direction="column"
-					justifyContent="center"
-					alignItems="center"
-					sx={{ height: "100vh" }}
-				>
+				<Container container md={12} direction="column" justifyContent="center" alignItems="center">
 					<Content>
 						<TopMessages>
 							<Header>Create Account</Header>

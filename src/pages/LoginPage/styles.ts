@@ -6,6 +6,7 @@ type InputProps = {
 };
 
 export const Container = styled(Grid)(({ theme }) => ({
+	paddingTop: "200px",
 	paddingLeft: "50px",
 	paddingRight: "50px",
 

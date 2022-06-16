@@ -41,7 +41,6 @@ export const loadUser = createAsyncThunk("auth/loggedin", async (_, { rejectWith
 export const logoutUser = createAsyncThunk("auth/logout", async (_, { rejectWithValue }) => {
 	try {
 		const res = await AuthService.logout();
-		console.log("LOGOUT", res.data.data);
 		return res.data.data;
 	} catch (error: any) {
 		return rejectWithValue(error.response?.data);
