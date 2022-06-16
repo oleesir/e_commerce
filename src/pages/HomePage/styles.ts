@@ -23,10 +23,3 @@ export const WrapperItem = styled(Grid)(({ theme }) => ({
 		display: "none",
 	},
 }));
-
-export const Container = styled(Grid)(({ theme }) => ({
-	paddingRight: "16px",
-	[theme.breakpoints.down("md")]: {
-		paddingRight: "10px",
-	},
-}));
