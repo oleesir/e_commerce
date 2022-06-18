@@ -1,21 +1,21 @@
 import { Box, TextField, Button, Link, Menu, MenuItem, Toolbar, IconButton } from "@mui/material";
 import { styled } from "@mui/system";
 
-export const Wrapper = styled(Box)(() => ({
+export const Wrapper = styled(Box)(({ theme }) => ({
 	backgroundColor: "#fff",
 	"& .MuiAppBar-root": { backgroundColor: "#fff" },
-	"& .MuiToolbar-root": { paddingLeft: 0, paddingRight: 0 },
+	"& .MuiToolbar-root": { paddingLeft: "50px", paddingRight: "50px" },
+	[theme.breakpoints.down("md")]: {
+		"& .MuiToolbar-root": { paddingLeft: "10px", paddingRight: "10px" },
+	},
 }));
 
 export const ToolBar = styled(Toolbar)(({ theme }) => ({
 	display: "flex",
-	justifyContent: "space-around",
+	width: "100%",
+	justifyContent: "space-between",
 	alignItems: "center",
-	padding: "15px 50px",
-	[theme.breakpoints.down("md")]: {
-		justifyContent: "space-between",
-		padding: "10px 5px",
-	},
+	padding: "15px 0",
 }));
 
 export const SearchToolBar = styled(Toolbar)(({ theme }) => ({

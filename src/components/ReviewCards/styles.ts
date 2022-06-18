@@ -9,7 +9,7 @@ type InputProps = {
 export const ReviewContent = styled("div")<InputProps>(({ bigScreen, smallScreen, theme }) => ({
 	marginTop: "50px",
 	display: bigScreen === true ? "block" : "none",
-	[theme.breakpoints.down("sm")]: {
+	[theme.breakpoints.down("md")]: {
 		display: smallScreen === true ? "block" : "none",
 		marginTop: 0,
 	},
@@ -18,7 +18,7 @@ export const ReviewContent = styled("div")<InputProps>(({ bigScreen, smallScreen
 export const Header = styled(Typography)(({ theme }) => ({
 	display: "none",
 
-	[theme.breakpoints.down("sm")]: {
+	[theme.breakpoints.down("md")]: {
 		fontSize: "18px",
 		display: "block",
 		marginBottom: "15px",

@@ -12,7 +12,7 @@ const LandingPage = () => {
 			md={12}
 			flexDirection="column"
 			sx={{
-				backgroundColor: location.pathname === "/login" || location.pathname === "/signup" ? "#FFF" : "#F5F5F5",
+				backgroundColor: "#fff",
 				pt: location.pathname === "/login" || location.pathname === "/signup" ? 0 : "100px",
 			}}
 		>

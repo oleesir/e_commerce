@@ -13,6 +13,7 @@ const ProductCards = ({ products }: InputType) => {
 			{products.map((product) => (
 				<ProductCard
 					key={product?._id}
+					productId={product?._id}
 					slug={product?.slug}
 					prodName={product?.name}
 					prodPrice={product?.price}
