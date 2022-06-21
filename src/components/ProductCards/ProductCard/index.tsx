@@ -18,13 +18,14 @@ type InputType = {
 	slug: string;
 	prodPrice: number;
 	prodImage: string;
+	productId: string;
 };
 
-const ProductCard = ({ prodName, prodPrice, prodImage, slug }: InputType) => {
+const ProductCard = ({ prodName, prodPrice, prodImage, slug, productId }: InputType) => {
 	const navigate = useNavigate();
 
 	const navigateToProduct = () => {
-		navigate(`/${slug}`, { state: slug });
+		navigate(`/${slug}`, { state: { productId } });
 	};
 	return (
 		<Grid item md={3} sm={6} xs={6}>

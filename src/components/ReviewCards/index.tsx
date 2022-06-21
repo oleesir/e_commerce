@@ -13,9 +13,6 @@ const ReviewCards = ({ bigScreen, smallScreen }: InputProps) => {
 			<Header>Reviews</Header>
 			<ReviewCard />
 			<ReviewCard />
-			<ReviewCard />
-			<ReviewCard />
-			<ReviewCard />
 		</ReviewContent>
 	);
 };

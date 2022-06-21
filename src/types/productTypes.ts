@@ -22,6 +22,7 @@ export type ProductInfo = {
 };
 
 export type ProductState = {
+	product: ProductInfo | null;
 	products: ProductInfo[];
 	isLoading: boolean;
 	error: any;

@@ -73,7 +73,8 @@ export const Name = styled(Typography)(({ theme }) => ({
 	color: "#072F40",
 	fontSize: "25px",
 	marginBottom: "20px",
-	[theme.breakpoints.down("sm")]: {
+	wordBreak: "break-word",
+	[theme.breakpoints.down("md")]: {
 		fontSize: "22px",
 	},
 }));
@@ -82,7 +83,7 @@ export const Brand = styled(Typography)(({ theme }) => ({
 	color: "#072F40",
 	fontSize: "20px",
 
-	[theme.breakpoints.down("sm")]: {
+	[theme.breakpoints.down("md")]: {
 		fontSize: "18px",
 	},
 }));
@@ -91,7 +92,7 @@ export const Price = styled(Typography)(({ theme }) => ({
 	color: "#072F40",
 	fontSize: "20px",
 
-	[theme.breakpoints.down("sm")]: {
+	[theme.breakpoints.down("md")]: {
 		fontSize: "18px",
 	},
 }));
@@ -109,7 +110,7 @@ export const Ratings = styled(Typography)(({ theme }) => ({
 export const Description = styled(Typography)(({ theme }) => ({
 	color: "#072F40",
 	fontSize: "16px",
-
+	wordBreak: "break-word",
 	// [theme.breakpoints.down("sm")]: {
 	// 	fontSize: "22px",
 	// },
@@ -119,13 +120,14 @@ export const ReviewName = styled(Typography)(({ theme }) => ({
 	color: "#072F40",
 	fontSize: "15px",
 	marginBottom: "10px",
-	[theme.breakpoints.down("sm")]: {
+	[theme.breakpoints.down("md")]: {
 		fontSize: "14px",
 	},
 }));
 export const TopForm = styled(Grid)(({ theme }) => ({
 	marginBottom: "260px",
-	[theme.breakpoints.down("sm")]: {
+
+	[theme.breakpoints.down("md")]: {
 		marginBottom: "60px",
 	},
 }));
@@ -150,12 +152,13 @@ export const SelectStyle = styled(Select)(({ theme }) => ({
 	borderRadius: "2px",
 	border: "2px solid #F5F5F5",
 	"& .MuiSelect-select": {
+		backgroundColor: "#fff",
 		"&:focus": {
 			border: "transparent",
 		},
 	},
 
-	[theme.breakpoints.down("sm")]: {
+	[theme.breakpoints.down("md")]: {
 		border: "1px solid #F5F5F5",
 	},
 }));
@@ -176,9 +179,10 @@ export const InputFieldStyles = styled(TextField)(({ theme }) => ({
 		border: "2px solid #F5F5F5",
 		fontSize: "18px",
 		padding: 0,
+		backgroundColor: "#fff",
 	},
 
-	[theme.breakpoints.down("sm")]: {
+	[theme.breakpoints.down("md")]: {
 		width: "100%",
 		padding: 0,
 		"input::placeholder": { border: "2px solid #F5F5F5", fontSize: "15px" },
@@ -206,7 +210,7 @@ export const AddToCartBtn = styled(Button)(({ theme }) => ({
 		backgroundColor: " #1976D2",
 	},
 
-	[theme.breakpoints.down("sm")]: {
+	[theme.breakpoints.down("md")]: {
 		padding: "10px",
 		marginTop: "20px",
 	},
@@ -225,7 +229,7 @@ export const InputTextArea = styled(TextareaAutosize)(({ theme }) => ({
 	resize: "vertical",
 	overflow: "auto",
 	fontSize: "18px",
-	[theme.breakpoints.down("sm")]: {
+	[theme.breakpoints.down("md")]: {
 		border: "1px solid #F5F5F5",
 	},
 }));
