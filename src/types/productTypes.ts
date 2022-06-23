@@ -27,3 +27,10 @@ export type ProductState = {
 	isLoading: boolean;
 	error: any;
 };
+
+export type CartState = {
+	cartItems: ProductInfo[];
+	cartTotalQuantity: number;
+	cartTotalAmount: number;
+	error: any;
+};

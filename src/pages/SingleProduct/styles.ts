@@ -8,7 +8,11 @@ import {
 	Select,
 	TextareaAutosize,
 	Paper,
+	IconButton,
 } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+
 import { styled } from "@mui/system";
 
 export const Container = styled(Grid)(({ theme }) => ({
@@ -101,10 +105,16 @@ export const Ratings = styled(Typography)(({ theme }) => ({
 	color: "#072F40",
 	fontSize: "20px",
 	marginBottom: "10px",
+}));
 
-	// [theme.breakpoints.down("sm")]: {
-	// 	fontSize: "22px",
-	// },
+export const DescriptionHeader = styled(Typography)(({ theme }) => ({
+	color: "#072F40",
+	fontSize: "20px",
+	margin: "3px 0",
+}));
+
+export const DescriptionHeaderContent = styled("div")(({ theme }) => ({
+	margin: "20px 0",
 }));
 
 export const Description = styled(Typography)(({ theme }) => ({
@@ -204,7 +214,6 @@ export const AddToCartBtn = styled(Button)(({ theme }) => ({
 	marginBottom: "20px",
 	cursor: "pointer",
 	fontWeight: 400,
-
 	border: "1px solid #1976D2",
 	"&:hover": {
 		backgroundColor: " #1976D2",
@@ -232,4 +241,42 @@ export const InputTextArea = styled(TextareaAutosize)(({ theme }) => ({
 	[theme.breakpoints.down("md")]: {
 		border: "1px solid #F5F5F5",
 	},
+}));
+
+export const AddSubContent = styled("div")(({ theme }) => ({
+	display: "flex",
+	width: "100%",
+	justifyContent: "center",
+	alignItems: "center",
+}));
+
+export const AddSubBtn = styled(IconButton)(({ theme }) => ({
+	padding: "15px",
+	backgroundColor: "#1976D2",
+	cursor: "pointer",
+	"&:hover": {
+		backgroundColor: " #1976D2",
+	},
+	[theme.breakpoints.down("md")]: {
+		padding: "10px",
+	},
+}));
+
+export const RemoveIconStyle = styled(RemoveIcon)(({ theme }) => ({
+	fontSize: "large",
+	color: "#fff",
+}));
+
+export const AddIconStyle = styled(AddIcon)(({ theme }) => ({
+	fontSize: "large",
+	color: "#fff",
+}));
+
+export const NumValueContent = styled("div")(({ theme }) => ({
+	width: "10%",
+	display: "flex",
+	justifyContent: "center",
+	alignItems: "center",
+	margin: "0 20px",
+	backgroundColor: "#F5F5F5",
 }));

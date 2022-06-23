@@ -9,7 +9,7 @@ import { Wrapper, WrapperItem } from "./styles";
 
 const HomePage = () => {
 	const dispatch = useAppDispatch();
-	const { products, isLoading } = useAppSelector((state: any) => state.product);
+	const { products, isLoading, cart } = useAppSelector((state: any) => state.product);
 
 	useEffect(() => {
 		const getData = () => {
@@ -17,6 +17,7 @@ const HomePage = () => {
 		};
 		return getData();
 	}, [dispatch]);
+
 	return (
 		<>
 			{isLoading && <Loader backgroundcolor="#F5F5F5" />}

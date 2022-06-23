@@ -1,6 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Grid, Typography } from "@mui/material";
+import { useAppDispatch, useAppSelector } from "../../../store";
+import { addToCart } from "../../../features/cartSlice";
+import { Grid, Typography, IconButton } from "@mui/material";
 
 import {
 	Product,
@@ -14,6 +16,7 @@ import {
 } from "./styles";
 
 type InputType = {
+	product: any;
 	prodName: string;
 	slug: string;
 	prodPrice: number;
@@ -21,12 +24,13 @@ type InputType = {
 	productId: string;
 };
 
-const ProductCard = ({ prodName, prodPrice, prodImage, slug, productId }: InputType) => {
+const ProductCard = ({ prodName, prodPrice, prodImage, slug, productId, product }: InputType) => {
 	const navigate = useNavigate();
 
 	const navigateToProduct = () => {
 		navigate(`/${slug}`, { state: { productId } });
 	};
+
 	return (
 		<Grid item md={3} sm={6} xs={6}>
 			<Product onClick={navigateToProduct}>
@@ -46,7 +50,6 @@ const ProductCard = ({ prodName, prodPrice, prodImage, slug, productId }: InputT
 							}).format(prodPrice)}
 						</ProductPrice>
 						<div>
-							<AddShoppingCart />
 							<FavouriteItem />
 						</div>
 					</ProductPriceCart>
