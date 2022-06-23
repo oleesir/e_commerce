@@ -1,4 +1,4 @@
-import { Box, TextField, Button, Link, Menu, MenuItem, Toolbar, IconButton } from "@mui/material";
+import { Box, TextField, Button, Link, Menu, MenuItem, Toolbar, IconButton, Typography } from "@mui/material";
 import { styled } from "@mui/system";
 
 export const Wrapper = styled(Box)(({ theme }) => ({
@@ -15,7 +15,7 @@ export const ToolBar = styled(Toolbar)(({ theme }) => ({
 	width: "100%",
 	justifyContent: "space-between",
 	alignItems: "center",
-	padding: "15px 0",
+	padding: "5px 0",
 }));
 
 export const SearchToolBar = styled(Toolbar)(({ theme }) => ({
@@ -154,4 +154,32 @@ export const SearchIconBtn = styled(IconButton)(({ theme }) => ({
 
 export const SearchIconBtnRight = styled(IconButton)(({ theme }) => ({
 	marginLeft: "10px",
+}));
+
+export const CartContent = styled("div")(({ theme }) => ({
+	borderRadius: "50%",
+	display: "flex",
+	position: "relative",
+	justifyContent: "center",
+	alignItems: "center",
+	width: "50px",
+	height: "50px",
+}));
+
+export const CartItems = styled("div")(({ theme }) => ({
+	borderRadius: "50%",
+	top: "5px",
+	position: "absolute",
+	right: 0,
+	alignItems: "center",
+	backgroundColor: "#F80001",
+	width: "20px",
+	height: "20px",
+	display: "flex",
+	justifyContent: "center",
+}));
+
+export const CartNum = styled(Typography)(({ theme }) => ({
+	fontSize: "10px",
+	color: "#fff",
 }));

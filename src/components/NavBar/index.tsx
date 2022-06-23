@@ -34,6 +34,9 @@ import {
 	SearchToolBar,
 	IcBtn,
 	LogoutBtn,
+	CartContent,
+	CartItems,
+	CartNum,
 } from "./styles";
 import TopDrawer from "./TopDrawer";
 
@@ -44,10 +47,11 @@ const NavBar: FC = () => {
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
 	const { isAuth, user } = useAppSelector((state: any) => state.auth);
+	const { cartItems } = useAppSelector((state: any) => state.cart);
 
 	useEffect(() => {}, [isAuth]);
 
-	console.log("LOCATION", location);
+	// console.log("LOCATION", location);
 	const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
 		setAnchorEl(event.currentTarget);
 	};
@@ -213,13 +217,21 @@ const NavBar: FC = () => {
 								</IcBtn>
 								<TopDrawer />
 								<IconBtn>
-									<ShoppingCartOutlinedIcon
-										fontSize="medium"
-										sx={{
-											color: "#072F40",
-											cursor: "pointer",
-										}}
-									/>
+									<CartContent>
+										{cartItems.length === 0 && null}
+										{cartItems.length > 0 && (
+											<CartItems>
+												<CartNum>{cartItems.length}</CartNum>
+											</CartItems>
+										)}
+										<ShoppingCartOutlinedIcon
+											fontSize="medium"
+											sx={{
+												color: "#072F40",
+												cursor: "pointer",
+											}}
+										/>
+									</CartContent>
 								</IconBtn>
 							</>
 						</NavContent>

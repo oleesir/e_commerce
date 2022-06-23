@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Grid, Box } from "@mui/material";
+import { Grid, Box, Divider } from "@mui/material";
 import { getSingleProduct } from "../../features/productSlice";
+import { addToCart } from "../../features/cartSlice";
 import { useAppDispatch, useAppSelector } from "../../store";
 import Loader from "../../components/Loader";
 import ReviewCards from "../../components/ReviewCards";
 import { useLocation } from "react-router-dom";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
 import {
 	Container,
 	ProductImg,
@@ -14,24 +17,32 @@ import {
 	Price,
 	Ratings,
 	AddToCartBtn,
-	InputFieldStyles,
-	InputFieldContent,
-	InputFieldLabel,
-	FormControlStyle,
-	SelectStyle,
-	MenuItemStyle,
-	InputTextArea,
-	FormHeader,
+	DescriptionHeaderContent,
+	AddSubBtn,
+	RemoveIconStyle,
+	AddIconStyle,
+	NumValueContent,
+	// InputFieldStyles,
+	// InputFieldContent,
+	// InputFieldLabel,
+	// FormControlStyle,
+	// SelectStyle,
+	// MenuItemStyle,
+	// InputTextArea,
+	// FormHeader,
 	TopForm,
 	SecondContent,
 	FirstContent,
+	DescriptionHeader,
+	AddSubContent,
 } from "./styles";
 
 const SingleProduct = () => {
 	const dispatch = useAppDispatch();
 	const { state }: { state: any } = useLocation();
-	const [rating, setRating] = useState("");
+	// const [rating, setRating] = useState("");
 	const { product, isLoading } = useAppSelector((state: any) => state.product);
+	const { cartItems } = useAppSelector((state: any) => state.cart);
 	const { productId } = state;
 
 	useEffect(() => {
@@ -43,8 +54,23 @@ const SingleProduct = () => {
 		}
 	}, [productId, dispatch]);
 
-	const handleChange = (event: any) => {
-		setRating(event.target.value as string);
+	const foundItem = cartItems.find((item: any) => item._id === productId);
+
+	// const handleChange = (event: any) => {
+	// 	setRating(event.target.value as string);
+	// };
+	// const foundItem = cartItems.find((item: any) => item._id === productId);
+
+	// console.log("CART ITEMS", cartItems);
+	// console.log("FOUND ITEMS", foundItem);
+	// console.log("FOUND ITEMS", foundItem);
+
+	const handleAddToCart = async () => {
+		dispatch(addToCart(product));
+
+		// const data = await dispatch(getSingleProduct(productId));
+
+		// if(data.countInStock )
 	};
 
 	return (
@@ -61,15 +87,41 @@ const SingleProduct = () => {
 							<Box>
 								<Name>{product?.name}</Name>
 								<Brand>Brand: {product?.brand}</Brand>
-								<Price> Price: {product?.price}</Price>
+								<Price>
+									Price:
+									{new Intl.NumberFormat("en-NG", {
+										style: "currency",
+										currency: "NGN",
+									}).format(product?.price)}
+								</Price>
 								<Ratings> Ratings</Ratings>
+								{cartItems.length === 0 && <AddToCartBtn onClick={handleAddToCart}>Add Cart</AddToCartBtn>}
+								{cartItems.length > 0 && (
+									<AddSubContent>
+										<AddSubBtn>
+											<RemoveIconStyle />
+										</AddSubBtn>
+										<NumValueContent>
+											<Price>{foundItem?.cartQuantity}</Price>
+										</NumValueContent>
+										<AddSubBtn onClick={handleAddToCart}>
+											<AddIconStyle />
+										</AddSubBtn>
+									</AddSubContent>
+								)}
+
+								<DescriptionHeaderContent>
+									<DescriptionHeader> Description</DescriptionHeader>
+									<Divider />
+								</DescriptionHeaderContent>
+
 								<Description>{product?.description}</Description>
-								<AddToCartBtn>Add Cart</AddToCartBtn>
 							</Box>
 						</TopForm>
 
 						<Grid item>
-							<Box>
+							<ReviewCards smallScreen={true} />
+							{/* <Box>
 								<ReviewCards smallScreen={true} />
 								<FormHeader>CUSTOMER REVIEW</FormHeader>
 								<InputFieldContent>
@@ -93,7 +145,7 @@ const SingleProduct = () => {
 									<InputTextArea aria-label="minimum height" minRows={10} />
 								</InputFieldContent>
 								<AddToCartBtn>Submit</AddToCartBtn>
-							</Box>
+							</Box> */}
 						</Grid>
 					</SecondContent>
 				</Container>
