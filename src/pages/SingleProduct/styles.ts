@@ -12,7 +12,6 @@ import {
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
-
 import { styled } from "@mui/system";
 
 export const Container = styled(Grid)(({ theme }) => ({
@@ -117,6 +116,13 @@ export const DescriptionHeaderContent = styled("div")(({ theme }) => ({
 	margin: "20px 0",
 }));
 
+export const NumOfItemsContent = styled("div")(({ theme }) => ({
+	display: "flex",
+	width: "100%",
+	justifyContent: "center",
+	alignItems: "center",
+}));
+
 export const Description = styled(Typography)(({ theme }) => ({
 	color: "#072F40",
 	fontSize: "16px",
@@ -211,7 +217,7 @@ export const AddToCartBtn = styled(Button)(({ theme }) => ({
 	color: "#fff",
 	backgroundColor: "#1976D2",
 	marginTop: "30px",
-	marginBottom: "20px",
+	marginBottom: "15px",
 	cursor: "pointer",
 	fontWeight: 400,
 	border: "1px solid #1976D2",
@@ -248,15 +254,34 @@ export const AddSubContent = styled("div")(({ theme }) => ({
 	width: "100%",
 	justifyContent: "center",
 	alignItems: "center",
+	marginBottom: "15px",
 }));
 
-export const AddSubBtn = styled(IconButton)(({ theme }) => ({
+export const AddBtn = styled(IconButton)(({ theme }) => ({
 	padding: "15px",
 	backgroundColor: "#1976D2",
 	cursor: "pointer",
 	"&:hover": {
 		backgroundColor: " #1976D2",
 	},
+	"&.Mui-disabled": {
+		backgroundColor: " #1976D2",
+		opacity: 0.5,
+		cursor: "not-allowed",
+	},
+	[theme.breakpoints.down("md")]: {
+		padding: "10px",
+	},
+}));
+
+export const SubBtn = styled(IconButton)(({ theme }) => ({
+	padding: "15px",
+	backgroundColor: "#1976D2",
+	cursor: "pointer",
+	"&:hover": {
+		backgroundColor: " #1976D2",
+	},
+
 	[theme.breakpoints.down("md")]: {
 		padding: "10px",
 	},

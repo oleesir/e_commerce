@@ -15,6 +15,10 @@ export const ReviewContent = styled("div")<InputProps>(({ bigScreen, smallScreen
 	},
 }));
 
+export const HeaderContent = styled("div")(({ theme }) => ({
+	margin: "20px 0",
+}));
+
 export const Header = styled(Typography)(({ theme }) => ({
 	display: "none",
 
