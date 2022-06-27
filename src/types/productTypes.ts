@@ -19,6 +19,7 @@ export type ProductInfo = {
 	price: number;
 	countInStock: number;
 	reviews: Reviews[];
+	cartQuantity?: number | undefined;
 };
 
 export type ProductState = {

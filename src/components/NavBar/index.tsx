@@ -13,6 +13,7 @@ import TemporaryDrawer from "./Drawer";
 import InputAdornment from "@mui/material/InputAdornment";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { logoutUser } from "../../features/authSlice";
+import { ProductInfo } from "../../types/productTypes";
 import { useAppSelector, useAppDispatch } from "../../store";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -51,7 +52,6 @@ const NavBar: FC = () => {
 
 	useEffect(() => {}, [isAuth]);
 
-	// console.log("LOCATION", location);
 	const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
 		setAnchorEl(event.currentTarget);
 	};

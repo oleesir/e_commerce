@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Grid, Box, Divider } from "@mui/material";
 import { getSingleProduct } from "../../features/productSlice";
-import { addToCart } from "../../features/cartSlice";
+import { addToCart, decreaseItems } from "../../features/cartSlice";
 import { useAppDispatch, useAppSelector } from "../../store";
 import Loader from "../../components/Loader";
 import ReviewCards from "../../components/ReviewCards";
 import { useLocation } from "react-router-dom";
-import AddIcon from "@mui/icons-material/Add";
-import RemoveIcon from "@mui/icons-material/Remove";
+import { ProductInfo } from "../../types/productTypes";
 import {
 	Container,
 	ProductImg,
@@ -18,10 +17,12 @@ import {
 	Ratings,
 	AddToCartBtn,
 	DescriptionHeaderContent,
-	AddSubBtn,
+	AddBtn,
+	SubBtn,
 	RemoveIconStyle,
 	AddIconStyle,
 	NumValueContent,
+	NumOfItemsContent,
 	// InputFieldStyles,
 	// InputFieldContent,
 	// InputFieldLabel,
@@ -41,6 +42,7 @@ const SingleProduct = () => {
 	const dispatch = useAppDispatch();
 	const { state }: { state: any } = useLocation();
 	// const [rating, setRating] = useState("");
+	const [isDisabled, setIsDisabled] = useState<boolean>(false);
 	const { product, isLoading } = useAppSelector((state: any) => state.product);
 	const { cartItems } = useAppSelector((state: any) => state.cart);
 	const { productId } = state;
@@ -54,23 +56,23 @@ const SingleProduct = () => {
 		}
 	}, [productId, dispatch]);
 
-	const foundItem = cartItems.find((item: any) => item._id === productId);
-
 	// const handleChange = (event: any) => {
 	// 	setRating(event.target.value as string);
 	// };
-	// const foundItem = cartItems.find((item: any) => item._id === productId);
+	const itemInCart = cartItems.find((item: any) => item._id === product?._id);
 
-	// console.log("CART ITEMS", cartItems);
-	// console.log("FOUND ITEMS", foundItem);
-	// console.log("FOUND ITEMS", foundItem);
-
-	const handleAddToCart = async () => {
+	const handleAddToCart = (item: ProductInfo) => (event: any) => {
+		if (item?.cartQuantity === product?.countInStock) {
+			setIsDisabled(true);
+		}
 		dispatch(addToCart(product));
+	};
 
-		// const data = await dispatch(getSingleProduct(productId));
-
-		// if(data.countInStock )
+	const handleDecreaseItem = (item: ProductInfo) => (event: any) => {
+		if (item?.cartQuantity === product?.countInStock) {
+			setIsDisabled(false);
+		}
+		dispatch(decreaseItems(product));
 	};
 
 	return (
@@ -88,33 +90,38 @@ const SingleProduct = () => {
 								<Name>{product?.name}</Name>
 								<Brand>Brand: {product?.brand}</Brand>
 								<Price>
-									Price:
+									Price:{" "}
 									{new Intl.NumberFormat("en-NG", {
 										style: "currency",
 										currency: "NGN",
 									}).format(product?.price)}
 								</Price>
 								<Ratings> Ratings</Ratings>
-								{cartItems.length === 0 && <AddToCartBtn onClick={handleAddToCart}>Add Cart</AddToCartBtn>}
-								{cartItems.length > 0 && (
+
+								{!itemInCart && <AddToCartBtn onClick={handleAddToCart(product)}>Add Cart</AddToCartBtn>}
+
+								{itemInCart && (
 									<AddSubContent>
-										<AddSubBtn>
+										<SubBtn onClick={handleDecreaseItem(product)}>
 											<RemoveIconStyle />
-										</AddSubBtn>
+										</SubBtn>
 										<NumValueContent>
-											<Price>{foundItem?.cartQuantity}</Price>
+											<Price>{itemInCart?.cartQuantity}</Price>
 										</NumValueContent>
-										<AddSubBtn onClick={handleAddToCart}>
+										<AddBtn onClick={handleAddToCart(product)} disabled={isDisabled}>
 											<AddIconStyle />
-										</AddSubBtn>
+										</AddBtn>
 									</AddSubContent>
 								)}
-
+								{itemInCart && (
+									<NumOfItemsContent>
+										<Description>{itemInCart?.cartQuantity} item(s) has been added</Description>{" "}
+									</NumOfItemsContent>
+								)}
 								<DescriptionHeaderContent>
 									<DescriptionHeader> Description</DescriptionHeader>
 									<Divider />
 								</DescriptionHeaderContent>
-
 								<Description>{product?.description}</Description>
 							</Box>
 						</TopForm>
