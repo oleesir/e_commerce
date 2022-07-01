@@ -32,7 +32,7 @@ export const Content = styled("div")(({ theme }) => ({
 
 	[theme.breakpoints.down("md")]: {
 		width: "100%",
-		padding: 0,
+		padding: "20px 10px",
 	},
 }));
 

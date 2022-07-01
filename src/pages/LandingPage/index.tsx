@@ -1,24 +1,19 @@
 import React from "react";
-import { Grid } from "@mui/material";
+import { Grid, Box } from "@mui/material";
 import { useLocation } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import NavBar from "../../components/NavBar";
+import { Wrapper } from "./styles";
 
 const LandingPage = () => {
 	let location = useLocation();
 	return (
-		<Grid
-			container
-			md={12}
-			flexDirection="column"
-			sx={{
-				backgroundColor: "#fff",
-				pt: location.pathname === "/login" || location.pathname === "/signup" ? 0 : "100px",
-			}}
-		>
-			<NavBar />
-			<Outlet />
-		</Grid>
+		<Wrapper container md={12} flexDirection="column">
+			<Box sx={{ height: "100vh", width: "100%" }}>
+				<NavBar />
+				<Outlet />
+			</Box>
+		</Wrapper>
 	);
 };
 

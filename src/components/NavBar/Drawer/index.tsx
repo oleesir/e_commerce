@@ -72,7 +72,7 @@ const TemporaryDrawer = () => {
 						<CloseOutlinedIcon fontSize="medium" onClick={toggleDrawer(false)} sx={{ mr: "5px", ml: "9px" }} />
 						<Link href="/">
 							<Typography variant="h5" color="textPrimary" sx={{ display: "inline-block" }}>
-								Olive
+								OLIVE
 							</Typography>
 						</Link>
 					</Logo>

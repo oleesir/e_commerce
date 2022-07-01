@@ -17,6 +17,7 @@ import { styled } from "@mui/system";
 export const Container = styled(Grid)(({ theme }) => ({
 	paddingLeft: "50px",
 	paddingRight: "50px",
+	paddingTop: "100px",
 
 	[theme.breakpoints.down("md")]: {
 		width: "100%",

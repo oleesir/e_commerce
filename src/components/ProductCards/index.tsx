@@ -1,17 +1,15 @@
 import React from "react";
 import ProductCard from "./ProductCard";
 import { ProductInfo } from "../../types/productTypes";
-// import { MouseEventHandler } from "react";
 import { Container } from "./styles";
 
 type InputType = {
 	products: ProductInfo[];
-	// addToCart: MouseEventHandler<HTMLButtonElement> | undefined;
 };
 
 const ProductCards = ({ products }: InputType) => {
 	return (
-		<Container container item spacing={2}>
+		<Container container item spacing={3}>
 			{products.map((product) => (
 				<ProductCard
 					product={product}
