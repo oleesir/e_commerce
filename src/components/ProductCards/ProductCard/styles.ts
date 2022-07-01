@@ -20,7 +20,7 @@ export const AddToCartBtn = styled(Button)(() => ({
 }));
 
 export const Product = styled(Paper)(({ theme }) => ({
-	width: "100%",
+	// width: "100%",
 	display: "flex",
 	flexDirection: "column",
 	paddingBottom: "20px",

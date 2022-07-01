@@ -17,6 +17,8 @@ import Products from "./pages/Products";
 import Users from "./pages/Users";
 import Search from "./pages/Search";
 import SingleProduct from "./pages/SingleProduct";
+import Cart from "./pages/Cart";
+import CssBaseline from "@mui/material/CssBaseline";
 import "./App.css";
 
 declare module "@mui/material/styles" {
@@ -55,11 +57,22 @@ const theme = createTheme({
 			desktop: 1200,
 		},
 	},
+	components: {
+		MuiCssBaseline: {
+			styleOverrides: {
+				body: {
+					backgroundColor: "#F5F5F5",
+					minHeight: "100%",
+				},
+			},
+		},
+	},
 });
 
 const App = () => {
 	return (
 		<ThemeProvider theme={theme}>
+			<CssBaseline />
 			<div className="App">
 				<Router>
 					<Routes>
@@ -68,6 +81,7 @@ const App = () => {
 							<Route path="/login" element={<LoginPage />} />
 							<Route path="/signup" element={<SignupPage />} />
 							<Route path="/:slug" element={<SingleProduct />} />
+							<Route path="/cart" element={<Cart />} />
 							<Route path="/account" element={<Account />} />
 							<Route path="/orders" element={<Orders />} />
 							<Route path="/favourites" element={<Favourites />} />

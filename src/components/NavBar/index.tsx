@@ -77,6 +77,10 @@ const NavBar: FC = () => {
 		handleClose();
 	};
 
+	const navigateToCart = () => {
+		navigate("/cart");
+	};
+
 	return (
 		<Wrapper sx={{ flexGrow: 1 }}>
 			<AppBar position="fixed">
@@ -116,7 +120,7 @@ const NavBar: FC = () => {
 
 							<LogoLink href="/">
 								<Typography variant="h5" color="textPrimary" sx={{ display: "inline-block" }}>
-									Olive
+									OLIVE
 								</Typography>
 							</LogoLink>
 						</Logo>
@@ -216,7 +220,7 @@ const NavBar: FC = () => {
 									/>
 								</IcBtn>
 								<TopDrawer />
-								<IconBtn>
+								<IconBtn onClick={navigateToCart}>
 									<CartContent>
 										{cartItems.length === 0 && null}
 										{cartItems.length > 0 && (

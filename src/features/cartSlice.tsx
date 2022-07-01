@@ -13,14 +13,19 @@ const cartSlice = createSlice({
 	initialState,
 	reducers: {
 		addToCart: (state: any, action: PayloadAction<ProductInfo>) => {
-			const itemIndex = state.cartItems.findIndex((item: any) => item._id === action.payload._id);
+			const foundIndex = state.cartItems.findIndex((item: any) => item._id === action.payload._id);
+			const isItemInCart = foundIndex !== -1;
 
-			if (itemIndex >= 0) {
-				state.cartItems[itemIndex].cartQuantity += 1;
+			if (isItemInCart) {
+				state.cartItems[foundIndex] = {
+					...state.cartItems[foundIndex],
+					cartQuantity: (state.cartItems[foundIndex].cartQuantity += 1),
+				};
 			} else {
-				const newItem = { ...action.payload, cartQuantity: 1 };
+				let newItem = { ...action.payload, cartQuantity: 1 };
 				state.cartItems.push(newItem);
 			}
+
 			localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
 		},
 		decreaseItems: (state: any, action: PayloadAction<ProductInfo>) => {

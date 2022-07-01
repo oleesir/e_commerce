@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from "../../store";
 import Loader from "../../components/Loader";
 import ReviewCards from "../../components/ReviewCards";
 import { useLocation } from "react-router-dom";
-import { ProductInfo } from "../../types/productTypes";
+
 import {
 	Container,
 	ProductImg,
@@ -42,36 +42,33 @@ const SingleProduct = () => {
 	const dispatch = useAppDispatch();
 	const { state }: { state: any } = useLocation();
 	// const [rating, setRating] = useState("");
+
 	const [isDisabled, setIsDisabled] = useState<boolean>(false);
 	const { product, isLoading } = useAppSelector((state: any) => state.product);
-	const { cartItems } = useAppSelector((state: any) => state.cart);
+	const itemInCart = useAppSelector((state: any) =>
+		state.cart.cartItems.find((item: any) => item._id === product?._id),
+	);
 	const { productId } = state;
 
 	useEffect(() => {
-		const getData = () => {
-			dispatch(getSingleProduct(productId));
-		};
 		if (productId) {
-			getData();
+			dispatch(getSingleProduct(productId));
 		}
 	}, [productId, dispatch]);
 
-	// const handleChange = (event: any) => {
-	// 	setRating(event.target.value as string);
-	// };
-	const itemInCart = cartItems.find((item: any) => item._id === product?._id);
-
-	const handleAddToCart = (item: ProductInfo) => (event: any) => {
-		if (item?.cartQuantity === product?.countInStock) {
+	useEffect(() => {
+		if (itemInCart?.cartQuantity >= product?.countInStock) {
 			setIsDisabled(true);
+		} else {
+			setIsDisabled(false);
 		}
+	}, [itemInCart?.cartQuantity, product?.countInStock]);
+
+	const handleAddToCart = (event: any) => {
 		dispatch(addToCart(product));
 	};
 
-	const handleDecreaseItem = (item: ProductInfo) => (event: any) => {
-		if (item?.cartQuantity === product?.countInStock) {
-			setIsDisabled(false);
-		}
+	const handleDecreaseItem = (event: any) => {
 		dispatch(decreaseItems(product));
 	};
 
@@ -98,17 +95,17 @@ const SingleProduct = () => {
 								</Price>
 								<Ratings> Ratings</Ratings>
 
-								{!itemInCart && <AddToCartBtn onClick={handleAddToCart(product)}>Add Cart</AddToCartBtn>}
+								{!itemInCart && <AddToCartBtn onClick={handleAddToCart}>Add Cart</AddToCartBtn>}
 
 								{itemInCart && (
 									<AddSubContent>
-										<SubBtn onClick={handleDecreaseItem(product)}>
+										<SubBtn onClick={handleDecreaseItem}>
 											<RemoveIconStyle />
 										</SubBtn>
 										<NumValueContent>
 											<Price>{itemInCart?.cartQuantity}</Price>
 										</NumValueContent>
-										<AddBtn onClick={handleAddToCart(product)} disabled={isDisabled}>
+										<AddBtn onClick={handleAddToCart} disabled={isDisabled}>
 											<AddIconStyle />
 										</AddBtn>
 									</AddSubContent>
