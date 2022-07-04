@@ -1,5 +1,7 @@
 import React from "react";
-import { Grid, Box, Divider } from "@mui/material";
+import { Grid, Divider } from "@mui/material";
+import CartItem from "./CartIterm";
+import { ProductInfo } from "../../types/productTypes";
 import {
 	Wrapper,
 	MainContent,
@@ -17,24 +19,41 @@ import {
 	CheckoutMobileContent,
 	CartMobileContent,
 } from "./styles";
-import CartItem from "./CartIterm";
 
-const CartItems = () => {
+type CartItemsProps = {
+	cartTotalQuantity: number;
+	cartTotalAmount: number;
+	cartItems: ProductInfo[];
+};
+
+const CartItems = ({ cartTotalQuantity, cartTotalAmount, cartItems }: CartItemsProps) => {
 	return (
 		<Wrapper>
 			<Grid container md={12} sm={12}>
 				<CartMobileContent>
 					<Name>Subtotal</Name>
-					<Name>50000</Name>
+					<Name>
+						{new Intl.NumberFormat("en-NG", {
+							style: "currency",
+							currency: "NGN",
+						}).format(cartTotalAmount)}
+					</Name>
 				</CartMobileContent>
 				<Grid item md={8} sm={12} xs={12} flexDirection="column">
 					<Header>
-						<Name>Cart(1)</Name>
+						<Name>Cart({cartTotalQuantity})</Name>
 					</Header>
 					<MainContent elevation={0}>
-						<CartItem />
-						<CartItem />
-						<CartItem />
+						{cartItems.map((cartItem) => (
+							<CartItem
+								key={cartItem._id}
+								cartItemId={cartItem._id}
+								price={cartItem?.price}
+								name={cartItem?.name}
+								image={cartItem?.image}
+								quantity={cartItem?.cartQuantity}
+							/>
+						))}
 					</MainContent>
 				</Grid>
 				<PriceContent item md={4} sm={12} xs={12}>
@@ -44,17 +63,37 @@ const CartItems = () => {
 							<Divider />
 							<SummaryBody>
 								<SubTotal>Subtotal</SubTotal>
-								<Price>500000</Price>
+								<Price>
+									{" "}
+									{new Intl.NumberFormat("en-NG", {
+										style: "currency",
+										currency: "NGN",
+									}).format(cartTotalAmount)}
+								</Price>
 							</SummaryBody>
 							<Divider />
 							<BtnContent>
-								<CheckoutBtn>Checkout</CheckoutBtn>
+								<CheckoutBtn>
+									Checkout(
+									{new Intl.NumberFormat("en-NG", {
+										style: "currency",
+										currency: "NGN",
+									}).format(cartTotalAmount)}
+									)
+								</CheckoutBtn>
 							</BtnContent>
 						</SideContent>
 					</CheckoutContent>
 					<CheckoutMobileContent>
 						<BtnContent>
-							<CheckoutBtn>Checkout</CheckoutBtn>
+							<CheckoutBtn>
+								Checkout(
+								{new Intl.NumberFormat("en-NG", {
+									style: "currency",
+									currency: "NGN",
+								}).format(cartTotalAmount)}
+								)
+							</CheckoutBtn>
 						</BtnContent>
 					</CheckoutMobileContent>
 				</PriceContent>

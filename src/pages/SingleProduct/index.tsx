@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Grid, Box, Divider } from "@mui/material";
 import { getSingleProduct } from "../../features/productSlice";
-import { addToCart, decreaseItems } from "../../features/cartSlice";
+import { addToCart, decreaseItem } from "../../features/cartSlice";
 import { useAppDispatch, useAppSelector } from "../../store";
 import Loader from "../../components/Loader";
 import ReviewCards from "../../components/ReviewCards";
@@ -69,7 +69,7 @@ const SingleProduct = () => {
 	};
 
 	const handleDecreaseItem = (event: any) => {
-		dispatch(decreaseItems(product));
+		dispatch(decreaseItem(product));
 	};
 
 	return (

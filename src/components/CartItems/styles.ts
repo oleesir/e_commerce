@@ -56,7 +56,7 @@ export const Name = styled(Typography)(({ theme }) => ({
 	color: "#072F40",
 	fontSize: "25px",
 	[theme.breakpoints.down("md")]: {
-		fontSize: "22px",
+		fontSize: "20px",
 	},
 }));
 
