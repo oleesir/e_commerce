@@ -1,5 +1,9 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
+import Divider from "@mui/material/Divider";
+import { addToCart, decreaseItem } from "../../../features/cartSlice";
+import { useAppDispatch, useAppSelector } from "../../../store";
+import { getSingleProduct } from "../../../features/productSlice";
 import {
 	Wrapper,
 	Content,
@@ -16,33 +20,86 @@ import {
 	NumValueContent,
 	RemoveIconStyle,
 	AddIconStyle,
+	Price,
 } from "./styles";
-const CartItem = () => {
+
+type CartItemProps = {
+	cartItemId: string;
+	price: number;
+	name: string;
+	image: string;
+	quantity: number;
+};
+const CartItem = ({ price, name, image, quantity, cartItemId }: CartItemProps) => {
+	const dispatch = useAppDispatch();
+	const [increaseBtnToDisabled, setincreaseBtnToDisabled] = useState<boolean>(false);
+	const [decreaseBtnToDisabled, setDecreaseBtnToDisabled] = useState<boolean>(false);
+	const { cartItems } = useAppSelector((state: any) => state.cart);
+	const { product } = useAppSelector((state: any) => state.product);
+
+	useEffect(() => {
+		if (cartItemId) {
+			dispatch(getSingleProduct(cartItemId));
+		}
+	}, [dispatch, cartItemId]);
+
+	const selectedItem = cartItems.find((item: any) => item._id === cartItemId);
+
+	useEffect(() => {
+		if (selectedItem?.cartQuantity >= product?.countInStock) {
+			setincreaseBtnToDisabled(true);
+		} else {
+			setincreaseBtnToDisabled(false);
+		}
+	}, [selectedItem?.cartQuantity, product?.countInStock]);
+
+	useEffect(() => {
+		if (selectedItem?.cartQuantity === 1) {
+			setDecreaseBtnToDisabled(true);
+		} else {
+			setDecreaseBtnToDisabled(false);
+		}
+	}, [selectedItem?.cartQuantity]);
+
+	const handleAddToCart = (event: any) => {
+		dispatch(addToCart(selectedItem));
+	};
+
+	const handleDecreaseItem = (event: any) => {
+		dispatch(decreaseItem(selectedItem));
+	};
+
 	return (
 		<Wrapper>
 			<Content elevation={0}>
 				<TopContent>
 					<TopContentRight>
-						<Img></Img>
-						<Name>Sony PlayStation 5 Digital Edition</Name>
+						<Img src={image} alt="sample" />
 					</TopContentRight>
 					<PriceContent>
-						<Name>500000</Name>
+						<Name>{name}</Name>
+						<Price>
+							{new Intl.NumberFormat("en-NG", {
+								style: "currency",
+								currency: "NGN",
+							}).format(price)}
+						</Price>
 					</PriceContent>
 				</TopContent>
 				<BtmContent>
 					<RemoveBtn startIcon={<DeleteIcon />}>REMOVE</RemoveBtn>
 					<AddSubContent>
-						<SubBtn>
+						<SubBtn onClick={handleDecreaseItem} disabled={decreaseBtnToDisabled}>
 							<RemoveIconStyle />
 						</SubBtn>
-						<NumValueContent></NumValueContent>
-						<AddBtn>
+						<NumValueContent>{quantity}</NumValueContent>
+						<AddBtn onClick={handleAddToCart} disabled={increaseBtnToDisabled}>
 							<AddIconStyle />
 						</AddBtn>
 					</AddSubContent>
 				</BtmContent>
 			</Content>
+			<Divider />
 		</Wrapper>
 	);
 };

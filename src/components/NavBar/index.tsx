@@ -16,6 +16,7 @@ import { logoutUser } from "../../features/authSlice";
 import { ProductInfo } from "../../types/productTypes";
 import { useAppSelector, useAppDispatch } from "../../store";
 import { useLocation, useNavigate } from "react-router-dom";
+import { getTotalQuantity } from "../../features/cartSlice";
 
 import {
 	Wrapper,
@@ -48,9 +49,14 @@ const NavBar: FC = () => {
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 	const open = Boolean(anchorEl);
 	const { isAuth, user } = useAppSelector((state: any) => state.auth);
-	const { cartItems } = useAppSelector((state: any) => state.cart);
+	const { cartTotalQuantity, cartItems } = useAppSelector((state: any) => state.cart);
 
 	useEffect(() => {}, [isAuth]);
+	useEffect(() => {
+		if (cartItems) {
+			dispatch(getTotalQuantity());
+		}
+	}, [cartItems, dispatch]);
 
 	const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
 		setAnchorEl(event.currentTarget);
@@ -222,10 +228,10 @@ const NavBar: FC = () => {
 								<TopDrawer />
 								<IconBtn onClick={navigateToCart}>
 									<CartContent>
-										{cartItems.length === 0 && null}
-										{cartItems.length > 0 && (
+										{cartTotalQuantity === 0 && null}
+										{cartTotalQuantity > 0 && (
 											<CartItems>
-												<CartNum>{cartItems.length}</CartNum>
+												<CartNum>{cartTotalQuantity}</CartNum>
 											</CartItems>
 										)}
 										<ShoppingCartOutlinedIcon

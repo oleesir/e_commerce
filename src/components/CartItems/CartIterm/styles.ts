@@ -6,8 +6,6 @@ import { styled } from "@mui/system";
 export const Wrapper = styled(Box)(({ theme }) => ({
 	backgroundColor: "#fff",
 	width: "100%",
-	borderTop: "1px solid #EDEDED",
-	borderBottom: "1px solid #EDEDED",
 }));
 
 export const Content = styled(Paper)(({ theme }) => ({
@@ -24,23 +22,22 @@ export const TopContent = styled("div")(({ theme }) => ({
 	backgroundColor: "#fff",
 	width: "100%",
 	display: "flex",
-	justifyContent: "space-between",
 	marginBottom: "25px",
 }));
 
 export const PriceContent = styled("div")(({ theme }) => ({
 	display: "flex",
+	flexDirection: "column",
 }));
 
 export const TopContentRight = styled("div")(({ theme }) => ({
 	display: "flex",
 }));
 
-export const Img = styled("div")(({ theme }) => ({
+export const Img = styled("img")(({ theme }) => ({
 	height: "100px",
-	backgroundColor: "yellow",
 	width: "100px",
-	marginRight: "30px",
+	marginRight: "60px",
 	[theme.breakpoints.down("md")]: {
 		marginRight: "10px",
 	},
@@ -58,11 +55,26 @@ export const Name = styled(Typography)(({ theme }) => ({
 	},
 }));
 
+export const Price = styled(Typography)(({ theme }) => ({
+	color: "#072F40",
+	fontSize: "20px",
+	fontWeight: 600,
+	marginTop: "15px",
+
+	[theme.breakpoints.down("md")]: {
+		fontSize: "16px",
+	},
+	[theme.breakpoints.down("sm")]: {
+		fontSize: "14px",
+	},
+}));
+
 export const BtmContent = styled("div")(({ theme }) => ({
 	width: "100%",
 	display: "flex",
 	justifyContent: "space-between",
 	alignContent: "flex-end",
+	marginBottom: "10px",
 }));
 
 export const RemoveBtn = styled(Button)(({ theme }) => ({
@@ -119,11 +131,11 @@ export const SubBtn = styled(IconButton)(({ theme }) => ({
 }));
 
 export const NumValueContent = styled("div")(({ theme }) => ({
-	width: "10%",
+	width: "50px",
 	display: "flex",
 	justifyContent: "center",
 	alignItems: "center",
-	margin: "0 20px",
+	margin: "0 10px",
 	backgroundColor: "#F5F5F5",
 }));
 
