@@ -5,8 +5,9 @@ import { addToCart, decreaseItem } from "../../features/cartSlice";
 import { useAppDispatch, useAppSelector } from "../../store";
 import Loader from "../../components/Loader";
 import ReviewCards from "../../components/ReviewCards";
+import ProductImages from "../../components/ProductImages";
 import { useLocation } from "react-router-dom";
-
+import CarouselImages from "../../components/CarouselImages";
 import {
 	Container,
 	ProductImg,
@@ -36,6 +37,9 @@ import {
 	FirstContent,
 	DescriptionHeader,
 	AddSubContent,
+	TopContent,
+	ViewProductContent,
+	ViewProductListContent,
 } from "./styles";
 
 const SingleProduct = () => {
@@ -45,6 +49,7 @@ const SingleProduct = () => {
 
 	const [isDisabled, setIsDisabled] = useState<boolean>(false);
 	const { product, isLoading } = useAppSelector((state: any) => state.product);
+	const [selectedImage, setSelectedImage] = useState("");
 	const itemInCart = useAppSelector((state: any) =>
 		state.cart.cartItems.find((item: any) => item._id === product?._id),
 	);
@@ -64,6 +69,12 @@ const SingleProduct = () => {
 		}
 	}, [itemInCart?.cartQuantity, product?.countInStock]);
 
+	useEffect(() => {
+		if (productId) {
+			dispatch(getSingleProduct(productId));
+		}
+	}, [productId, dispatch]);
+
 	const handleAddToCart = (event: any) => {
 		dispatch(addToCart(product));
 	};
@@ -77,9 +88,18 @@ const SingleProduct = () => {
 			{isLoading && <Loader backgroundcolor="#fff" />}
 			{!isLoading && (
 				<Container container md={12}>
-					<FirstContent container md={6} direction="column">
-						<ProductImg src={product?.image} alt="product" />
-						<ReviewCards bigScreen={true} />
+					<FirstContent container md={6} sm={12}>
+						<TopContent>
+							<CarouselImages images={product?.images} />
+							<ViewProductContent>
+								{<ProductImg src={selectedImage ? selectedImage : product?.images[0].secureUrl} alt="product" />}
+								<ViewProductListContent>
+									{product?.images && <ProductImages images={product?.images} setSelectedImage={setSelectedImage} />}
+								</ViewProductListContent>
+							</ViewProductContent>
+
+							<ReviewCards bigScreen={true} />
+						</TopContent>
 					</FirstContent>
 					<SecondContent container md={6} direction="column">
 						<TopForm item>

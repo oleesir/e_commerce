@@ -5,13 +5,17 @@ export type Reviews = {
 	user: string;
 };
 
+export type Images = {
+	cloudinaryId: string;
+	secureUrl: string;
+};
+
 export type ProductInfo = {
 	_id: string;
 	name: string;
-	cloudinaryId: string;
 	slug: string;
 	description: string;
-	image: string;
+	images: Images[];
 	category: string;
 	brand: string;
 	rating: number;

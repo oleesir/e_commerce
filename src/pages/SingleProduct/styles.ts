@@ -9,6 +9,7 @@ import {
 	TextareaAutosize,
 	Paper,
 	IconButton,
+	Box,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
@@ -49,28 +50,46 @@ export const SecondContent = styled(Grid)(({ theme }) => ({
 	},
 }));
 
-export const ProductImg = styled("img")(({ theme }) => ({
+export const TopContent = styled(Box)(({ theme }) => ({
+	display: "flex",
+	flexDirection: "column",
 	width: "100%",
-	height: "auto",
+}));
+
+export const ViewProductContent = styled(Box)(({ theme }) => ({
+	display: "flex",
+	flexDirection: "column",
+	[theme.breakpoints.down("md")]: {
+		alignItems: "center",
+		justifyContent: "center",
+	},
+}));
+
+export const ViewProductListContent = styled(Box)(({ theme }) => ({
+	display: "flex",
+
+	[theme.breakpoints.down("md")]: {
+		alignItems: "center",
+		justifyContent: "center",
+	},
+}));
+
+export const ProductImg = styled("img")(({ theme }) => ({
+	width: "400px",
+	height: "400px",
 	cursor: "pointer",
-	// [theme.breakpoints.down("sm")]: {
-	// 	height: "150px",
-	// },
+	[theme.breakpoints.down("sm")]: {
+		display: "none",
+	},
 }));
 
 export const ReviewContent = styled("div")(({ theme }) => ({
 	marginTop: "50px",
-	// [theme.breakpoints.down("sm")]: {
-	// 	height: "150px",
-	// },
 }));
 
 export const ReviewItem = styled(Paper)(({ theme }) => ({
 	width: "100%",
 	padding: "10px",
-	// [theme.breakpoints.down("sm")]: {
-	// 	height: "150px",
-	// },
 }));
 
 export const Name = styled(Typography)(({ theme }) => ({

@@ -18,7 +18,7 @@ const ProductCards = ({ products }: InputType) => {
 					slug={product?.slug}
 					prodName={product?.name}
 					prodPrice={product?.price}
-					prodImage={product?.image}
+					prodImage={product?.images[0].secureUrl}
 				/>
 			))}
 		</Container>
