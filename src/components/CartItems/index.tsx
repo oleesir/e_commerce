@@ -50,7 +50,7 @@ const CartItems = ({ cartTotalQuantity, cartTotalAmount, cartItems }: CartItemsP
 								cartItemId={cartItem._id}
 								price={cartItem?.price}
 								name={cartItem?.name}
-								image={cartItem?.image}
+								images={cartItem?.images[0].secureUrl}
 								quantity={cartItem?.cartQuantity}
 							/>
 						))}

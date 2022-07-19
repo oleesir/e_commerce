@@ -27,10 +27,10 @@ type CartItemProps = {
 	cartItemId: string;
 	price: number;
 	name: string;
-	image: string;
+	images: string;
 	quantity: number;
 };
-const CartItem = ({ price, name, image, quantity, cartItemId }: CartItemProps) => {
+const CartItem = ({ price, name, images, quantity, cartItemId }: CartItemProps) => {
 	const dispatch = useAppDispatch();
 	const [increaseBtnToDisabled, setincreaseBtnToDisabled] = useState<boolean>(false);
 	const [decreaseBtnToDisabled, setDecreaseBtnToDisabled] = useState<boolean>(false);
@@ -74,7 +74,7 @@ const CartItem = ({ price, name, image, quantity, cartItemId }: CartItemProps) =
 			<Content elevation={0}>
 				<TopContent>
 					<TopContentRight>
-						<Img src={image} alt="sample" />
+						<Img src={images} alt="sample" />
 					</TopContentRight>
 					<PriceContent>
 						<Name>{name}</Name>
