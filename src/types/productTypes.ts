@@ -38,4 +38,24 @@ export type CartState = {
 	cartTotalQuantity: number;
 	cartTotalAmount: number;
 	error: any;
+	isLoading: boolean;
+	cartFromApi: any;
+};
+
+export type CartInputState = {
+	productId: string;
+	price:number;
+};
+
+
+export type CartItemsInfo = {
+	productId: string;
+	quantity:number;
+	price:number;
+};
+
+
+export type CartItemsInputState = {
+	cartItems: CartItemsInfo[];
+
 };
