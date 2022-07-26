@@ -1,59 +1,54 @@
-import React, { useState, useEffect } from "react";
-import { Grid, Box, Divider } from "@mui/material";
-import { getSingleProduct } from "../../features/productSlice";
-import { addToCart, decreaseItem } from "../../features/cartSlice";
-import { useAppDispatch, useAppSelector } from "../../store";
+import React, {useEffect, useState} from "react";
+import {Box, Divider, Grid} from "@mui/material";
+import {getSingleProduct} from "../../features/productSlice";
+import {addItemToCartApi, addToCart, decreaseItem, getUserCart} from "../../features/cartSlice";
+import {useAppDispatch, useAppSelector} from "../../store";
 import Loader from "../../components/Loader";
 import ReviewCards from "../../components/ReviewCards";
 import ProductImages from "../../components/ProductImages";
-import { useLocation } from "react-router-dom";
+import {useLocation} from "react-router-dom";
 import CarouselImages from "../../components/CarouselImages";
 import {
-	Container,
-	ProductImg,
-	Name,
-	Description,
-	Brand,
-	Price,
-	Ratings,
-	AddToCartBtn,
-	DescriptionHeaderContent,
 	AddBtn,
-	SubBtn,
-	RemoveIconStyle,
 	AddIconStyle,
-	NumValueContent,
-	NumOfItemsContent,
-	// InputFieldStyles,
-	// InputFieldContent,
-	// InputFieldLabel,
-	// FormControlStyle,
-	// SelectStyle,
-	// MenuItemStyle,
-	// InputTextArea,
-	// FormHeader,
-	TopForm,
-	SecondContent,
-	FirstContent,
-	DescriptionHeader,
 	AddSubContent,
+	AddToCartBtn,
+	Brand,
+	Container,
+	Description,
+	DescriptionHeader,
+	DescriptionHeaderContent,
+	FirstContent,
+	Name,
+	NumOfItemsContent,
+	NumValueContent,
+	Price,
+	ProductImg,
+	Ratings,
+	RemoveIconStyle,
+	SecondContent,
+	SubBtn,
 	TopContent,
+	TopForm,
 	ViewProductContent,
 	ViewProductListContent,
 } from "./styles";
 
 const SingleProduct = () => {
 	const dispatch = useAppDispatch();
-	const { state }: { state: any } = useLocation();
+	const {state}: { state: any } = useLocation();
 	// const [rating, setRating] = useState("");
 
 	const [isDisabled, setIsDisabled] = useState<boolean>(false);
-	const { product, isLoading } = useAppSelector((state: any) => state.product);
+	const {isAuth} = useAppSelector((state: any) => state.auth);
+	const {product, isLoading} = useAppSelector((state: any) => state.product);
 	const [selectedImage, setSelectedImage] = useState("");
 	const itemInCart = useAppSelector((state: any) =>
 		state.cart.cartItems.find((item: any) => item._id === product?._id),
 	);
-	const { productId } = state;
+	const {cartFromApi} = useAppSelector((state: any) => state.cart);
+
+	const {productId} = state;
 
 	useEffect(() => {
 		if (productId) {
@@ -69,36 +64,50 @@ const SingleProduct = () => {
 		}
 	}, [itemInCart?.cartQuantity, product?.countInStock]);
 
-	useEffect(() => {
-		if (productId) {
-			dispatch(getSingleProduct(productId));
-		}
-	}, [productId, dispatch]);
 
-	const handleAddToCart = (event: any) => {
-		dispatch(addToCart(product));
+	useEffect(() => {
+		const getData = () => {
+			dispatch(getUserCart());
+		};
+		return getData();
+	}, [dispatch]);
+
+	const handleAddToCart = () => {
+		if (isAuth) {
+			dispatch(addItemToCartApi({productId: product?._id, price: product?.price}));
+		} else {
+			dispatch(addToCart(product));
+		}
 	};
 
-	const handleDecreaseItem = (event: any) => {
+
+	const handleDecreaseItem = () => {
 		dispatch(decreaseItem(product));
 	};
 
+
+	let foundProduct = cartFromApi?.cartItems.find((cartItem: any) => {
+		return cartItem.productId.toString() === productId
+	})
+
+
 	return (
 		<>
-			{isLoading && <Loader backgroundcolor="#fff" />}
+			{isLoading && <Loader backgroundcolor="#fff"/>}
 			{!isLoading && (
 				<Container container md={12}>
 					<FirstContent container md={6} sm={12}>
 						<TopContent>
-							<CarouselImages images={product?.images} />
+							<CarouselImages images={product?.images}/>
 							<ViewProductContent>
-								{<ProductImg src={selectedImage ? selectedImage : product?.images[0].secureUrl} alt="product" />}
+								{<ProductImg src={selectedImage ? selectedImage : product?.images[0].secureUrl}
+											 alt="product"/>}
 								<ViewProductListContent>
-									{product?.images && <ProductImages images={product?.images} setSelectedImage={setSelectedImage} />}
+									{product?.images &&
+										<ProductImages images={product?.images} setSelectedImage={setSelectedImage}/>}
 								</ViewProductListContent>
 							</ViewProductContent>
-
-							<ReviewCards bigScreen={true} />
+							<ReviewCards bigScreen={true}/>
 						</TopContent>
 					</FirstContent>
 					<SecondContent container md={6} direction="column">
@@ -107,7 +116,7 @@ const SingleProduct = () => {
 								<Name>{product?.name}</Name>
 								<Brand>Brand: {product?.brand}</Brand>
 								<Price>
-									Price:{" "}
+									Price:
 									{new Intl.NumberFormat("en-NG", {
 										style: "currency",
 										currency: "NGN",
@@ -115,36 +124,64 @@ const SingleProduct = () => {
 								</Price>
 								<Ratings> Ratings</Ratings>
 
-								{!itemInCart && <AddToCartBtn onClick={handleAddToCart}>Add Cart</AddToCartBtn>}
+								{!itemInCart && !isAuth ?
+									<AddToCartBtn onClick={handleAddToCart}>Add Cart</AddToCartBtn> : ""}
+								{!foundProduct && isAuth ?
+									<AddToCartBtn onClick={handleAddToCart}>Add Cart</AddToCartBtn> : ""}
 
-								{itemInCart && (
+								{itemInCart && !isAuth ? (
 									<AddSubContent>
 										<SubBtn onClick={handleDecreaseItem}>
-											<RemoveIconStyle />
+											<RemoveIconStyle/>
 										</SubBtn>
 										<NumValueContent>
 											<Price>{itemInCart?.cartQuantity}</Price>
 										</NumValueContent>
 										<AddBtn onClick={handleAddToCart} disabled={isDisabled}>
-											<AddIconStyle />
+											<AddIconStyle/>
 										</AddBtn>
 									</AddSubContent>
-								)}
-								{itemInCart && (
+								) : ""}
+
+
+								{isAuth && foundProduct ? (
+									<AddSubContent>
+										<SubBtn onClick={handleDecreaseItem}>
+											<RemoveIconStyle/>
+										</SubBtn>
+										<NumValueContent>
+											<Price>{foundProduct.quantity}</Price>
+										</NumValueContent>
+										<AddBtn onClick={handleAddToCart} disabled={isDisabled}>
+											<AddIconStyle/>
+										</AddBtn>
+									</AddSubContent>
+								) : ""}
+
+								{itemInCart && !isAuth ? (
 									<NumOfItemsContent>
-										<Description>{itemInCart?.cartQuantity} item(s) has been added</Description>{" "}
+										<Description>{itemInCart?.cartQuantity} item(s) has been
+											added</Description>
 									</NumOfItemsContent>
-								)}
+								) : ""}
+
+								{isAuth && foundProduct ? (
+									<NumOfItemsContent>
+										<Description>{foundProduct.quantity} item(s) has been
+											added</Description>
+									</NumOfItemsContent>
+								) : ""}
+
 								<DescriptionHeaderContent>
 									<DescriptionHeader> Description</DescriptionHeader>
-									<Divider />
+									<Divider/>
 								</DescriptionHeaderContent>
 								<Description>{product?.description}</Description>
 							</Box>
 						</TopForm>
 
 						<Grid item>
-							<ReviewCards smallScreen={true} />
+							<ReviewCards smallScreen={true}/>
 							{/* <Box>
 								<ReviewCards smallScreen={true} />
 								<FormHeader>CUSTOMER REVIEW</FormHeader>
