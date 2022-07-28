@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Divider from "@mui/material/Divider";
-import { addToCart, decreaseItem } from "../../../features/cartSlice";
+import { addToCart, decreaseItem,removeItem,removeItemFromCartApi,getUserCart } from "../../../features/cartSlice";
 import { useAppDispatch, useAppSelector } from "../../../store";
 import { getSingleProduct } from "../../../features/productSlice";
+import {ProductInfo} from "../../../types/productTypes";
 import {
 	Wrapper,
 	Content,
@@ -23,18 +24,21 @@ import {
 	Price,
 } from "./styles";
 
+
 type CartItemProps = {
 	cartItemId: string;
 	price: number;
-	name: string;
-	images: string;
+	name: string | undefined;
+	images: string | undefined;
 	quantity: number;
+
 };
 const CartItem = ({ price, name, images, quantity, cartItemId }: CartItemProps) => {
 	const dispatch = useAppDispatch();
-	const [increaseBtnToDisabled, setincreaseBtnToDisabled] = useState<boolean>(false);
+	const [increaseBtnToDisabled, setIncreaseBtnToDisabled] = useState<boolean>(false);
 	const [decreaseBtnToDisabled, setDecreaseBtnToDisabled] = useState<boolean>(false);
-	const { cartItems } = useAppSelector((state: any) => state.cart);
+	const { isAuth,user } = useAppSelector((state: any) => state.auth);
+	const { cartItems ,cartFromApi} = useAppSelector((state: any) => state.cart);
 	const { product } = useAppSelector((state: any) => state.product);
 
 	useEffect(() => {
@@ -43,13 +47,18 @@ const CartItem = ({ price, name, images, quantity, cartItemId }: CartItemProps) 
 		}
 	}, [dispatch, cartItemId]);
 
+
+
 	const selectedItem = cartItems.find((item: any) => item._id === cartItemId);
+	// const selectedItemApi = cartFromApi?.cartItems.find((item: any) => item?.productId === cartItemId);
+
+
 
 	useEffect(() => {
 		if (selectedItem?.cartQuantity >= product?.countInStock) {
-			setincreaseBtnToDisabled(true);
+			setIncreaseBtnToDisabled(true);
 		} else {
-			setincreaseBtnToDisabled(false);
+			setIncreaseBtnToDisabled(false);
 		}
 	}, [selectedItem?.cartQuantity, product?.countInStock]);
 
@@ -61,13 +70,17 @@ const CartItem = ({ price, name, images, quantity, cartItemId }: CartItemProps) 
 		}
 	}, [selectedItem?.cartQuantity]);
 
-	const handleAddToCart = (event: any) => {
+	const handleAddToCart = () => {
 		dispatch(addToCart(selectedItem));
 	};
 
-	const handleDecreaseItem = (event: any) => {
+	const handleDecreaseItem = () => {
 		dispatch(decreaseItem(selectedItem));
 	};
+
+	const handleRemoveItem =()=>{
+		isAuth ? dispatch(removeItemFromCartApi(cartItemId)): dispatch(removeItem(selectedItem))
+	}
 
 	return (
 		<Wrapper>
@@ -87,7 +100,7 @@ const CartItem = ({ price, name, images, quantity, cartItemId }: CartItemProps) 
 					</PriceContent>
 				</TopContent>
 				<BtmContent>
-					<RemoveBtn startIcon={<DeleteIcon />}>REMOVE</RemoveBtn>
+					<RemoveBtn startIcon={<DeleteIcon />} onClick={handleRemoveItem}>REMOVE</RemoveBtn>
 					<AddSubContent>
 						<SubBtn onClick={handleDecreaseItem} disabled={decreaseBtnToDisabled}>
 							<RemoveIconStyle />

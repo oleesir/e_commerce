@@ -21,9 +21,18 @@ export const addItemToCartApi = createAsyncThunk("/carts", async (formData: Cart
     }
 });
 
-export const getUserCart = createAsyncThunk("/carts/user_cart", async (_, {rejectWithValue}) => {
+export const getUserCart = createAsyncThunk("/carts/userId", async (_, {rejectWithValue}) => {
     try {
         const res = await CartService.getUserCartFromApi();
+        return res.data.data;
+    } catch (error: any) {
+        return rejectWithValue(error.response?.data);
+    }
+});
+
+export const removeItemFromCartApi = createAsyncThunk("/carts/remove/productId", async (productId:string, {rejectWithValue}) => {
+    try {
+        const res = await CartService.removeItemFromCartApi(productId);
         return res.data.data;
     } catch (error: any) {
         return rejectWithValue(error.response?.data);
@@ -38,10 +47,10 @@ const cartSlice = createSlice({
             const foundIndex = state.cartItems.findIndex((item: any) => item._id === action.payload._id);
             const isItemInCart = foundIndex !== -1;
 
-            if (isItemInCart) {
+            if (isItemInCart ) {
                 state.cartItems[foundIndex] = {
                     ...state.cartItems[foundIndex],
-                    cartQuantity: (state.cartItems[foundIndex].cartQuantity += 1),
+                    cartQuantity: state.cartItems[foundIndex].cartQuantity += 1,
                 };
             } else {
                 let newItem = {...action.payload, cartQuantity: 1};
@@ -80,6 +89,13 @@ const cartSlice = createSlice({
 
             state.cartTotalAmount = totalAmount;
         },
+        removeItem:(state: any, action: PayloadAction<ProductInfo>)=>{
+            let nextCartItems: any;
+            nextCartItems = state.cartItems.filter((item: any) => item._id !== action.payload._id);
+            state.cartItems = nextCartItems;
+
+            localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
+        },
         clearLocalStorageData: (state: any) => {
             state.cartItems = [];
             state.cartTotalQuantity = 0;
@@ -98,8 +114,9 @@ const cartSlice = createSlice({
             state.cartFromApi = action.payload;
         });
 
-        builder.addCase(addItemToCartApi.rejected, (state) => {
+        builder.addCase(addItemToCartApi.rejected, (state,action) => {
             state.isLoading = false;
+            state.error=action.payload;
         });
 
         builder.addCase(getUserCart.pending, (state) => {
@@ -111,12 +128,27 @@ const cartSlice = createSlice({
             state.cartFromApi = action.payload;
         });
 
-        builder.addCase(getUserCart.rejected, (state) => {
+        builder.addCase(getUserCart.rejected, (state,action) => {
             state.isLoading = false;
+            state.error=action.payload;
+        });
+
+        builder.addCase(removeItemFromCartApi.pending, (state) => {
+            state.isLoading = true;
+        });
+
+        builder.addCase(removeItemFromCartApi.fulfilled, (state, action) => {
+            state.isLoading = false;
+            state.cartFromApi = action.payload;
+        });
+
+        builder.addCase(removeItemFromCartApi.rejected, (state,action) => {
+            state.isLoading = false;
+            state.error=action.payload;
         });
 
     },
 });
 
-export const {addToCart, decreaseItem, getTotalQuantity, getTotalAmount, clearLocalStorageData} = cartSlice.actions;
+export const {addToCart, decreaseItem, getTotalQuantity, getTotalAmount, clearLocalStorageData,removeItem} = cartSlice.actions;
 export default cartSlice.reducer;

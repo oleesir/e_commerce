@@ -1,32 +1,39 @@
 import React from "react";
-import { Grid, Divider } from "@mui/material";
+import {Divider, Grid} from "@mui/material";
 import CartItem from "./CartIterm";
-import { ProductInfo } from "../../types/productTypes";
+import {CartItemsFromApi, ProductInfo} from "../../types/productTypes";
 import {
-	Wrapper,
-	MainContent,
-	SideContent,
-	SubTotal,
-	Header,
-	Name,
-	SummaryBody,
-	PriceContent,
-	SummaryHeader,
-	Price,
 	BtnContent,
+	CartMobileContent,
 	CheckoutBtn,
 	CheckoutContent,
 	CheckoutMobileContent,
-	CartMobileContent,
+	Header,
+	MainContent,
+	Name,
+	Price,
+	PriceContent,
+	SideContent,
+	SubTotal,
+	SummaryBody,
+	SummaryHeader,
+	Wrapper,
 } from "./styles";
+
 
 type CartItemsProps = {
 	cartTotalQuantity: number;
 	cartTotalAmount: number;
-	cartItems: ProductInfo[];
+	products: ProductInfo[];
+	isAuth: boolean;
+	cartState: ProductInfo[];
+	cartFromApi: CartItemsFromApi;
 };
 
-const CartItems = ({ cartTotalQuantity, cartTotalAmount, cartItems }: CartItemsProps) => {
+
+const CartItems = ({cartTotalQuantity, cartTotalAmount, products, isAuth, cartState, cartFromApi}: CartItemsProps) => {
+
+
 	return (
 		<Wrapper>
 			<Grid container md={12} sm={12}>
@@ -36,31 +43,49 @@ const CartItems = ({ cartTotalQuantity, cartTotalAmount, cartItems }: CartItemsP
 						{new Intl.NumberFormat("en-NG", {
 							style: "currency",
 							currency: "NGN",
-						}).format(cartTotalAmount)}
+						}).format(isAuth ? cartFromApi?.totalPrice : cartTotalAmount)}
 					</Name>
 				</CartMobileContent>
 				<Grid item md={8} sm={12} xs={12} flexDirection="column">
 					<Header>
-						<Name>Cart({cartTotalQuantity})</Name>
+						<Name>Cart({isAuth ? cartFromApi?.totalQuantity : cartTotalQuantity})</Name>
 					</Header>
 					<MainContent elevation={0}>
-						{cartItems.map((cartItem) => (
-							<CartItem
-								key={cartItem._id}
-								cartItemId={cartItem._id}
-								price={cartItem?.price}
-								name={cartItem?.name}
-								images={cartItem?.images[0].secureUrl}
-								quantity={cartItem?.cartQuantity}
-							/>
-						))}
+						{(!isAuth && cartState) && cartState.map((cartItem: ProductInfo) => {
+							return (
+								<CartItem
+									key={cartItem?._id}
+									cartItemId={cartItem?._id}
+									price={cartItem?.price}
+									name={cartItem?.name}
+									images={cartItem?.images[0].secureUrl}
+									quantity={cartItem?.cartQuantity}
+								/>
+							)
+						})}
+						{(isAuth && cartFromApi) && cartFromApi?.cartItems.map((cartItem: any) => {
+								const prod = products.find((p) => p?._id === cartItem?.productId)
+
+								return (
+									<CartItem
+										key={cartItem?.productId}
+										cartItemId={cartItem?.productId}
+										price={cartItem?.price}
+										name={prod?.name}
+										images={prod?.images[0].secureUrl}
+										quantity={cartItem?.quantity}
+
+									/>
+								)
+							}
+						)}
 					</MainContent>
 				</Grid>
 				<PriceContent item md={4} sm={12} xs={12}>
 					<CheckoutContent>
 						<SideContent elevation={0}>
 							<SummaryHeader>CART SUMMARY</SummaryHeader>
-							<Divider />
+							<Divider/>
 							<SummaryBody>
 								<SubTotal>Subtotal</SubTotal>
 								<Price>
@@ -68,17 +93,17 @@ const CartItems = ({ cartTotalQuantity, cartTotalAmount, cartItems }: CartItemsP
 									{new Intl.NumberFormat("en-NG", {
 										style: "currency",
 										currency: "NGN",
-									}).format(cartTotalAmount)}
+									}).format(isAuth ? cartFromApi?.totalPrice : cartTotalAmount)}
 								</Price>
 							</SummaryBody>
-							<Divider />
+							<Divider/>
 							<BtnContent>
 								<CheckoutBtn>
 									Checkout(
 									{new Intl.NumberFormat("en-NG", {
 										style: "currency",
 										currency: "NGN",
-									}).format(cartTotalAmount)}
+									}).format(isAuth ? cartFromApi?.totalPrice : cartTotalAmount)}
 									)
 								</CheckoutBtn>
 							</BtnContent>
@@ -91,7 +116,7 @@ const CartItems = ({ cartTotalQuantity, cartTotalAmount, cartItems }: CartItemsP
 								{new Intl.NumberFormat("en-NG", {
 									style: "currency",
 									currency: "NGN",
-								}).format(cartTotalAmount)}
+								}).format(isAuth ? cartFromApi?.totalPrice : cartTotalAmount)}
 								)
 							</CheckoutBtn>
 						</BtnContent>
