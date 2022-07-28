@@ -48,6 +48,11 @@ export type CartInputState = {
 };
 
 
+export type DeleteInputState = {
+	productId: string;
+};
+
+
 export type CartItemsInfo = {
 	productId: string;
 	quantity:number;
@@ -55,7 +60,9 @@ export type CartItemsInfo = {
 };
 
 
-export type CartItemsInputState = {
+export type CartItemsFromApi = {
 	cartItems: CartItemsInfo[];
+	totalPrice:number;
+	totalQuantity:number
 
 };

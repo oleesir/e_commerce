@@ -15,7 +15,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import {logoutUser} from "../../features/authSlice";
 import {useAppDispatch, useAppSelector} from "../../store";
 import {useLocation, useNavigate} from "react-router-dom";
-import {getTotalQuantity, getUserCart,clearLocalStorageData} from "../../features/cartSlice";
+import {getTotalQuantity, getUserCart} from "../../features/cartSlice";
 
 import {
     CartContent,
@@ -71,13 +71,6 @@ const NavBar: FC = () => {
     }, [cartItems, dispatch]);
 
 
-    // useEffect(() => {
-    //     if(!isAuth){
-    //         dispatch(clearLocalStorageData());
-    //     }
-    // }, [isAuth]);
-
-
     const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
     };
@@ -94,8 +87,7 @@ const NavBar: FC = () => {
     };
 
     const logout = () => {
-        console.log('CLICKED')
-       dispatch(logoutUser());
+        dispatch(logoutUser());
         handleClose();
     };
 
@@ -108,10 +100,6 @@ const NavBar: FC = () => {
         navigate("/cart");
     };
 
-
-    console.log("CART ITEMS", cartItems);
-
-    console.log("CART ITEMS FROM API", cartFromApi);
 
     return (
         <Wrapper sx={{flexGrow: 1}}>
@@ -189,8 +177,8 @@ const NavBar: FC = () => {
                                     }
                                     endIcon={anchorEl ? <KeyboardArrowUpOutlinedIcon/> : <KeyboardArrowDownIcon/>}
                                 >
-                                    {isAuth === true && `Hi, ${user?.firstName}`}
-                                    {isAuth === false && "Account"}
+                                    {isAuth && `Hi, ${user?.firstName}`}
+                                    {!isAuth  && "Account"}
                                 </NavBtn>
                                 <MenuStyle
                                     id="basic-menu"
@@ -202,25 +190,25 @@ const NavBar: FC = () => {
                                     }}
                                 >
                                     <MenuItemStyle onClick={handleClose}>
-                                        <NavLink href={isAuth === true ? "/account" : "/login"}>
+                                        <NavLink href={isAuth ? "/account" : "/login"}>
                                             <PersonOutlineOutlinedIcon sx={{mr: "5px"}}/>
                                             <Typography sx={{display: "inline"}}>My Account</Typography>
                                         </NavLink>
                                     </MenuItemStyle>
                                     <MenuItemStyle onClick={handleClose}>
-                                        <NavLink href={isAuth === true ? "/orders" : "/login"}>
+                                        <NavLink href={isAuth ? "/orders" : "/login"}>
                                             <Inventory2OutlinedIcon sx={{mr: "5px"}}/>
                                             <Typography sx={{display: "inline"}}>Orders</Typography>
                                         </NavLink>
                                     </MenuItemStyle>
                                     <MenuItemStyle onClick={handleClose}>
-                                        <NavLink href={isAuth === true ? "/favourites" : "/login"}>
+                                        <NavLink href={isAuth ? "/favourites" : "/login"}>
                                             <FavoriteBorderOutlinedIcon sx={{mr: "5px"}}/>
                                             <Typography sx={{display: "inline"}}> Favourites</Typography>
                                         </NavLink>
                                     </MenuItemStyle>
                                     <MenuItemStyle onClick={handleClose}>
-                                        <NavLink href={isAuth === true ? "/favourites" : "/login"}>
+                                        <NavLink href={isAuth ? "/favourites" : "/login"}>
                                             <FavoriteBorderOutlinedIcon sx={{mr: "5px"}}/>
                                             <Typography sx={{display: "inline"}}> Pending Reviews</Typography>
                                         </NavLink>

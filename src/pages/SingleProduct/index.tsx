@@ -40,7 +40,7 @@ const SingleProduct = () => {
 	// const [rating, setRating] = useState("");
 
 	const [isDisabled, setIsDisabled] = useState<boolean>(false);
-	const {isAuth} = useAppSelector((state: any) => state.auth);
+	const {isAuth,user} = useAppSelector((state: any) => state.auth);
 	const {product, isLoading} = useAppSelector((state: any) => state.product);
 	const [selectedImage, setSelectedImage] = useState("");
 	const itemInCart = useAppSelector((state: any) =>
@@ -66,11 +66,9 @@ const SingleProduct = () => {
 
 
 	useEffect(() => {
-		const getData = () => {
 			dispatch(getUserCart());
-		};
-		return getData();
-	}, [dispatch]);
+
+	}, []);
 
 	const handleAddToCart = () => {
 		if (isAuth) {
