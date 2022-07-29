@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Box, Divider, Grid} from "@mui/material";
 import {getSingleProduct} from "../../features/productSlice";
-import {addItemToCartApi, addToCart, decreaseItem, getUserCart} from "../../features/cartSlice";
+import {addItemToCartApi, addToCart, decreaseItem, getUserCart, reduceCartApi} from "../../features/cartSlice";
 import {useAppDispatch, useAppSelector} from "../../store";
 import Loader from "../../components/Loader";
 import ReviewCards from "../../components/ReviewCards";
@@ -38,9 +38,8 @@ const SingleProduct = () => {
 	const dispatch = useAppDispatch();
 	const {state}: { state: any } = useLocation();
 	// const [rating, setRating] = useState("");
-
 	const [isDisabled, setIsDisabled] = useState<boolean>(false);
-	const {isAuth,user} = useAppSelector((state: any) => state.auth);
+	const {isAuth} = useAppSelector((state: any) => state.auth);
 	const {product, isLoading} = useAppSelector((state: any) => state.product);
 	const [selectedImage, setSelectedImage] = useState("");
 	const itemInCart = useAppSelector((state: any) =>
@@ -68,7 +67,9 @@ const SingleProduct = () => {
 	useEffect(() => {
 			dispatch(getUserCart());
 
-	}, []);
+	}, [dispatch]);
+
+
 
 	const handleAddToCart = () => {
 		if (isAuth) {
@@ -79,8 +80,15 @@ const SingleProduct = () => {
 	};
 
 
+
 	const handleDecreaseItem = () => {
-		dispatch(decreaseItem(product));
+
+		if (isAuth) {
+			dispatch(reduceCartApi({productId: product?._id, price: product?.price}));
+		} else {
+			dispatch(decreaseItem(product));
+		}
+
 	};
 
 
@@ -91,7 +99,7 @@ const SingleProduct = () => {
 
 	return (
 		<>
-			{isLoading && <Loader backgroundcolor="#fff"/>}
+			{isLoading && <Loader backGroundColor="#fff" height="100vh"/>}
 			{!isLoading && (
 				<Container container md={12}>
 					<FirstContent container md={6} sm={12}>
@@ -127,7 +135,7 @@ const SingleProduct = () => {
 								{!foundProduct && isAuth ?
 									<AddToCartBtn onClick={handleAddToCart}>Add Cart</AddToCartBtn> : ""}
 
-								{itemInCart && !isAuth ? (
+								{(itemInCart && !isAuth) && (
 									<AddSubContent>
 										<SubBtn onClick={handleDecreaseItem}>
 											<RemoveIconStyle/>
@@ -139,10 +147,10 @@ const SingleProduct = () => {
 											<AddIconStyle/>
 										</AddBtn>
 									</AddSubContent>
-								) : ""}
+								) }
 
 
-								{isAuth && foundProduct ? (
+								{(isAuth && foundProduct) && (
 									<AddSubContent>
 										<SubBtn onClick={handleDecreaseItem}>
 											<RemoveIconStyle/>
@@ -154,7 +162,7 @@ const SingleProduct = () => {
 											<AddIconStyle/>
 										</AddBtn>
 									</AddSubContent>
-								) : ""}
+								) }
 
 								{itemInCart && !isAuth ? (
 									<NumOfItemsContent>

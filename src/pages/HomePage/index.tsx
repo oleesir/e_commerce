@@ -22,7 +22,7 @@ const HomePage = () => {
 
 	return (
 		<>
-			{isLoading && <Loader backgroundcolor="#F5F5F5"/>}
+			{isLoading && <Loader backGroundColor="#fff" height="100vh"/>}
 			{!isLoading && (
 				<Wrapper container md={12}>
 					<WrapperItem item md={2}>

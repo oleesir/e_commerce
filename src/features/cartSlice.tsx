@@ -2,6 +2,9 @@ import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {CartInputState, CartState, ProductInfo} from "../types/productTypes";
 import CartService from "../services/cart.services";
 
+
+
+
 export const initialState: CartState = {
     cartItems: localStorage.getItem("cartItems") ? JSON.parse(localStorage.getItem("cartItems") || "") : [],
     cartFromApi: null,
@@ -9,12 +12,22 @@ export const initialState: CartState = {
     cartTotalQuantity: 0,
     cartTotalAmount: 0,
     isLoading: false,
+    isLoadingAddAndSub:false
 };
 
 
 export const addItemToCartApi = createAsyncThunk("/carts", async (formData: CartInputState, {rejectWithValue}) => {
     try {
         const res = await CartService.addToCartFromApi(formData);
+        return res.data.data;
+    } catch (error: any) {
+        return rejectWithValue(error.response?.data);
+    }
+});
+
+export const reduceCartApi = createAsyncThunk("/carts/decrease", async (formData: CartInputState, {rejectWithValue}) => {
+    try {
+        const res = await CartService.reduceCartFromApi(formData);
         return res.data.data;
     } catch (error: any) {
         return rejectWithValue(error.response?.data);
@@ -106,16 +119,30 @@ const cartSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(addItemToCartApi.pending, (state) => {
-            state.isLoading = true;
+            state.isLoadingAddAndSub = true;
         });
 
         builder.addCase(addItemToCartApi.fulfilled, (state, action) => {
-            state.isLoading = false;
+            state.isLoadingAddAndSub = false;
             state.cartFromApi = action.payload;
         });
 
         builder.addCase(addItemToCartApi.rejected, (state,action) => {
-            state.isLoading = false;
+            state.isLoadingAddAndSub = false;
+            state.error=action.payload;
+        });
+
+        builder.addCase(reduceCartApi.pending, (state) => {
+            state.isLoadingAddAndSub = true;
+        });
+
+        builder.addCase(reduceCartApi.fulfilled, (state, action) => {
+            state.isLoadingAddAndSub = false;
+            state.cartFromApi = action.payload;
+        });
+
+        builder.addCase(reduceCartApi.rejected, (state,action) => {
+            state.isLoadingAddAndSub = false;
             state.error=action.payload;
         });
 

@@ -7,15 +7,18 @@ import Loader from "../../components/Loader";
 import {Wrapper} from "./styles";
 
 
-
-
 const Cart: FC = () => {
     const dispatch = useAppDispatch();
     const {products} = useAppSelector((state: any) => state.product);
-    const {cartTotalQuantity, cartItems, cartTotalAmount,cartFromApi,isLoading }= useAppSelector((state: any) => state.cart);
-    const [cartState,setCartState] = useState(cartItems)
+    const {
+        cartTotalQuantity,
+        cartItems,
+        cartTotalAmount,
+        cartFromApi,
+        isLoading
+    } = useAppSelector((state: any) => state.cart);
+    const [cartState, setCartState] = useState(cartItems)
     const {isAuth} = useAppSelector((state: any) => state.auth);
-
 
 
     useEffect(() => {
@@ -26,27 +29,27 @@ const Cart: FC = () => {
     }, [dispatch]);
 
     useEffect(() => {
-        if(isAuth){
+        if (isAuth) {
             dispatch(getUserCart());
         }
 
-    }, [dispatch,isAuth]);
+    }, [dispatch, isAuth]);
 
 
     useEffect(() => {
-        if(!isAuth && cartItems){
+        if (!isAuth && cartItems) {
             setCartState(cartItems)
             dispatch(getTotalQuantity());
             dispatch(getTotalAmount());
         }
 
-    }, [dispatch,cartItems,isAuth,setCartState,cartState]);
+    }, [dispatch, cartItems, isAuth, setCartState, cartState]);
 
 
     return (
         <Wrapper>
-            {isLoading && <Loader backgroundcolor="#fff"/>}
-            {!isLoading &&  <CartItems
+            {isLoading && <Loader backGroundColor="#fff" height="100vh"/>}
+            {!isLoading && <CartItems
               cartTotalQuantity={cartTotalQuantity}
               cartTotalAmount={cartTotalAmount}
               products={products}

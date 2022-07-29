@@ -75,11 +75,12 @@ const LoginPage: FC = () => {
 
     return (
         <>
-            {isLoading && <Loader backgroundcolor="#fff"/>}
+            {isLoading && <Loader backGroundColor="#fff" height="100vh"/>}
             {!isLoading && (
                 <Container container md={12} direction="column" justifyContent="center" alignItems="center">
                     <Content>
                         <TopMessages>
+
                             <Header>Welcome Back</Header>
                             <SubHeader>Enter your credentials to access your account</SubHeader>
                         </TopMessages>

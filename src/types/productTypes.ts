@@ -40,11 +40,12 @@ export type CartState = {
 	error: any;
 	isLoading: boolean;
 	cartFromApi: any;
+	isLoadingAddAndSub:boolean;
 };
 
 export type CartInputState = {
 	productId: string;
-	price:number;
+	price?:number;
 };
 
 

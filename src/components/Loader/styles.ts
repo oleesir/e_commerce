@@ -1,14 +1,15 @@
 import { styled } from "@mui/system";
 
 type InputProps = {
-	backgroundcolor: string;
+	backGroundColor: string;
+	height:string;
 };
 
-export const Wrapper = styled("div")<InputProps>(({ backgroundcolor }) => ({
+export const Wrapper = styled("div")<InputProps>(({ backGroundColor,height }) => ({
 	width: "100%",
-	backgroundColor: backgroundcolor,
+	backgroundColor: backGroundColor,
 	display: "flex",
 	justifyContent: "center",
 	alignItems: "center",
-	height: "100vh",
+	height: height,
 }));
