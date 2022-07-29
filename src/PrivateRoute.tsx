@@ -7,7 +7,7 @@ const PrivateRoute: FC<{ allowedRoles: string[] }> = ({ allowedRoles }) => {
 	const { isLoading, isAuth, user } = useAppSelector((state: any) => state.auth);
 
 	if (isLoading) {
-		return <Loader backgroundcolor="#fff" />;
+		return <Loader backGroundColor="#fff" height="100vh" />;
 	}
 
 	if (!isLoading && !isAuth) {

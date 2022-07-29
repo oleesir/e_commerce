@@ -63,7 +63,7 @@ const SignupPage: FC = () => {
 
 	return (
 		<>
-			{isLoading && <Loader backgroundcolor="#fff" />}
+			{isLoading && <Loader backGroundColor="#fff" height="100vh" />}
 			{!isLoading && (
 				<Container container md={12} direction="column" justifyContent="center" alignItems="center">
 					<Content>
