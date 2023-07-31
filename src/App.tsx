@@ -9,6 +9,7 @@ import AuthLayout from './layouts/AuthLayout.tsx';
 import Login from './pages/Login.tsx';
 import MainLayout from './layouts/MainLayout.tsx';
 import Home from './pages/Home.tsx';
+import Products from './pages/Products.tsx';
 import './App.css';
 
 const router = createBrowserRouter(
@@ -21,6 +22,7 @@ const router = createBrowserRouter(
 
       <Route element={<MainLayout />}>
         <Route index path='/' element={<Home />} />
+        <Route index path='shop' element={<Products />} />
       </Route>
     </Route>,
   ),

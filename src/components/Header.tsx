@@ -3,7 +3,8 @@ import { PiShoppingCartLight } from 'react-icons/pi';
 import { FiSearch } from 'react-icons/fi';
 import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { navItems } from '../utils/navItems.ts';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -18,27 +19,28 @@ const Header = () => {
     navigate('/auth/login');
   };
   return (
-    <div className='w-full'>
+    <div className='w-full fixed bg-[#FFF] drop-shadow-lg z-10'>
       <div className='py-4 max-w-5xl  mx-auto'>
         <div className='hidden lg:flex justify-between '>
           <div className='flex justify-between items-center'>
-            <p className=''>
+            <NavLink to={'/'} className='cursor-pointer'>
               <span className='text-2xl mb-0 font-titanOne text-[#FD665E]'>Olive</span>
-              <span className='text-lg font-titanOne text-[#FD665E]'>ture</span>
-            </p>
-            <div className='ml-11 flex'>
-              <p className='relative group cursor-pointer'>
-                <span className='text-sm text-[#2C2C2C]'>Products</span>
-                <span className='absolute -bottom-1 left-0 w-0 h-[2px] bg-[#FD665E] transition-all group-hover:w-full duration-500 rounded-md'></span>
-              </p>
-              <p className='ml-5 relative group cursor-pointer'>
-                <span className='text-sm text-[#2C2C2C]'>Blogs</span>
-                <span className='absolute -bottom-1 left-0 w-0 h-[2px] bg-[#FD665E] transition-all group-hover:w-full duration-500 rounded-md'></span>
-              </p>
-              <p className='ml-5 relative group cursor-pointer'>
-                <span className='text-sm text-[#2C2C2C]'>Contacts</span>
-                <span className='absolute -bottom-1 left-0 w-0 h-[2px] bg-[#FD665E] transition-all group-hover:w-full duration-500 rounded-md'></span>
-              </p>
+              <span className='text-lg font-titanOne text-[#FD665E]'>market</span>
+            </NavLink>
+            <div className='ml-8 flex'>
+              {navItems.map((item: any, i: any) => {
+                const isActive = location.pathname.includes(item.root);
+                return (
+                  <NavLink to={item.path} key={i} className='relative group cursor-pointer ml-5'>
+                    <span
+                      className={isActive ? 'text-sm text-[#FD665E]' : 'text-sm text-[#2C2C2C]'}
+                    >
+                      {item.navItem}
+                    </span>
+                    <span className='absolute -bottom-1 left-0 w-0 h-[2px] bg-[#FD665E] transition-all group-hover:w-full duration-500 rounded-md'></span>
+                  </NavLink>
+                );
+              })}
             </div>
           </div>
 
@@ -48,9 +50,9 @@ const Header = () => {
                 type='text'
                 name='search'
                 placeholder='Search'
-                className='bg-white h-8 pl-2  rounded-none text-sm focus:outline-none border-[1px] w-full ml-5'
+                className='bg-white h-9 pl-2  rounded-none text-sm focus:outline-none border-[1px] w-full ml-5'
               />
-              <button type='submit' className='absolute -right-5 top-0  bg-[#FD665E] py-2 px-5'>
+              <button type='submit' className='absolute -right-5 top-0  bg-[#FD665E] py-2.5 px-5'>
                 <FiSearch color={'#FFF'} />
               </button>
             </div>
@@ -73,7 +75,7 @@ const Header = () => {
         <div className='flex lg:hidden inset-0 z-50 w-full justify-between px-5'>
           <p className=''>
             <span className='text-2xl mb-0 font-titanOne text-[#FD665E]'>Olive</span>
-            <span className='text-lg font-titanOne text-[#FD665E]'>Move</span>
+            <span className='text-lg font-titanOne text-[#FD665E]'>market</span>
           </p>
           <div
             className={

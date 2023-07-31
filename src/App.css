@@ -4,3 +4,35 @@
   box-sizing: border-box;
   font-family: 'Inter', sans-serif;
 }
+
+.react-multi-carousel-list {
+  padding: 0 0 2rem 0;
+}
+
+.custom-dot-list-style button{
+  border: 1px solid #FD665E;
+  background: #FD665E;
+}
+
+.react-multi-carousel-dot button{
+  border: 1px solid #FD665E;
+}
+
+.react-multi-carousel-dot.react-multi-carousel-dot--active button{
+  background:  #FD665E !important;
+  border: 1px solid #FD665E;
+}
+
+.checkbox-container input:checked ~ .check-1{
+  @apply text-opacity-100;
+  animation: check-anime 0.5s 1;
+}
+
+@keyframes check-anime {
+  0%, 100%{
+    @apply transform scale-100;
+  }
+  50%{
+    @apply transform scale-150 text-opacity-0;
+  }
+}
