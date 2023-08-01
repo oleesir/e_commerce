@@ -5,8 +5,8 @@ const Footer = () => {
         <div className='grid grid-cols-4 gap-x-4'>
           <div className='flex flex-col'>
             <p className='mb-5'>
-              <span className='text-2xl mb-0 font-titanOne text-[#FD665E]'>Olive</span>
-              <span className='text-lg font-titanOne text-[#FD665E]'>ture</span>
+              <span className='text-xl mb-0 font-titanOne text-[#FD665E]'>Olive</span>
+              <span className='text-base font-titanOne text-[#FD665E]'>market</span>
             </p>
             <div className='relative text-gray-600 w-full mb-3'>
               <input

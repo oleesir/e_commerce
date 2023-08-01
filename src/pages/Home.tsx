@@ -10,11 +10,11 @@ import DiscountItem from '../components/DiscountItem.tsx';
 import TopCategories from '../components/TopCategories.tsx';
 import SubscribeBanner from '../components/SubscribeBanner.tsx';
 import SponsorsBanner from '../components/SponsorsBanner.tsx';
-import LatestBlog from '../components/LatestBlog.tsx';
+import ViewCard from '../components/Cards/ViewCard.tsx';
 
 const Home = () => {
   return (
-    <div className='w-full flex flex-col'>
+    <div className='w-full flex flex-col mt-[100px]'>
       <div className='flex w-full mt-5 bg-[#F1F0FF]'>
         <div className='flex max-w-5xl  mx-auto'>
           <img src='/lamp.png' className='w-[200px] h-[200px]' alt='lamp' />
@@ -80,8 +80,35 @@ const Home = () => {
         <div className='w-full  mt-20 '>
           <SponsorsBanner />
         </div>
-        <div className='w-full  mt-20 '>
-          <LatestBlog />
+        <div className='max-w-5xl  mx-auto'>
+          <div className='w-full flex flex-col mt-20'>
+            <div className='flex mb-5'>
+              <p className='text-[20px]'>You may also like</p>
+            </div>
+            <div className='w-full'>
+              <Carousel
+                responsive={responsive}
+                // arrows={false}
+                // customLeftArrow={<ButtonGroup label='left' />}
+              >
+                <ViewCard image='/cane_chair.png' />
+                <ViewCard image='/white_chair.png' />
+                <ViewCard image='/black_couch.jpeg' />
+                <ViewCard image='/cane_chair.png' />
+                <ViewCard image='/white_chair.png' />
+                <ViewCard image='/black_couch.jpeg' />
+                <ViewCard image='/cane_chair.png' />
+                <ViewCard image='/white_chair.png' />
+                <ViewCard image='/white_chair.png' />
+                <ViewCard image='/cane_chair.png' />
+                <ViewCard image='/white_chair.png' />
+                <ViewCard image='/black_couch.jpeg' />
+                <ViewCard image='/cane_chair.png' />
+                <ViewCard image='/white_chair.png' />
+                <ViewCard image='/white_chair.png' />
+              </Carousel>
+            </div>
+          </div>
         </div>
       </div>
     </div>
