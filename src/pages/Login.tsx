@@ -2,11 +2,14 @@ import { useForm } from 'react-hook-form';
 import { LoginInput } from '../types.ts';
 import { RiEyeCloseLine, RiEyeLine } from 'react-icons/ri';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MdShoppingCartCheckout } from 'react-icons/md';
 import { PiMapPinLineBold } from 'react-icons/pi';
 import { loginSchema } from '../schema/loginSchema.ts';
 import { useNavigate } from 'react-router-dom';
+import { ClockLoader } from 'react-spinners';
+
+import { useLoginMutation } from '../features/oliveMarketApi.tsx';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -16,28 +19,55 @@ const Login = () => {
     formState: { errors },
   } = useForm<LoginInput>({ resolver: yupResolver(loginSchema) });
   const [show, setShow] = useState(false);
+  const [serverError, setServerError] = useState(null);
+  const [login, { isSuccess, error, isLoading }] = useLoginMutation();
+
+  useEffect(() => {
+    if (isSuccess) {
+      navigate('/');
+    }
+  }, [isSuccess]);
+
+  useEffect(() => {
+    if (error) {
+      // @ts-ignore
+      setServerError(error?.data.message);
+    }
+  }, [error]);
 
   const handleShow = (e: any) => {
     e.preventDefault();
     setShow((prevState) => !prevState);
   };
 
-  const onSubmit = (data: LoginInput) => {
-    console.log('DATA', data);
-    navigate('/');
+  const onSubmit = async (data: LoginInput) => {
+    await login({ email: data.email, password: data.password });
   };
 
   const pushToSignup = () => {
     navigate('/auth/signup');
   };
 
+  // const getErrorMessage = () => {
+  //   if (!error) return undefined;
+  //
+  //   if ('status' in error) {
+  //     const errorData = error.data as { message: string };
+  //     // you can access all properties of `FetchBaseQueryError` here
+  //     return errorData?.message;
+  //   }
+  // };
+
   return (
     <div className='pt-10 w-full max-w-5xl  mx-auto lg:pt-10'>
       <div className='flex w-full mb-8  px-5 lg:px-0'>
-        <p className='text-2xl lg:text-3xl font-extrabold'>Sign in</p>
+        <p className='text-2xl lg:text-3xl font-extrabold'>Welcome back</p>
       </div>
       <div className=' py-2 px-2 grid grid-cols-1 lg:grid-cols-2'>
         <div className='w-full flex flex-col'>
+          <div className='w-full flex h-1 justify-center mb-5'>
+            <p className='text-base text-[#FF0303]'>{serverError}</p>
+          </div>
           <form
             onSubmit={handleSubmit(onSubmit)}
             className='w-full flex justify-center flex-col mb-10'
@@ -47,7 +77,13 @@ const Login = () => {
               <input
                 type='email'
                 className='w-full bg-[#fff] text-black py-1 lg:py-2 px-5 outline-none border-[1px] rounded-md'
-                {...register('email')}
+                {...register('email', {
+                  onChange: () => {
+                    if (error) {
+                      setServerError(null);
+                    }
+                  },
+                })}
               />
               <div className='h-1'>
                 <span className='text-xs text-[#FF0303]'>{errors.email?.message}</span>
@@ -58,7 +94,13 @@ const Login = () => {
               <div className='w-full inline-block relative'>
                 <input
                   type={!show ? 'password' : 'text'}
-                  {...register('password')}
+                  {...register('password', {
+                    onChange: () => {
+                      if (error) {
+                        setServerError(null);
+                      }
+                    },
+                  })}
                   className='w-full bg-[#fff] text-black py-1 lg:py-2 px-5 outline-none border-[1px] rounded-md'
                 />
                 <button
@@ -84,9 +126,15 @@ const Login = () => {
             <div className='w-full flex items-center  cursor-pointer '>
               <button
                 type='submit'
-                className='rounded-md bg-[#FD665E] text-[#FFF] text-sm font-bold py-3 px-8 cursor-pointer'
+                disabled={isLoading}
+                className={
+                  isLoading
+                    ? 'bg-[#FD665E] text-[#FFF] text-sm font-bold py-3 px-8 cursor-not-allowed'
+                    : 'bg-[#FD665E] text-[#FFF] text-sm font-bold py-3 px-8 cursor-pointer'
+                }
               >
-                Sign in
+                {isLoading && <ClockLoader color='#fff' size={20} />}
+                {!isLoading && 'Login'}
               </button>
             </div>
           </form>
