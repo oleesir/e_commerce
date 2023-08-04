@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { LoginInput, SignupInput } from '../types.ts';
 
 const baseUrl = import.meta.env.VITE_PUBLIC_BACKEND_API;
 const baseQuery = fetchBaseQuery({ baseUrl, credentials: 'include' });
@@ -6,9 +7,10 @@ const baseQuery = fetchBaseQuery({ baseUrl, credentials: 'include' });
 export const oliveMarketApi = createApi({
   reducerPath: 'oliveMarketApi',
   baseQuery,
+  tagTypes: ['Users'],
   endpoints: (builder) => ({
-    signup: builder.mutation({
-      query: (body: { firstName: string; lastName: string; email: string; password: string }) => {
+    signup: builder.mutation<void, SignupInput>({
+      query: (body) => {
         return {
           url: 'auth/signup',
           method: 'POST',
@@ -16,14 +18,15 @@ export const oliveMarketApi = createApi({
         };
       },
     }),
-    login: builder.mutation({
-      query: (body: { email: string; password: string }) => {
+    login: builder.mutation<void, LoginInput>({
+      query: (body) => {
         return {
           url: 'auth/login',
           method: 'POST',
           body,
         };
       },
+      invalidatesTags: ['Users'],
     }),
     loadUser: builder.query({
       query: () => {
@@ -32,7 +35,17 @@ export const oliveMarketApi = createApi({
           method: 'GET',
         };
       },
+      providesTags: ['Users'],
     }),
+    // logout: builder.query({
+    //   query: () => {
+    //     return {
+    //       url: 'auth/logout',
+    //       method: 'GET',
+    //     };
+    //   },
+    //   providesTags: ['Users'],
+    // }),
   }),
 });
 

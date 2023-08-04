@@ -1,14 +1,15 @@
-import { MdOutlineAccountCircle } from 'react-icons/md';
+import { MdOutlinePersonOff, MdOutlinePersonOutline } from 'react-icons/md';
 import { PiShoppingCartLight } from 'react-icons/pi';
 import { FiSearch } from 'react-icons/fi';
 import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai';
 import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { navItems } from '../utils/navItems.ts';
+import { oliveMarketApi } from '../features/oliveMarketApi.tsx';
 
 const Header = () => {
   const navigate = useNavigate();
-
+  const authUser = oliveMarketApi.useLoadUserQuery(undefined);
   const [nav, setNav] = useState(false);
 
   const handleNav = () => {
@@ -18,6 +19,7 @@ const Header = () => {
   const navToLogin = () => {
     navigate('/auth/login');
   };
+
   return (
     <div className='w-full fixed bg-[#FFF] drop-shadow-lg z-10'>
       <div className='py-4 max-w-5xl  mx-auto'>
@@ -63,7 +65,12 @@ const Header = () => {
               >
                 <span className='w-0 h-0 rounded-md bg-[#FFF] absolute top-0 left-0 ease-out duration-500 transition-all group-hover:w-full group-hover:h-full -z-1'></span>
                 <span className='w-full text-[#FFF] text-sm transition-colors duration-300 ease-in-out group-hover:text-[#FD665E] z-10 flex items-center'>
-                  <MdOutlineAccountCircle size={20} className='mr-1' /> Account
+                  {authUser?.data?.data === null ? (
+                    <MdOutlinePersonOff size={20} className='mr-1' />
+                  ) : (
+                    <MdOutlinePersonOutline size={20} className='mr-1' />
+                  )}
+                  Account
                 </span>
               </button>
               <button>
