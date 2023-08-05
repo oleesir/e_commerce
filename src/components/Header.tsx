@@ -5,25 +5,32 @@ import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai';
 import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { navItems } from '../utils/navItems.ts';
-import { useLoadUserQuery } from '../features/oliveMarketApi.tsx';
+import { useLoadUserQuery, useLogoutMutation } from '../features/oliveMarketApi.tsx';
 
 const Header = () => {
   const navigate = useNavigate();
   const { data: authUser } = useLoadUserQuery(undefined);
+  const [show, setShow] = useState(false);
   const [nav, setNav] = useState(false);
-  // const [logout] = useLogoutMutation();
+  const [logout] = useLogoutMutation();
 
   const handleNav = () => {
     setNav(!nav);
   };
 
-  const navToLogin = () => {
-    navigate('/auth/login');
+  const handleLogout = async () => {
+    await logout(null);
+    setShow(false);
   };
 
-  // const handleLogout = async () => {
-  //   await logout(null);
-  // };
+  const navToLogin = () => {
+    if (authUser?._id === undefined) {
+      navigate('/auth/login');
+    } else {
+      setShow((prevState) => !prevState);
+    }
+  };
+
   return (
     <div className='w-full fixed bg-[#FFF] drop-shadow-lg z-10'>
       <div className='py-4 max-w-5xl  mx-auto'>
@@ -63,20 +70,30 @@ const Header = () => {
               </button>
             </div>
             <div className='flex justify-between items-center'>
-              <button
-                onClick={navToLogin}
-                className=' relative inline-flex items-center justify-start overflow-hidden transition-all duration-500  bg-[#FD665E] rounded-none  hover:bg-[#FFF] group py-2 px-4 ml-8 mr-5'
-              >
-                <span className='w-0 h-0 rounded-md bg-[#FFF] absolute top-0 left-0 ease-out duration-500 transition-all group-hover:w-full group-hover:h-full -z-1'></span>
-                <span className='w-full text-[#FFF] text-sm transition-colors duration-300 ease-in-out group-hover:text-[#FD665E] z-10 flex items-center'>
-                  {authUser?._id === undefined ? (
-                    <MdOutlinePersonOff size={20} className='mr-1' />
-                  ) : (
-                    <MdOutlinePersonOutline size={20} className='mr-1' />
-                  )}
-                  Account
-                </span>
-              </button>
+              <div className='relative'>
+                <button
+                  onClick={navToLogin}
+                  className=' relative inline-flex items-center justify-start overflow-hidden transition-all duration-500  bg-[#FD665E] rounded-none  hover:bg-[#FFF] group py-2 px-4 ml-8 mr-5'
+                >
+                  <span className='w-0 h-0 rounded-md bg-[#FFF] absolute top-0 left-0 ease-out duration-500 transition-all group-hover:w-full group-hover:h-full -z-1'></span>
+                  <span className='w-full text-[#FFF] text-sm transition-colors duration-300 ease-in-out group-hover:text-[#FD665E] z-10 flex items-center'>
+                    {authUser?._id === undefined ? (
+                      <MdOutlinePersonOff size={20} className='mr-1' />
+                    ) : (
+                      <MdOutlinePersonOutline size={20} className='mr-1' />
+                    )}
+                    Account
+                  </span>
+                </button>
+                {show ? (
+                  <div className='w-[110px] h-[50px] bg-[#FFF] absolute shadow-2xl right-5 top-10'>
+                    <button onClick={handleLogout} className=' w-full p-4 text-[#FD665E]'>
+                      Logout
+                    </button>
+                  </div>
+                ) : null}
+              </div>
+
               <button>
                 <PiShoppingCartLight size={25} />
               </button>

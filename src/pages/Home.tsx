@@ -12,6 +12,7 @@ import SubscribeBanner from '../components/SubscribeBanner.tsx';
 import SponsorsBanner from '../components/SponsorsBanner.tsx';
 import ViewCard from '../components/Cards/ViewCard.tsx';
 import { useGetProductsQuery } from '../features/oliveMarketApi.tsx';
+import Loader from '../components/Loaders/Loader.tsx';
 
 const Home = () => {
   const { data: queryProducts, isLoading } = useGetProductsQuery(undefined);
@@ -19,7 +20,7 @@ const Home = () => {
 
   return (
     <>
-      {isLoading && <div>Loading</div>}
+      {isLoading && <Loader />}
       {!isLoading && (
         <div className='w-full flex flex-col mt-[100px]'>
           <div className='flex w-full mt-5 bg-[#F1F0FF]'>
