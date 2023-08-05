@@ -1,6 +1,9 @@
 import ProductCard from './Cards/ProductCard.tsx';
+import { useGetProductsQuery } from '../features/oliveMarketApi.tsx';
 
 const TrendingProduct = () => {
+  const { data } = useGetProductsQuery(undefined);
+
   return (
     <div className='w-full'>
       <div className='w-full flex justify-center mb-5'>
@@ -9,10 +12,17 @@ const TrendingProduct = () => {
       <div className='w-full flex mt-10'>
         <div className='max-w-5xl  mx-auto'>
           <div className='grid grid-cols-4 gap-x-8'>
-            <ProductCard image='/grey_couch.jpg' />
-            <ProductCard image='/cane_chair.png' />
-            <ProductCard image='/white_chair.png' />
-            <ProductCard image='/black_couch.jpeg' />
+            {data &&
+              data.map((item: any) => (
+                <ProductCard
+                  key={item._id}
+                  image={item.images[0].secureUrl}
+                  name={item.name}
+                  rating={item.rating}
+                  price={item.price / 100}
+                  numberOfReviews={item.numberOfReviews}
+                />
+              ))}
           </div>
           <div className='grid grid-cols-3 gap-x-4 py-10'>
             <div className='w-full bg-[#FFF6FB] py-4 px-8'>

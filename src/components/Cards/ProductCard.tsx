@@ -1,6 +1,18 @@
 import ReactStars from 'react-rating-star-with-type';
 
-const ProductCard = ({ image }: { image: string }) => {
+const ProductCard = ({
+  image,
+  name,
+  rating,
+  price,
+  numberOfReviews,
+}: {
+  image: string;
+  name: string;
+  rating: number;
+  price: number;
+  numberOfReviews: number;
+}) => {
   return (
     <div className=' relative group flex flex-col w-[200px] h-[300px] ease-in duration-300 hover:scale-105 hover:shadow-xl cursor-pointer pb-2'>
       <img src={image} className='w-full h-[150px] ' alt='image ' />
@@ -15,13 +27,21 @@ const ProductCard = ({ image }: { image: string }) => {
         </div>
       </div>
       <div className='p-3'>
-        <p className='text-xs mb-1'>Costway Convertible Futon Sofa Bed Memory Foam Couch...</p>
+        <p className='text-xs mb-1'>
+          {name.length > 40 ? name.slice(0, 30) : name}
+          {name.length >= 40 && '...'}
+        </p>
         <div className='mb-1 flex items-center'>
-          <ReactStars value={4.5} activeColors={['orange']} classNames='mr-1' size={15} />
-          <p className='text-gray-500 text-xs'>(120)</p>
+          <ReactStars value={rating} activeColors={['orange']} classNames='mr-1' size={15} />
+          <p className='text-gray-500 text-xs'>({numberOfReviews})</p>
         </div>
 
-        <p className='text-xs mb-1'>$30.00</p>
+        <p className='text-xs mb-1'>
+          {new Intl.NumberFormat('en-CA', {
+            style: 'currency',
+            currency: 'CAD',
+          }).format(price)}
+        </p>
       </div>
     </div>
   );

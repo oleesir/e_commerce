@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { LoginInput, SignupInput } from '../types.ts';
+import { LoginInput, Product, SignupInput, User } from '../types.ts';
 
 const baseUrl = import.meta.env.VITE_PUBLIC_BACKEND_API;
 const baseQuery = fetchBaseQuery({ baseUrl, credentials: 'include' });
@@ -7,7 +7,7 @@ const baseQuery = fetchBaseQuery({ baseUrl, credentials: 'include' });
 export const oliveMarketApi = createApi({
   reducerPath: 'oliveMarketApi',
   baseQuery,
-  tagTypes: ['Users'],
+  tagTypes: ['Users', 'Products'],
   endpoints: (builder) => ({
     signup: builder.mutation<void, SignupInput>({
       query: (body) => {
@@ -17,6 +17,7 @@ export const oliveMarketApi = createApi({
           body,
         };
       },
+      invalidatesTags: ['Users'],
     }),
     login: builder.mutation<void, LoginInput>({
       query: (body) => {
@@ -35,18 +36,42 @@ export const oliveMarketApi = createApi({
           method: 'GET',
         };
       },
+      transformResponse: (response: any) => {
+        const newResponse: User = response?.data;
+        return { _id: newResponse?._id, email: newResponse?.email, role: newResponse?.role };
+      },
       providesTags: ['Users'],
     }),
-    // logout: builder.query({
-    //   query: () => {
-    //     return {
-    //       url: 'auth/logout',
-    //       method: 'GET',
-    //     };
-    //   },
-    //   providesTags: ['Users'],
-    // }),
+    logout: builder.mutation({
+      query: () => {
+        return {
+          url: 'auth/logout',
+          method: 'POST',
+        };
+      },
+      invalidatesTags: ['Users'],
+    }),
+    getProducts: builder.query({
+      query: () => {
+        return {
+          url: 'products',
+          method: 'GET',
+        };
+      },
+      transformResponse: (response: any) => {
+        const newResponse: Product[] = response?.data;
+
+        return newResponse;
+      },
+      providesTags: ['Products'],
+    }),
   }),
 });
 
-export const { useSignupMutation, useLoginMutation, useLoadUserQuery } = oliveMarketApi;
+export const {
+  useSignupMutation,
+  useLoginMutation,
+  useLoadUserQuery,
+  useLogoutMutation,
+  useGetProductsQuery,
+} = oliveMarketApi;
