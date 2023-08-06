@@ -15,6 +15,8 @@ const TrendingProduct = () => {
             {data &&
               data.map((item: any) => (
                 <ProductCard
+                  slug={item?.slug}
+                  productId={item?._id}
                   key={item._id}
                   image={item.images[0].secureUrl}
                   name={item.name}
