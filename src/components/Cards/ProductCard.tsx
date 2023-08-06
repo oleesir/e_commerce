@@ -14,8 +14,8 @@ const ProductCard = ({
   name: string;
   rating: number;
   price: number;
-  slug?: string;
-  productId?: string;
+  slug: string;
+  productId: string;
   numberOfReviews: number;
 }) => {
   const navigate = useNavigate();

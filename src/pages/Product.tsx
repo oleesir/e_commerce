@@ -18,6 +18,8 @@ const Product = () => {
   const handleSelectedImage = (image: string) => {
     setSelectedImage(image);
   };
+  console.log('ID', productId);
+  console.log('DATA', queryProduct);
 
   return (
     <>

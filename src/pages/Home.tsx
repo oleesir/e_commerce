@@ -57,6 +57,8 @@ const Home = () => {
                     newArray.map((item: any) => (
                       <ProductCard
                         key={item?._id}
+                        slug={item?.slug}
+                        productId={item?._id}
                         image={item?.images[0].secureUrl}
                         name={item?.name}
                         rating={item?.rating}

@@ -72,7 +72,7 @@ export const oliveMarketApi = createApi({
         };
       },
       transformResponse: (response: any) => {
-        const newResponse: Product | undefined = response?.data;
+        const newResponse: Product = response?.data;
         return newResponse;
       },
       providesTags: ['Products'],
