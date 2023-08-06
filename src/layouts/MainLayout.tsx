@@ -5,11 +5,11 @@ import { useLoadUserQuery } from '../features/oliveMarketApi.tsx';
 import Loader from '../components/Loaders/Loader.tsx';
 
 const MainLayout = () => {
-  const { isFetching } = useLoadUserQuery(undefined);
+  const { isLoading } = useLoadUserQuery(undefined);
   return (
     <div className='flex flex-col w-full'>
-      {isFetching && <Loader />}
-      {!isFetching && (
+      {isLoading && <Loader />}
+      {!isLoading && (
         <>
           <Header />
           <Outlet />
