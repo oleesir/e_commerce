@@ -18,10 +18,12 @@ const Products = () => {
                 data.map((item: any) => (
                   <ProductCard
                     key={item._id}
+                    productId={item._id}
                     image={item.images[0].secureUrl}
                     name={item.name}
                     rating={item.rating}
                     price={item.price / 100}
+                    slug={item.slug}
                     numberOfReviews={item.numberOfReviews}
                   />
                 ))}

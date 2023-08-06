@@ -64,6 +64,19 @@ export const oliveMarketApi = createApi({
       },
       providesTags: ['Products'],
     }),
+    getProduct: builder.query({
+      query: (_id) => {
+        return {
+          url: `products/${_id}`,
+          method: 'GET',
+        };
+      },
+      transformResponse: (response: any) => {
+        const newResponse: Product | undefined = response?.data;
+        return newResponse;
+      },
+      providesTags: ['Products'],
+    }),
   }),
 });
 
@@ -73,4 +86,5 @@ export const {
   useLoadUserQuery,
   useLogoutMutation,
   useGetProductsQuery,
+  useGetProductQuery,
 } = oliveMarketApi;

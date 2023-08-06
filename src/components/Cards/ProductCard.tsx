@@ -1,4 +1,5 @@
 import ReactStars from 'react-rating-star-with-type';
+import { useNavigate } from 'react-router-dom';
 
 const ProductCard = ({
   image,
@@ -6,13 +7,22 @@ const ProductCard = ({
   rating,
   price,
   numberOfReviews,
+  slug,
+  productId,
 }: {
   image: string;
   name: string;
   rating: number;
   price: number;
+  slug?: string;
+  productId?: string;
   numberOfReviews: number;
 }) => {
+  const navigate = useNavigate();
+
+  const navigateToProduct = () => {
+    navigate(`/${slug}`, { state: { productId } });
+  };
   return (
     <div className=' relative group flex flex-col w-[200px] h-[300px] ease-in duration-300 hover:scale-105 hover:shadow-xl cursor-pointer pb-2'>
       <img src={image} className='w-full h-[150px] ' alt='image ' />
@@ -20,7 +30,10 @@ const ProductCard = ({
       <div className='absolute top-0 left-0 w-full h-full flex justify-center items-center opacity-0 hover:opacity-100'>
         <div className='w-full h-full flex justify-center items-end p-2'>
           <div className=''>
-            <button className='py-2 px-4 bg-[#FD665E] text-[#FFF] mt-2 rounded-none text-xs'>
+            <button
+              onClick={navigateToProduct}
+              className='py-2 px-4 bg-[#FD665E] text-[#FFF] mt-2 rounded-none text-xs'
+            >
               Add to cart
             </button>
           </div>

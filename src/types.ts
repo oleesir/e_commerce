@@ -36,10 +36,10 @@ export type Images = {
 
 export type Product = {
   name: string;
-  slug: string;
+  slug?: string;
   description: string;
-  reviews?: Reviews;
-  images: Images;
+  reviews: Reviews[];
+  images: Images[];
   category: string;
   brand: string;
   rating: number;
