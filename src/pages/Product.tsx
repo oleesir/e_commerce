@@ -1,25 +1,39 @@
 import ReactStars from 'react-rating-star-with-type';
 import Accordion from '../components/Accordion.tsx';
 import ViewCard from '../components/Cards/ViewCard.tsx';
+import { GrAdd, GrSubtract } from 'react-icons/gr';
 import Carousel from 'react-multi-carousel';
 import { responsive } from '../utils/responsive.ts';
 import SponsorsBanner from '../components/SponsorsBanner.tsx';
 import { useLocation } from 'react-router-dom';
-import { useGetProductQuery } from '../features/oliveMarketApi.tsx';
+import { useGetProductQuery, useLoadUserQuery } from '../features/oliveMarketApi.tsx';
 import Loader from '../components/Loaders/Loader.tsx';
 import { useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../reduxHooks.ts';
+import { addToCart, decreaseItem } from '../features/oliveMarketSlice.tsx';
 
 const Product = () => {
   const { state }: { state: any } = useLocation();
+  const dispatch = useAppDispatch();
   const { productId }: { productId: string } = state;
+  const { data: authUser } = useLoadUserQuery(undefined);
   const { data: queryProduct, isLoading } = useGetProductQuery(productId);
   const [selectedImage, setSelectedImage] = useState('');
+  const itemInCart = useAppSelector((state: any) =>
+    state.cart.cartItems.find((item: any) => item._id === productId),
+  );
 
   const handleSelectedImage = (image: string) => {
     setSelectedImage(image);
   };
-  console.log('ID', productId);
-  console.log('DATA', queryProduct);
+
+  const handleIncreaseProduct = () => {
+    queryProduct && dispatch(addToCart(queryProduct));
+  };
+
+  const handleDecreaseProduct = () => {
+    queryProduct && dispatch(decreaseItem(queryProduct));
+  };
 
   return (
     <>
@@ -81,13 +95,40 @@ const Product = () => {
                     />
                     <p className='text-gray-500 text-xs mt-1'>(120)</p>
                   </div>
-
-                  <button
-                    type='submit'
-                    className='rounded-none bg-[#FD665E] text-[#FFF] text-sm font-bold py-3 px-8 cursor-pointer'
-                  >
-                    Add to Cart
-                  </button>
+                  <div className='w-full flex '>
+                    {!itemInCart && authUser?._id === undefined ? (
+                      <button
+                        type='button'
+                        onClick={handleIncreaseProduct}
+                        className='rounded-none bg-[#FD665E] text-[#FFF] text-sm font-bold py-3 px-8 cursor-pointer w-full'
+                      >
+                        Add to Cart
+                      </button>
+                    ) : null}
+                    {itemInCart && authUser?._id === undefined && (
+                      <div className='w-full  flex justify-center'>
+                        <div className='w-1/3  flex justify-between'>
+                          <button
+                            type='button'
+                            onClick={handleDecreaseProduct}
+                            className='p-3 bg-[#FD665E] text-[#FFF]'
+                          >
+                            <GrSubtract size={20} color='#FFF' />
+                          </button>
+                          <div className='p-3 flex items-center'>
+                            <p className='text-xl'>{itemInCart?.cartQuantity}</p>
+                          </div>
+                          <button
+                            type='button'
+                            onClick={handleIncreaseProduct}
+                            className='p-3 bg-[#FD665E] text-[#FFF]'
+                          >
+                            <GrAdd size={20} color='#FFF' />
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
               <div className='w-full mt-10'>

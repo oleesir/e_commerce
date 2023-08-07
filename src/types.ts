@@ -35,6 +35,7 @@ export type Images = {
 };
 
 export type Product = {
+  _id: string;
   name: string;
   slug?: string;
   description: string;
@@ -46,4 +47,8 @@ export type Product = {
   numberOfReviews: number;
   price: number;
   countInStock: number;
+};
+
+export type CartState = {
+  cartItems: Product[];
 };

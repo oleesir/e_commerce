@@ -2,17 +2,27 @@ import { MdOutlinePersonOff, MdOutlinePersonOutline } from 'react-icons/md';
 import { PiShoppingCartLight } from 'react-icons/pi';
 import { FiSearch } from 'react-icons/fi';
 import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { navItems } from '../utils/navItems.ts';
 import { useLoadUserQuery, useLogoutMutation } from '../features/oliveMarketApi.tsx';
+import { getTotalQuantity } from '../features/oliveMarketSlice.tsx';
+import { useAppDispatch, useAppSelector } from '../reduxHooks.ts';
 
 const Header = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const { data: authUser } = useLoadUserQuery(undefined);
   const [show, setShow] = useState(false);
   const [nav, setNav] = useState(false);
   const [logout] = useLogoutMutation();
+  const { cartTotalQuantity, cartItems } = useAppSelector((state: any) => state.cart);
+
+  useEffect(() => {
+    if (cartItems) {
+      dispatch(getTotalQuantity());
+    }
+  }, [cartItems, dispatch]);
 
   const handleNav = () => {
     setNav(!nav);
@@ -93,10 +103,16 @@ const Header = () => {
                   </div>
                 ) : null}
               </div>
-
-              <button>
-                <PiShoppingCartLight size={25} />
-              </button>
+              <div className='relative flex items-center'>
+                {cartTotalQuantity > 0 && (
+                  <div className='absolute rounded-full w-[20px] h-[20px] bg-[#FD665E] text-[#FFF] pt-[3px] left-4 -top-2'>
+                    <p className='text-[10px] text-center'>{cartTotalQuantity}</p>
+                  </div>
+                )}
+                <button>
+                  <PiShoppingCartLight size={25} />
+                </button>
+              </div>
             </div>
           </div>
         </div>
