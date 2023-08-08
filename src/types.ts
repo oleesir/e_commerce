@@ -46,6 +46,7 @@ export type Product = {
   rating: number;
   numberOfReviews: number;
   price: number;
+  cartQuantity: number;
   countInStock: number;
 };
 

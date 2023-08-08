@@ -1,7 +1,6 @@
 import ReactStars from 'react-rating-star-with-type';
 import Accordion from '../components/Accordion.tsx';
 import ViewCard from '../components/Cards/ViewCard.tsx';
-import { GrAdd, GrSubtract } from 'react-icons/gr';
 import Carousel from 'react-multi-carousel';
 import { responsive } from '../utils/responsive.ts';
 import SponsorsBanner from '../components/SponsorsBanner.tsx';
@@ -11,6 +10,7 @@ import Loader from '../components/Loaders/Loader.tsx';
 import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../reduxHooks.ts';
 import { addToCart, decreaseItem } from '../features/oliveMarketSlice.tsx';
+import { RiAddLine, RiSubtractLine } from 'react-icons/ri';
 
 const Product = () => {
   const { state }: { state: any } = useLocation();
@@ -113,7 +113,7 @@ const Product = () => {
                             onClick={handleDecreaseProduct}
                             className='p-3 bg-[#FD665E] text-[#FFF]'
                           >
-                            <GrSubtract size={20} color='#FFF' />
+                            <RiSubtractLine size={20} color='#FFF' />
                           </button>
                           <div className='p-3 flex items-center'>
                             <p className='text-xl'>{itemInCart?.cartQuantity}</p>
@@ -123,7 +123,7 @@ const Product = () => {
                             onClick={handleIncreaseProduct}
                             className='p-3 bg-[#FD665E] text-[#FFF]'
                           >
-                            <GrAdd size={20} color='#FFF' />
+                            <RiAddLine size={20} color='#FFF' />
                           </button>
                         </div>
                       </div>

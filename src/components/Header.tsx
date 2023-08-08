@@ -41,6 +41,10 @@ const Header = () => {
     }
   };
 
+  const navToCart = () => {
+    navigate('/cart');
+  };
+
   return (
     <div className='w-full fixed bg-[#FFF] drop-shadow-lg z-10'>
       <div className='py-4 max-w-5xl  mx-auto'>
@@ -109,7 +113,7 @@ const Header = () => {
                     <p className='text-[10px] text-center'>{cartTotalQuantity}</p>
                   </div>
                 )}
-                <button>
+                <button type='button' onClick={navToCart}>
                   <PiShoppingCartLight size={25} />
                 </button>
               </div>
