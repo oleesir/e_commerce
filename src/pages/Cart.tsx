@@ -3,11 +3,12 @@ import { getTotalAmount, getTotalQuantity } from '../features/oliveMarketSlice.t
 import { useEffect, useState } from 'react';
 import CartItems from '../components/CartItems.tsx';
 import SponsorsBanner from '../components/SponsorsBanner.tsx';
+import { useGetUserCartQuery } from '../features/oliveMarketApi.tsx';
 
 const Cart = () => {
   const { cartItems, cartTotalAmount } = useAppSelector((state: any) => state.cart);
   const dispatch = useAppDispatch();
-
+  const { data: userCart } = useGetUserCartQuery(undefined);
   const [cartState, setCartState] = useState(cartItems);
 
   useEffect(() => {
@@ -17,6 +18,7 @@ const Cart = () => {
       dispatch(getTotalAmount());
     }
   }, [dispatch, cartItems, setCartState]);
+
   return (
     <div className='w-full flex pt-[100px]'>
       <div className='py-4 max-w-5xl mx-auto'>

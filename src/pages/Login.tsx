@@ -8,11 +8,13 @@ import { PiMapPinLineBold } from 'react-icons/pi';
 import { loginSchema } from '../schema/loginSchema.ts';
 import { useNavigate } from 'react-router-dom';
 import { ClockLoader } from 'react-spinners';
-
 import { useLoginMutation } from '../features/oliveMarketApi.tsx';
+import { useAppDispatch } from '../reduxHooks.ts';
+import { clearLocalStorageData } from '../features/oliveMarketSlice.tsx';
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const {
     handleSubmit,
     register,
@@ -24,6 +26,7 @@ const Login = () => {
 
   useEffect(() => {
     if (isSuccess) {
+      dispatch(clearLocalStorageData());
       navigate('/');
     }
   }, [isSuccess]);
@@ -41,7 +44,13 @@ const Login = () => {
   };
 
   const onSubmit = async (data: LoginInput) => {
-    await login({ email: data.email, password: data.password });
+    await login({
+      email: data.email,
+      password: data.password,
+      cartItems: localStorage.getItem('cartItems')
+        ? JSON.parse(localStorage.getItem('cartItems') || '')
+        : [],
+    });
   };
 
   const pushToSignup = () => {

@@ -5,7 +5,11 @@ import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai';
 import { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { navItems } from '../utils/navItems.ts';
-import { useLoadUserQuery, useLogoutMutation } from '../features/oliveMarketApi.tsx';
+import {
+  useGetUserCartQuery,
+  useLoadUserQuery,
+  useLogoutMutation,
+} from '../features/oliveMarketApi.tsx';
 import { getTotalQuantity } from '../features/oliveMarketSlice.tsx';
 import { useAppDispatch, useAppSelector } from '../reduxHooks.ts';
 
@@ -13,6 +17,7 @@ const Header = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { data: authUser } = useLoadUserQuery(undefined);
+  const { data: userCart } = useGetUserCartQuery(undefined);
   const [show, setShow] = useState(false);
   const [nav, setNav] = useState(false);
   const [logout] = useLogoutMutation();
@@ -108,11 +113,22 @@ const Header = () => {
                 ) : null}
               </div>
               <div className='relative flex items-center'>
-                {cartTotalQuantity > 0 && (
-                  <div className='absolute rounded-full w-[20px] h-[20px] bg-[#FD665E] text-[#FFF] pt-[3px] left-4 -top-2'>
-                    <p className='text-[10px] text-center'>{cartTotalQuantity}</p>
-                  </div>
-                )}
+                {authUser?._id === undefined
+                  ? cartTotalQuantity > 0 && (
+                      <div className='absolute rounded-full w-[20px] h-[20px] bg-[#FD665E] text-[#FFF] pt-[3px] left-4 -top-2'>
+                        <p className='text-[10px] text-center'>{cartTotalQuantity}</p>
+                      </div>
+                    )
+                  : userCart?.totalQuantity > 0 && (
+                      <div className='absolute rounded-full w-[20px] h-[20px] bg-[#FD665E] text-[#FFF] pt-[3px] left-4 -top-2'>
+                        <p className='text-[10px] text-center'>{userCart?.totalQuantity}</p>
+                      </div>
+                    )}
+                {/*{cartTotalQuantity > 0 && (*/}
+                {/*  <div className='absolute rounded-full w-[20px] h-[20px] bg-[#FD665E] text-[#FFF] pt-[3px] left-4 -top-2'>*/}
+                {/*    <p className='text-[10px] text-center'>{cartTotalQuantity}</p>*/}
+                {/*  </div>*/}
+                {/*)}*/}
                 <button type='button' onClick={navToCart}>
                   <PiShoppingCartLight size={25} />
                 </button>

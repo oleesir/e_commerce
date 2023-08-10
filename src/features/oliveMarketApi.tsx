@@ -7,7 +7,7 @@ const baseQuery = fetchBaseQuery({ baseUrl, credentials: 'include' });
 export const oliveMarketApi = createApi({
   reducerPath: 'oliveMarketApi',
   baseQuery,
-  tagTypes: ['Users', 'Products'],
+  tagTypes: ['Users', 'Products', 'Carts'],
   endpoints: (builder) => ({
     signup: builder.mutation<void, SignupInput>({
       query: (body) => {
@@ -17,7 +17,7 @@ export const oliveMarketApi = createApi({
           body,
         };
       },
-      invalidatesTags: ['Users'],
+      invalidatesTags: ['Users', 'Carts', 'Products'],
     }),
     login: builder.mutation<void, LoginInput>({
       query: (body) => {
@@ -27,7 +27,7 @@ export const oliveMarketApi = createApi({
           body,
         };
       },
-      invalidatesTags: ['Users'],
+      invalidatesTags: ['Users', 'Products'],
     }),
     loadUser: builder.query({
       query: () => {
@@ -77,6 +77,18 @@ export const oliveMarketApi = createApi({
       },
       providesTags: ['Products'],
     }),
+    getUserCart: builder.query({
+      query: () => {
+        return {
+          url: `carts/user_cart`,
+          method: 'GET',
+        };
+      },
+      transformResponse: (response: any) => {
+        return response?.data;
+      },
+      providesTags: ['Products'],
+    }),
   }),
 });
 
@@ -87,4 +99,5 @@ export const {
   useLogoutMutation,
   useGetProductsQuery,
   useGetProductQuery,
+  useGetUserCartQuery,
 } = oliveMarketApi;

@@ -3,11 +3,13 @@ export type SignupInput = {
   lastName: string;
   email: string;
   password: string;
+  cartItems?: Product[];
 };
 
 export type LoginInput = {
   email: string;
   password: string;
+  cartItems?: Product[];
 };
 
 export type User = {

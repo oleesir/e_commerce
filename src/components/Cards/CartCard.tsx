@@ -41,11 +41,11 @@ const CartCard = ({
           <img src={images} className='w-[100px] h-[100px] ' alt='image ' />
         </div>
         <div className='col-span-3'>
-          <div className='w-full flex justify-between '>
+          <div className='w-full flex justify-between'>
             <div className='flex flex-col w-1/2'>
               <p className='text-xs mb-5'>{name}</p>
               <div className='w-full mb-5'>
-                <div className='flex w-2/5  justify-between'>
+                <div className='flex w-1/3  justify-between'>
                   <button
                     type='button'
                     disabled={selectedItem?.cartQuantity === 1}
