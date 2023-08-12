@@ -36,16 +36,16 @@ const Cart = () => {
         <EmptyCart />
       ) : (
         <div className='w-full flex pt-[100px]'>
-          <div className='py-4 max-w-5xl mx-auto'>
+          <div className='py-4 max-w-5xl mx-auto px-2'>
             <div className='flex flex-col w-full'>
-              <div className='grid grid-cols-4 gap-4'>
+              <div className='grid grid-cols-1 md:grid-cols-4 md:gap-4'>
                 {authUser?._id === undefined ? (
                   <CartItems cartState={cartState} />
                 ) : (
                   <CartItemsApi cartFromApi={userCart?.cartItems} />
                 )}
 
-                <div>
+                <div className='w-full'>
                   <div className='flex w-full flex-col shadow-[0_8px_40px_0_rgba(49,32,138,0.05)] border-[1px] p-4'>
                     <div className='mb-5'>
                       <p className='text-lg font-bold'>Order Summary</p>

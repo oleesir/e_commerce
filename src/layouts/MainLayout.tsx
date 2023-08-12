@@ -7,7 +7,7 @@ import Loader from '../components/Loaders/Loader.tsx';
 const MainLayout = () => {
   const { isLoading } = useLoadUserQuery(undefined);
   return (
-    <div className='flex flex-col w-full'>
+    <div className='flex flex-col w-full overflow-hidden'>
       {isLoading && <Loader />}
       {!isLoading && (
         <>

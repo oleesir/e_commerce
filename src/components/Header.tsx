@@ -168,9 +168,23 @@ const Header = () => {
               <FiSearch size={28} />
             </button>
 
-            <button className='mr-5'>
-              <PiShoppingCartLight size={25} />
-            </button>
+            <div className='relative flex items-center cursor-pointer mr-5' onClick={navToCart}>
+              {authUser?._id === undefined
+                ? cartTotalQuantity > 0 && (
+                    <div className='absolute rounded-full w-[20px] h-[20px] bg-[#FD665E] text-[#FFF] pt-[3px] left-4 -top-2'>
+                      <p className='text-[10px] text-center'>{cartTotalQuantity}</p>
+                    </div>
+                  )
+                : userCart?.totalQuantity > 0 && (
+                    <div className='absolute rounded-full w-[20px] h-[20px] bg-[#FD665E] text-[#FFF] pt-[3px] left-4 -top-2'>
+                      <p className='text-[10px] text-center'>{userCart?.totalQuantity}</p>
+                    </div>
+                  )}
+
+              <button type='button'>
+                <PiShoppingCartLight size={25} />
+              </button>
+            </div>
 
             <button onClick={handleNav} className='block lg:hidden '>
               {!nav ? <AiOutlineMenu size={28} /> : <AiOutlineClose size={28} />}

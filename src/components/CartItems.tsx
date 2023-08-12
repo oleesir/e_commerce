@@ -4,7 +4,7 @@ import CartCard from './Cards/CartCard.tsx';
 const CartItems = ({ cartState }: { cartState: Product[] }) => {
   return (
     <>
-      <div className='col-span-3'>
+      <div className='w-full md:col-span-3'>
         {cartState &&
           cartState.map((cartItem: Product) => {
             return (

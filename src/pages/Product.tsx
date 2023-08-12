@@ -68,10 +68,10 @@ const Product = () => {
     <>
       {isLoading && <Loader />}
       {!isLoading && (
-        <div className='w-full mt-[150px]'>
+        <div className='w-full mt-[150px] '>
           <div className='max-w-5xl  mx-auto'>
             <div className='w-full flex flex-col'>
-              <div className='grid grid-cols-2 gap-8'>
+              <div className='grid md:grid-cols-2 gap-8'>
                 <div className='flex flex-col'>
                   <div className='w-full flex items-center justify-center mb-5'>
                     <img
