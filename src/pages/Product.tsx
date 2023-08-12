@@ -69,7 +69,7 @@ const Product = () => {
       {isLoading && <Loader />}
       {!isLoading && (
         <div className='w-full mt-[150px] '>
-          <div className='max-w-5xl  mx-auto'>
+          <div className='max-w-5xl  mx-auto px-3 md:px-0'>
             <div className='w-full flex flex-col'>
               <div className='grid md:grid-cols-2 gap-8'>
                 <div className='flex flex-col'>
@@ -100,7 +100,7 @@ const Product = () => {
                     </div>
                   </div>
                 </div>
-                <div className='flex flex-col border-l-[1px] pl-3'>
+                <div className='flex flex-col md:border-l-[1px] md:pl-3'>
                   <p className='text-[24px] mb-5'>{queryProduct?.name}</p>
                   <div className='flex w-full '>
                     <p className='text-[12px] font-bold'>Brand: </p>
