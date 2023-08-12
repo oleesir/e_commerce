@@ -1,7 +1,7 @@
 const UniqueFeaturesAdvert = () => {
   return (
-    <div className='py-4 max-w-5xl  mx-auto '>
-      <div className='w-full grid grid-cols-2'>
+    <div className='py-4 max-w-5xl  mx-auto  px-5'>
+      <div className='w-full grid md:grid-cols-2'>
         <div className='w-full grid justify-items-end'>
           <img src='/advertcouch.png' className='w-[400px] h-[400px]' alt='imagee' />
         </div>

@@ -22,6 +22,7 @@ export type User = {
   phoneNumber: string | undefined;
   email: string;
   role: string;
+  cartId: string;
 };
 
 export type Reviews = {
@@ -54,4 +55,33 @@ export type Product = {
 
 export type CartState = {
   cartItems: Product[];
+};
+
+export type CartItemFromApi = {
+  productId: string;
+  quantity: number;
+  name: string;
+  image: string;
+  price: number;
+  taxPrice: number;
+  priceAfterTax: number;
+};
+
+export type CartInput = {
+  productId: string | undefined;
+  price: number | undefined;
+  cartId: string;
+  name: string | undefined;
+  image: string | undefined;
+};
+
+export type DecreaseItemFromCartInput = {
+  productId: string | undefined;
+  price: number | undefined;
+  cartId: string;
+};
+
+export type DeleteItemFromCartInput = {
+  productId: string | undefined;
+  cartId: string;
 };

@@ -2,6 +2,13 @@ import { RiAddLine, RiDeleteBin6Line, RiSubtractLine } from 'react-icons/ri';
 import { BsBookmark } from 'react-icons/bs';
 import { useAppDispatch, useAppSelector } from '../../reduxHooks.ts';
 import { addToCart, decreaseItem, removeItem } from '../../features/oliveMarketSlice.tsx';
+import {
+  useDecrementItemInCartApiMutation,
+  useDeleteItemInCartApiMutation,
+  useGetProductQuery,
+  useIncrementItemInCartApiMutation,
+  useLoadUserQuery,
+} from '../../features/oliveMarketApi.tsx';
 
 const CartCard = ({
   cartItemId,
@@ -12,26 +19,56 @@ const CartCard = ({
 }: {
   cartItemId: string;
   price: number;
-  name: string;
-  images: string;
+  name: string | undefined;
+  images: string | undefined;
   quantity: number;
 }) => {
   const dispatch = useAppDispatch();
   const { cartItems } = useAppSelector((state: any) => state.cart);
+  const [incrementItemInCartApi] = useIncrementItemInCartApiMutation();
+  const [decrementItemInCartApi] = useDecrementItemInCartApiMutation();
+  const [deleteItemInCartApi] = useDeleteItemInCartApiMutation();
+  const { data: authUser } = useLoadUserQuery(undefined);
   const selectedItem = cartItems.find((item: any) => item?._id === cartItemId);
+  const { data: queryProduct } = useGetProductQuery(cartItemId);
 
-  const isDisabled = selectedItem?.cartQuantity === selectedItem?.countInStock;
-
-  const handleIncreaseProduct = () => {
-    dispatch(addToCart(selectedItem));
+  const handleIncreaseProduct = async () => {
+    if (authUser?._id === undefined) {
+      dispatch(addToCart(selectedItem));
+    } else {
+      await incrementItemInCartApi({
+        productId: cartItemId,
+        price: price / 100,
+        cartId: authUser?.cartId,
+        name: queryProduct?.name,
+        image: queryProduct?.images[0].secureUrl,
+      });
+    }
   };
 
-  const handleDecreaseProduct = () => {
-    dispatch(decreaseItem(selectedItem));
+  const handleDecreaseProduct = async () => {
+    if (authUser?._id === undefined) {
+      dispatch(decreaseItem(selectedItem));
+    } else {
+      await decrementItemInCartApi({
+        productId: cartItemId,
+        price: price / 100,
+        cartId: authUser?.cartId,
+      });
+    }
   };
 
-  const handleRemoveItem = () => {
-    dispatch(removeItem(selectedItem));
+  const isDisabled =
+    authUser?._id === undefined
+      ? selectedItem?.cartQuantity === selectedItem?.countInStock
+      : quantity === queryProduct?.countInStock;
+
+  const handleRemoveItem = async () => {
+    if (authUser?._id === undefined) {
+      dispatch(removeItem(selectedItem));
+    } else {
+      await deleteItemInCartApi({ productId: cartItemId, cartId: authUser?.cartId });
+    }
   };
 
   return (
@@ -48,10 +85,10 @@ const CartCard = ({
                 <div className='flex w-1/3  justify-between'>
                   <button
                     type='button'
-                    disabled={selectedItem?.cartQuantity === 1}
+                    disabled={selectedItem?.cartQuantity === 1 || quantity === 1}
                     onClick={handleDecreaseProduct}
                     className={
-                      selectedItem?.cartQuantity === 1
+                      selectedItem?.cartQuantity === 1 || quantity === 1
                         ? 'py-[5px] px-[8px] bg-[#FD665E] text-[#FFF] cursor-not-allowed opacity-50'
                         : 'py-[5px] px-[8px] bg-[#FD665E] text-[#FFF] cursor-pointer'
                     }

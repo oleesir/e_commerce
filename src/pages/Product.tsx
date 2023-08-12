@@ -5,7 +5,13 @@ import Carousel from 'react-multi-carousel';
 import { responsive } from '../utils/responsive.ts';
 import SponsorsBanner from '../components/SponsorsBanner.tsx';
 import { useLocation } from 'react-router-dom';
-import { useGetProductQuery, useLoadUserQuery } from '../features/oliveMarketApi.tsx';
+import {
+  useDecrementItemInCartApiMutation,
+  useGetProductQuery,
+  useGetUserCartQuery,
+  useIncrementItemInCartApiMutation,
+  useLoadUserQuery,
+} from '../features/oliveMarketApi.tsx';
 import Loader from '../components/Loaders/Loader.tsx';
 import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../reduxHooks.ts';
@@ -18,21 +24,44 @@ const Product = () => {
   const { productId }: { productId: string } = state;
   const { data: authUser } = useLoadUserQuery(undefined);
   const { data: queryProduct, isLoading } = useGetProductQuery(productId);
+  const { data: userCart } = useGetUserCartQuery(authUser?.cartId);
+  const [incrementItemInCartApi] = useIncrementItemInCartApiMutation();
+  const [decrementItemInCartApi] = useDecrementItemInCartApiMutation();
   const [selectedImage, setSelectedImage] = useState('');
+
   const itemInCart = useAppSelector((state: any) =>
     state.cart.cartItems.find((item: any) => item._id === productId),
   );
+  const itemInCartApi = userCart?.cartItems.find((item: any) => item.productId === productId);
 
   const handleSelectedImage = (image: string) => {
     setSelectedImage(image);
   };
 
-  const handleIncreaseProduct = () => {
-    queryProduct && dispatch(addToCart(queryProduct));
+  const handleIncreaseProduct = async () => {
+    if (authUser?._id === undefined) {
+      queryProduct && dispatch(addToCart(queryProduct));
+    } else {
+      await incrementItemInCartApi({
+        productId: queryProduct?._id,
+        price: queryProduct && queryProduct?.price / 100,
+        cartId: authUser?.cartId,
+        name: queryProduct?.name,
+        image: queryProduct?.images[0].secureUrl,
+      });
+    }
   };
 
-  const handleDecreaseProduct = () => {
-    queryProduct && dispatch(decreaseItem(queryProduct));
+  const handleDecreaseProduct = async () => {
+    if (authUser?._id === undefined) {
+      queryProduct && dispatch(decreaseItem(queryProduct));
+    } else {
+      await decrementItemInCartApi({
+        productId: queryProduct?._id,
+        price: queryProduct && queryProduct?.price / 100,
+        cartId: authUser?.cartId,
+      });
+    }
   };
 
   return (
@@ -105,6 +134,7 @@ const Product = () => {
                         Add to Cart
                       </button>
                     ) : null}
+
                     {itemInCart && authUser?._id === undefined && (
                       <div className='w-full  flex justify-center'>
                         <div className='w-1/3  flex justify-between'>
@@ -117,6 +147,40 @@ const Product = () => {
                           </button>
                           <div className='p-3 flex items-center'>
                             <p className='text-xl'>{itemInCart?.cartQuantity}</p>
+                          </div>
+                          <button
+                            type='button'
+                            onClick={handleIncreaseProduct}
+                            className='p-3 bg-[#FD665E] text-[#FFF]'
+                          >
+                            <RiAddLine size={20} color='#FFF' />
+                          </button>
+                        </div>
+                      </div>
+                    )}
+
+                    {!itemInCartApi && authUser?._id ? (
+                      <button
+                        type='button'
+                        onClick={handleIncreaseProduct}
+                        className='rounded-none bg-[#FD665E] text-[#FFF] text-sm font-bold py-3 px-8 cursor-pointer w-full'
+                      >
+                        Add to Cart
+                      </button>
+                    ) : null}
+
+                    {itemInCartApi && authUser?._id && (
+                      <div className='w-full  flex justify-center'>
+                        <div className='w-1/3  flex justify-between'>
+                          <button
+                            type='button'
+                            onClick={handleDecreaseProduct}
+                            className='p-3 bg-[#FD665E] text-[#FFF]'
+                          >
+                            <RiSubtractLine size={20} color='#FFF' />
+                          </button>
+                          <div className='p-3 flex items-center'>
+                            <p className='text-xl'>{itemInCartApi?.quantity}</p>
                           </div>
                           <button
                             type='button'

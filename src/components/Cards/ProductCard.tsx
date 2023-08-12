@@ -24,7 +24,7 @@ const ProductCard = ({
     navigate(`/${slug}`, { state: { productId } });
   };
   return (
-    <div className=' relative group flex flex-col w-[200px] h-[300px] ease-in duration-300 hover:scale-105 hover:shadow-xl cursor-pointer pb-2'>
+    <div className=' relative group flex flex-col w-[160px] md:w-[180px] h-[300px] ease-in duration-300 hover:scale-105 hover:shadow-xl cursor-pointer pb-2'>
       <img src={image} className='w-full h-[150px] ' alt='image ' />
       <div className='flex justify-center items-center absolute top-0 left-0 h-full w-full'></div>
       <div className='absolute top-0 left-0 w-full h-full flex justify-center items-center opacity-0 hover:opacity-100'>

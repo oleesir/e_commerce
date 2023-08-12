@@ -1,5 +1,13 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { LoginInput, Product, SignupInput, User } from '../types.ts';
+import {
+  CartInput,
+  DecreaseItemFromCartInput,
+  DeleteItemFromCartInput,
+  LoginInput,
+  Product,
+  SignupInput,
+  User,
+} from '../types.ts';
 
 const baseUrl = import.meta.env.VITE_PUBLIC_BACKEND_API;
 const baseQuery = fetchBaseQuery({ baseUrl, credentials: 'include' });
@@ -38,9 +46,14 @@ export const oliveMarketApi = createApi({
       },
       transformResponse: (response: any) => {
         const newResponse: User = response?.data;
-        return { _id: newResponse?._id, email: newResponse?.email, role: newResponse?.role };
+        return {
+          _id: newResponse?._id,
+          email: newResponse?.email,
+          role: newResponse?.role,
+          cartId: newResponse?.cartId,
+        };
       },
-      providesTags: ['Users'],
+      providesTags: ['Users', 'Products', 'Carts'],
     }),
     logout: builder.mutation({
       query: () => {
@@ -62,7 +75,7 @@ export const oliveMarketApi = createApi({
         const newResponse: Product[] = response?.data;
         return newResponse;
       },
-      providesTags: ['Products'],
+      providesTags: ['Products', 'Carts'],
     }),
     getProduct: builder.query({
       query: (_id) => {
@@ -75,19 +88,56 @@ export const oliveMarketApi = createApi({
         const newResponse: Product = response?.data;
         return newResponse;
       },
-      providesTags: ['Products'],
+      providesTags: ['Products', 'Carts'],
     }),
     getUserCart: builder.query({
-      query: () => {
+      query: (cartId) => {
         return {
-          url: `carts/user_cart`,
+          url: `carts/user_cart/${cartId}`,
           method: 'GET',
         };
       },
       transformResponse: (response: any) => {
         return response?.data;
       },
-      providesTags: ['Products'],
+      providesTags: ['Products', 'Carts'],
+    }),
+    incrementItemInCartApi: builder.mutation<void, CartInput>({
+      query: (body) => {
+        return {
+          url: 'carts',
+          method: 'POST',
+          body,
+        };
+      },
+      transformResponse: (response: any) => {
+        return response?.data;
+      },
+      invalidatesTags: ['Products', 'Carts'],
+    }),
+    decrementItemInCartApi: builder.mutation<void, DecreaseItemFromCartInput>({
+      query: (body) => {
+        return {
+          url: 'carts/decrease',
+          method: 'POST',
+          body,
+        };
+      },
+      transformResponse: (response: any) => {
+        return response?.data;
+      },
+      invalidatesTags: ['Products', 'Carts'],
+    }),
+    deleteItemInCartApi: builder.mutation<void, DeleteItemFromCartInput>({
+      query: (body) => {
+        return {
+          url: `carts/remove`,
+          method: 'DELETE',
+          body,
+        };
+      },
+
+      invalidatesTags: ['Carts'],
     }),
   }),
 });
@@ -100,4 +150,7 @@ export const {
   useGetProductsQuery,
   useGetProductQuery,
   useGetUserCartQuery,
+  useDecrementItemInCartApiMutation,
+  useIncrementItemInCartApiMutation,
+  useDeleteItemInCartApiMutation,
 } = oliveMarketApi;

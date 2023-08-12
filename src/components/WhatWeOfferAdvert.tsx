@@ -8,7 +8,7 @@ const WhatWeOfferAdvert = () => {
       </div>
       <div className='w-full flex mt-10'>
         <div className='max-w-5xl  mx-auto'>
-          <div className='grid grid-cols-4 gap-x-8'>
+          <div className='grid gap-x-8 grid-cols-1  md:grid-cols-4'>
             <OfferCard image='/free.png' />
             <OfferCard image='/cash_back.png' />
             <OfferCard image='/medal.png' />

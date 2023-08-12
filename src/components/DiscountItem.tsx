@@ -22,7 +22,7 @@ const DiscountItemsTab = () => {
         <p className='text-[30px] font-bold text-[#151875]'>Discount Item</p>
       </div>
       <div className='w-full flex justify-center'>
-        <div className='w-1/4 flex  justify-between '>
+        <div className='w-full md:w-[400px] flex  justify-between'>
           <button onClick={handleTab1} className='relative group cursor-pointer'>
             <span className='text-sm text-[#2C2C2C]'>Wood Chair</span>
             <span

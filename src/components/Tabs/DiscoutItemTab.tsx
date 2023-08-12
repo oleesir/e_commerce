@@ -3,8 +3,8 @@ import { IoCheckmark } from 'react-icons/io5';
 const DiscountItemTab = ({ image }: { image: string }) => {
   return (
     <div className='w-full'>
-      <div className=' grid grid-cols-2'>
-        <div className='w-full flex flex-col pt-24 pl-2'>
+      <div className=' grid md:grid-cols-2'>
+        <div className='w-full flex flex-col pt-10 pl-2'>
           <p className='text-[28px] font-bold mb-5 text-[#151875]'>20% Discount Of All Products</p>
           <p className='text-sm text-gray-500 mb-2'>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eu eget

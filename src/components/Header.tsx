@@ -17,7 +17,7 @@ const Header = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { data: authUser } = useLoadUserQuery(undefined);
-  const { data: userCart } = useGetUserCartQuery(undefined);
+  const { data: userCart } = useGetUserCartQuery(authUser?.cartId);
   const [show, setShow] = useState(false);
   const [nav, setNav] = useState(false);
   const [logout] = useLogoutMutation();
@@ -36,6 +36,9 @@ const Header = () => {
   const handleLogout = async () => {
     await logout(null);
     setShow(false);
+    if (location.pathname === '/cart') {
+      navigate('/');
+    }
   };
 
   const navToLogin = () => {
@@ -112,7 +115,7 @@ const Header = () => {
                   </div>
                 ) : null}
               </div>
-              <div className='relative flex items-center'>
+              <div className='relative flex items-center cursor-pointer' onClick={navToCart}>
                 {authUser?._id === undefined
                   ? cartTotalQuantity > 0 && (
                       <div className='absolute rounded-full w-[20px] h-[20px] bg-[#FD665E] text-[#FFF] pt-[3px] left-4 -top-2'>
@@ -124,12 +127,8 @@ const Header = () => {
                         <p className='text-[10px] text-center'>{userCart?.totalQuantity}</p>
                       </div>
                     )}
-                {/*{cartTotalQuantity > 0 && (*/}
-                {/*  <div className='absolute rounded-full w-[20px] h-[20px] bg-[#FD665E] text-[#FFF] pt-[3px] left-4 -top-2'>*/}
-                {/*    <p className='text-[10px] text-center'>{cartTotalQuantity}</p>*/}
-                {/*  </div>*/}
-                {/*)}*/}
-                <button type='button' onClick={navToCart}>
+
+                <button type='button'>
                   <PiShoppingCartLight size={25} />
                 </button>
               </div>
@@ -137,10 +136,10 @@ const Header = () => {
           </div>
         </div>
         <div className='flex lg:hidden inset-0 z-50 w-full justify-between px-5'>
-          <p className=''>
+          <NavLink to='/'>
             <span className='text-2xl mb-0 font-titanOne text-[#FD665E]'>Olive</span>
             <span className='text-lg font-titanOne text-[#FD665E]'>market</span>
-          </p>
+          </NavLink>
           <div
             className={
               nav
