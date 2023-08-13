@@ -1,10 +1,9 @@
 import AccordionLayout from '../layouts/AccordionLayout.tsx';
 
-const Accordion = ({ description }: { description: string | undefined }) => {
+const Accordion = ({ title, description }: { description: string | undefined; title: string }) => {
   return (
-    <div className='flex flex-col '>
-      <AccordionLayout title='Customer Reviews'>This is Accordion 1 Content</AccordionLayout>
-      <AccordionLayout title='About This Product'>{description}</AccordionLayout>
+    <div className='w-full cursor-pointer '>
+      <AccordionLayout title={title}>{description}</AccordionLayout>
     </div>
   );
 };

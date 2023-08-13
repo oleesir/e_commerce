@@ -1,8 +1,58 @@
+import AccordionLayout from '../layouts/AccordionLayout.tsx';
+
 const Footer = () => {
   return (
-    <div className='w-full bg-[#EEEFFB] mt-20 py-20'>
-      <div className='py-4 max-w-5xl  mx-auto '>
-        <div className='grid grid-cols-4 gap-x-4 px-5'>
+    <div className='w-full bg-[#EEEFFB] mt-20 md:py-20'>
+      <div className=' py-5 max-w-5xl  mx-auto px-3'>
+        <div className='flex flex-col md:hidden'>
+          <div className='w-full mb-2 flex justify-center'>
+            <p>
+              <span className='text-base mb-0 font-titanOne text-[#FD665E]'>Olive</span>
+              <span className='text-sm font-titanOne text-[#FD665E]'>market</span>
+            </p>
+          </div>
+          <AccordionLayout title={'Customer Case'}>
+            {
+              <div className='w-full flex '>
+                <div className='flex flex-col '>
+                  <p className='text-xs text-[#8A8FB9] mb-3'>Laptops & Computers</p>
+                  <p className='text-xs text-[#8A8FB9] mb-3'>Laptops & Computers</p>
+                  <p className='text-xs text-[#8A8FB9] mb-3'>Laptops & Computers</p>
+                  <p className='text-xs text-[#8A8FB9] mb-3'>Laptops & Computers</p>
+                  <p className='text-xs text-[#8A8FB9] mb-3'>Laptops & Computers</p>
+                </div>
+              </div>
+            }
+          </AccordionLayout>
+          <AccordionLayout title={'Customer Case'}>
+            {
+              <div className='w-full flex '>
+                <div className='flex flex-col '>
+                  <p className='text-xs text-[#8A8FB9] mb-3'>Laptops & Computers</p>
+                  <p className='text-xs text-[#8A8FB9] mb-3'>Laptops & Computers</p>
+                  <p className='text-xs text-[#8A8FB9] mb-3'>Laptops & Computers</p>
+                  <p className='text-xs text-[#8A8FB9] mb-3'>Laptops & Computers</p>
+                  <p className='text-xs text-[#8A8FB9] mb-3'>Laptops & Computers</p>
+                </div>
+              </div>
+            }
+          </AccordionLayout>
+          <AccordionLayout title={'Customer Case'}>
+            {
+              <div className='w-full flex '>
+                <div className='flex flex-col '>
+                  <p className='text-xs text-[#8A8FB9] mb-3'>Laptops & Computers</p>
+                  <p className='text-xs text-[#8A8FB9] mb-3'>Laptops & Computers</p>
+                  <p className='text-xs text-[#8A8FB9] mb-3'>Laptops & Computers</p>
+                  <p className='text-xs text-[#8A8FB9] mb-3'>Laptops & Computers</p>
+                  <p className='text-xs text-[#8A8FB9] mb-3'>Laptops & Computers</p>
+                </div>
+              </div>
+            }
+          </AccordionLayout>
+        </div>
+
+        <div className=' grid-cols-4 gap-x-4 px-5 hidden md:grid'>
           <div className='flex flex-col'>
             <p className='mb-5'>
               <span className='text-xl mb-0 font-titanOne text-[#FD665E]'>Olive</span>

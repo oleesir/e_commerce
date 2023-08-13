@@ -22,8 +22,8 @@ const Home = () => {
     <>
       {isLoading && <Loader />}
       {!isLoading && (
-        <div className='w-full flex flex-col mt-[100px]'>
-          <div className='flex w-full mt-5 bg-[#F1F0FF]'>
+        <div className='w-full flex flex-col'>
+          <div className='flex w-full pt-20 bg-[#F1F0FF]'>
             <div className='flex max-w-5xl  mx-auto'>
               <img src='/lamp.png' className='w-[200px] h-[200px] lg:flex hidden' alt='lamp' />
               <div className='grid grid-cols-1  md:grid-cols-2'>

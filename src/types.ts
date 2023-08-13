@@ -53,6 +53,22 @@ export type Product = {
   countInStock: number;
 };
 
+// export type data = {
+//   _id: string;
+//   name: string;
+//   slug?: string;
+//   description: string;
+//   reviews: [{ name: string; rating: number; comment: string; user: string }];
+//   images: [{ secureUrl: string; cloudinaryId: string }];
+//   category: string;
+//   brand: string;
+//   rating: number;
+//   numberOfReviews: number;
+//   price: number;
+//   cartQuantity: number;
+//   countInStock: number;
+// };
+
 export type CartState = {
   cartItems: Product[];
 };

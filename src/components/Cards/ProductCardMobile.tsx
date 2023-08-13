@@ -26,7 +26,7 @@ const ProductCardMobile = ({
   return (
     <div onClick={navigateToProduct} className='grid grid-cols-3 mb-5 border-b-[1px] py-3'>
       <div className='w-full flex justify-center'>
-        <img src={image} className='w-[150px] h-[120px] ' alt='image ' />
+        <img src={image} className='w-[150px] h-[120px] border-[1px]' alt='image ' />
       </div>
 
       <div className='col-span-2 p-3'>

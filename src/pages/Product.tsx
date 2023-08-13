@@ -196,7 +196,7 @@ const Product = () => {
                 </div>
               </div>
               <div className='w-full mt-10'>
-                <Accordion description={queryProduct?.description} />
+                <Accordion title={'About this product'} description={queryProduct?.description} />
               </div>
               <div className='w-full flex flex-col mt-10'>
                 <div className='flex mb-5'>

@@ -12,7 +12,7 @@ const AccordionLayout = ({ title, children }: { title: string; children: ReactNo
     <div>
       <div
         onClick={handlePanel}
-        className='flex w-full justify-between p-2 mt-2 rounded-none border-t-[1px]'
+        className='flex w-full justify-between p-2 mt-2 rounded-none border-t-[2px]'
       >
         <div className='flex'>
           <p className='text-[20px] font-bold text-[#151875]'>{title}</p>
