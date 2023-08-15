@@ -1,4 +1,3 @@
-import 'react-multi-carousel/lib/styles.css';
 import LatestProductsTab from '../components/Tabs/LatestProductsTab.tsx';
 import WhatWeOfferAdvert from '../components/WhatWeOfferAdvert.tsx';
 import UniqueFeaturesAdvert from '../components/UniqueFeaturesAdvert.tsx';
