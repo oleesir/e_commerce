@@ -103,7 +103,7 @@ const Product = () => {
                     </div>
                   </div>
                 </div>
-                <div className='flex flex-col md:border-l-[1px] md:pl-3'>
+                <div className='flex flex-col md:border-l-[1px] md:px-4'>
                   <p className='text-[24px] mb-5'>{queryProduct?.name}</p>
                   <div className='flex w-full '>
                     <p className='text-[12px] font-bold'>Brand: </p>
@@ -198,11 +198,11 @@ const Product = () => {
                   </div>
                 </div>
               </div>
-              <div className='w-full mt-10'>
+              <div className='w-full mt-10 px-5'>
                 <Accordion title={'About this product'} description={queryProduct?.description} />
               </div>
-              <div className='w-full flex flex-col mt-10'>
-                <div className='flex mb-5'>
+              <div className='w-full flex flex-col mt-10 px-5'>
+                <div className='flex'>
                   <p className='text-[20px]'>You may also like</p>
                 </div>
                 <FeaturedProducts newArray={newArray} />

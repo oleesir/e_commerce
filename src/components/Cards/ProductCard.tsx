@@ -30,10 +30,10 @@ const ProductCard = ({
       <div className='hidden md:flex justify-center items-center absolute top-0 left-0 h-full w-full'></div>
       <div className='hidden absolute top-0 left-0 w-full h-full md:flex justify-center items-center opacity-0 hover:opacity-100'>
         <div className='w-full h-full flex justify-center items-end p-2'>
-          <div className=''>
+          <div className='w-full'>
             <button
               onClick={navigateToProduct}
-              className='py-2 px-4 bg-[#FD665E] text-[#FFF] mt-2 rounded-none text-xs'
+              className='py-2 px-4 bg-[#FD665E] text-[#FFF] mt-2 rounded-none text-xs w-full'
             >
               Add to cart
             </button>
@@ -61,7 +61,7 @@ const ProductCard = ({
           <button
             type='button'
             onClick={navigateToProduct}
-            className='py-2 px-4 bg-[#FD665E] text-[#FFF] mt-2 rounded-none text-xs'
+            className='py-2 px-4 bg-[#FD665E] text-[#FFF] mt-2 rounded-none text-xs w-full'
           >
             Add to cart
           </button>
