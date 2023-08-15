@@ -12,6 +12,7 @@ import {
 } from '../features/oliveMarketApi.tsx';
 import { getTotalQuantity } from '../features/oliveMarketSlice.tsx';
 import { useAppDispatch, useAppSelector } from '../reduxHooks.ts';
+import { navItemsMobile } from '../utils/navItemsMobile.ts';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -28,10 +29,6 @@ const Header = () => {
       dispatch(getTotalQuantity());
     }
   }, [cartItems, dispatch]);
-
-  const handleNav = () => {
-    setNav(!nav);
-  };
 
   const handleLogout = async () => {
     await logout(null);
@@ -51,6 +48,10 @@ const Header = () => {
 
   const navToCart = () => {
     navigate('/cart');
+  };
+
+  const handleMenu = () => {
+    setNav(!nav);
   };
 
   return (
@@ -143,24 +144,33 @@ const Header = () => {
           <div
             className={
               nav
-                ? 'lg:hidden absolute top-0 left-0 right-0 bottom-0 flex  w-[280px] h-screen bg-black  ease-in duration-300 z-[1035]'
-                : 'lg:hidden absolute top-0 right-0 left-[-100%] bottom-0 flex w-full h-screen bg-black  ease-in-out duration-300'
+                ? 'lg:hidden absolute top-0 left-0 right-0 bottom-0 flex  w-full h-screen bg-[#F3F6F9]  ease-in duration-300 z-[1035]'
+                : 'lg:hidden absolute top-0 right-0 left-[-100%] bottom-0 flex w-full h-screen bg-[#FD665E]  ease-in-out duration-300'
             }
           >
-            <button onClick={handleNav}>
-              <AiOutlineClose size={28} color='green' className='bg-green-500' />
-            </button>
-            <ul>
-              <li onClick={handleNav} className='p-4 text-4xl'>
-                <p className='text-[#FFF]'>Home</p>
-              </li>
-              <li onClick={handleNav} className='p-4 text-4xl '>
-                <p className='text-[#FFF]'>Signup</p>
-              </li>
-              <li onClick={handleNav} className='p-4 text-4xl '>
-                <p className='text-[#FFF]'>Login</p>
-              </li>
-            </ul>
+            <div className='w-full flex flex-col'>
+              <div className='w-full grid justify-items-end mb-5 p-5'>
+                <button onClick={handleMenu}>
+                  <AiOutlineClose size={28} color='#151875' />
+                </button>
+              </div>
+
+              <div className='w-full grid justify-items-start '>
+                {navItemsMobile.map((item: any) => {
+                  return (
+                    <button
+                      onClick={() => {
+                        navigate(item.path);
+                        setNav(!nav);
+                      }}
+                      className=' w-full border-t-[1px] flex items-start  py-2 pl-5 border-[#151875]'
+                    >
+                      <p className='text-[#151875] text-[18px]'>{item.navItem}</p>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
           </div>
 
           <div className='flex'>
@@ -186,7 +196,7 @@ const Header = () => {
               </button>
             </div>
 
-            <button onClick={handleNav} className='block lg:hidden '>
+            <button onClick={handleMenu} className='block lg:hidden '>
               {!nav ? <AiOutlineMenu size={28} /> : <AiOutlineClose size={28} />}
             </button>
           </div>

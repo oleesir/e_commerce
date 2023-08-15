@@ -1,13 +1,11 @@
 import ReactStars from 'react-rating-star-with-type';
 import Accordion from '../components/Accordion.tsx';
-import ViewCard from '../components/Cards/ViewCard.tsx';
-import Carousel from 'react-multi-carousel';
-import { responsive } from '../utils/responsive.ts';
 import SponsorsBanner from '../components/SponsorsBanner.tsx';
 import { useLocation } from 'react-router-dom';
 import {
   useDecrementItemInCartApiMutation,
   useGetProductQuery,
+  useGetProductsQuery,
   useGetUserCartQuery,
   useIncrementItemInCartApiMutation,
   useLoadUserQuery,
@@ -17,22 +15,27 @@ import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../reduxHooks.ts';
 import { addToCart, decreaseItem } from '../features/oliveMarketSlice.tsx';
 import { RiAddLine, RiSubtractLine } from 'react-icons/ri';
+import FeaturedProducts from '../components/FeaturedProducts.tsx';
 
 const Product = () => {
   const { state }: { state: any } = useLocation();
   const dispatch = useAppDispatch();
-  const { productId }: { productId: string } = state;
+
   const { data: authUser } = useLoadUserQuery(undefined);
-  const { data: queryProduct, isLoading } = useGetProductQuery(productId);
+  const { data: queryProduct, isLoading } = useGetProductQuery(state?.productId);
   const { data: userCart } = useGetUserCartQuery(authUser?.cartId);
   const [incrementItemInCartApi] = useIncrementItemInCartApiMutation();
   const [decrementItemInCartApi] = useDecrementItemInCartApiMutation();
   const [selectedImage, setSelectedImage] = useState('');
+  const { data: queryProducts } = useGetProductsQuery(undefined);
+  const newArray = queryProducts && queryProducts.slice(0, 10);
 
   const itemInCart = useAppSelector((state: any) =>
-    state.cart.cartItems.find((item: any) => item._id === productId),
+    state.cart.cartItems.find((item: any) => item._id === state?.productId),
   );
-  const itemInCartApi = userCart?.cartItems.find((item: any) => item.productId === productId);
+  const itemInCartApi = userCart?.cartItems.find(
+    (item: any) => item.productId === state?.productId,
+  );
 
   const handleSelectedImage = (image: string) => {
     setSelectedImage(image);
@@ -202,29 +205,7 @@ const Product = () => {
                 <div className='flex mb-5'>
                   <p className='text-[20px]'>You may also like</p>
                 </div>
-                <div className='w-full'>
-                  <Carousel
-                    responsive={responsive}
-                    // arrows={false}
-                    // customLeftArrow={<CustomLeftArrow />}
-                  >
-                    <ViewCard image='/cane_chair.png' />
-                    <ViewCard image='/white_chair.png' />
-                    <ViewCard image='/black_couch.jpeg' />
-                    <ViewCard image='/cane_chair.png' />
-                    <ViewCard image='/white_chair.png' />
-                    <ViewCard image='/black_couch.jpeg' />
-                    <ViewCard image='/cane_chair.png' />
-                    <ViewCard image='/white_chair.png' />
-                    <ViewCard image='/white_chair.png' />
-                    <ViewCard image='/cane_chair.png' />
-                    <ViewCard image='/white_chair.png' />
-                    <ViewCard image='/black_couch.jpeg' />
-                    <ViewCard image='/cane_chair.png' />
-                    <ViewCard image='/white_chair.png' />
-                    <ViewCard image='/white_chair.png' />
-                  </Carousel>
-                </div>
+                <FeaturedProducts newArray={newArray} />
               </div>
               <div className='w-full  mt-20 '>
                 <SponsorsBanner />

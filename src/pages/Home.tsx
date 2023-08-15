@@ -1,22 +1,18 @@
-import ProductCard from '../components/Cards/ProductCard.tsx';
-import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-import { responsive } from '../utils/responsive.ts';
 import LatestProductsTab from '../components/Tabs/LatestProductsTab.tsx';
 import WhatWeOfferAdvert from '../components/WhatWeOfferAdvert.tsx';
 import UniqueFeaturesAdvert from '../components/UniqueFeaturesAdvert.tsx';
 import TrendingProduct from '../components/TrendingProduct.tsx';
 import DiscountItem from '../components/DiscountItem.tsx';
-import TopCategories from '../components/TopCategories.tsx';
 import SubscribeBanner from '../components/SubscribeBanner.tsx';
 import SponsorsBanner from '../components/SponsorsBanner.tsx';
-import ViewCard from '../components/Cards/ViewCard.tsx';
 import { useGetProductsQuery } from '../features/oliveMarketApi.tsx';
 import Loader from '../components/Loaders/Loader.tsx';
+import FeaturedProducts from '../components/FeaturedProducts.tsx';
 
 const Home = () => {
   const { data: queryProducts, isLoading } = useGetProductsQuery(undefined);
-  const newArray = queryProducts && queryProducts.slice(0, 5);
+  const newArray = queryProducts && queryProducts.slice(0, 10);
 
   return (
     <>
@@ -53,28 +49,10 @@ const Home = () => {
             </div>
           </div>
           <div className='w-full pt-20'>
-            <div className=' w-full px-1 md:max-w-5xl  md:mx-auto '>
-              <div className='w-full flex justify-center mb-5'>
-                <p className='text-[30px] font-bold text-[#151875]'>Featured Products</p>
-              </div>
-              <div className='w-full '>
-                <Carousel showDots={true} responsive={responsive}>
-                  {newArray &&
-                    newArray.map((item: any) => (
-                      <ProductCard
-                        key={item?._id}
-                        slug={item?.slug}
-                        productId={item?._id}
-                        image={item.images[0].secureUrl}
-                        name={item?.name}
-                        rating={item?.rating}
-                        price={item?.price / 100}
-                        numberOfReviews={item?.numberOfReviews}
-                      />
-                    ))}
-                </Carousel>
-              </div>
+            <div className='w-full flex justify-center mb-5'>
+              <p className='text-[30px] font-bold text-[#151875]'>Featured Products</p>
             </div>
+            <FeaturedProducts newArray={newArray} />
           </div>
           <div className='w-full flex pt-20 px-5'>
             <LatestProductsTab />
@@ -90,9 +68,6 @@ const Home = () => {
             <div className='w-full  mt-20 px-5'>
               <DiscountItem />
             </div>
-            <div className='w-full  mt-20 px-5'>
-              <TopCategories />
-            </div>
             <div className='w-full  mt-20 '>
               <SubscribeBanner />
             </div>
@@ -104,29 +79,8 @@ const Home = () => {
                 <div className='flex mb-5'>
                   <p className='text-[20px]'>You may also like</p>
                 </div>
-                <div className='w-full'>
-                  <Carousel
-                    responsive={responsive}
-                    // arrows={false}
-                    // customLeftArrow={<ButtonGroup label='left' />}
-                  >
-                    <ViewCard image='/cane_chair.png' />
-                    <ViewCard image='/white_chair.png' />
-                    <ViewCard image='/black_couch.jpeg' />
-                    <ViewCard image='/cane_chair.png' />
-                    <ViewCard image='/white_chair.png' />
-                    <ViewCard image='/black_couch.jpeg' />
-                    <ViewCard image='/cane_chair.png' />
-                    <ViewCard image='/white_chair.png' />
-                    <ViewCard image='/white_chair.png' />
-                    <ViewCard image='/cane_chair.png' />
-                    <ViewCard image='/white_chair.png' />
-                    <ViewCard image='/black_couch.jpeg' />
-                    <ViewCard image='/cane_chair.png' />
-                    <ViewCard image='/white_chair.png' />
-                    <ViewCard image='/white_chair.png' />
-                  </Carousel>
-                </div>
+
+                <FeaturedProducts newArray={newArray} />
               </div>
             </div>
           </div>
