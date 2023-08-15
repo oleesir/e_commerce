@@ -5,67 +5,6 @@
   font-family: 'Inter', sans-serif;
 }
 
-.react-multi-carousel-list {
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-  position: relative;
-}
-
-.react-multi-carousel-list {
-  padding: 0 0 2rem 0;
-}
-
-.custom-dot-list-style button{
-  border: 1px solid #FD665E;
-  background: #FD665E;
-}
-
-.react-multi-carousel-dot button{
-  border: 1px solid #FD665E;
-}
-
-.react-multi-carousel-dot.react-multi-carousel-dot--active button{
-  background:  #FD665E !important;
-  border: 1px solid #FD665E;
-}
-
-
-
-.react-multiple-carousel__arrow {
-  position: absolute;
-  outline: none;
-  transition: all 0.5s;
-  border-radius: 35px;
-  z-index: 1000;
-  border: none;
-  /*background: rgba(0, 0, 0, 0.5);*/
-  min-width: 43px;
-  min-height: 43px;
-  opacity: 1;
-  cursor: pointer;
-  /*background-color: blue;*/
-}
-.react-multiple-carousel__arrow:hover {
-  background: none
-}
-
-.react-multiple-carousel__arrow--left {
-  left: calc(10% - 100px);
-}
-.react-multiple-carousel__arrow--left::before {
-  content: "\e824";
-  color:black;
-}
-.react-multiple-carousel__arrow--right {
-  right: calc(1% + 1px);
-}
-.react-multiple-carousel__arrow--right::before {
-  content: "\e825";
-  color:black;
-}
-
-
 .checkbox-container input:checked ~ .check-1{
   @apply text-opacity-100;
   animation: check-anime 0.5s 1;
