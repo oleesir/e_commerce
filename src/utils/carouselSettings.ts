@@ -10,23 +10,23 @@ export const carouselSettings = {
   autoplaySpeed: 5000,
   responsive: [
     {
-      breakpoint: 1281,
+      breakpoint: 1240,
       settings: {
         slidesToShow: 5,
         slidesToScroll: 5,
         infinite: true,
-        dots: false,
+        dots: true,
         arrows: false,
       },
     },
     {
       breakpoint: 900,
       settings: {
-        slidesToShow: 5,
+        slidesToShow: 4,
         slidesToScroll: 2,
         initialSlide: 2,
         infinite: true,
-        dots: false,
+        dots: true,
         arrows: false,
       },
     },
