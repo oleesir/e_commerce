@@ -32,7 +32,7 @@ const ProductCard = ({
         <div className='w-full h-full flex justify-center items-end p-2'>
           <div className=''>
             <button
-              // onClick={navigateToProduct}
+              onClick={navigateToProduct}
               className='py-2 px-4 bg-[#FD665E] text-[#FFF] mt-2 rounded-none text-xs'
             >
               Add to cart
