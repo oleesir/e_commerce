@@ -77,6 +77,19 @@ export const oliveMarketApi = createApi({
       },
       providesTags: ['Products', 'Carts'],
     }),
+    searchProducts: builder.query({
+      query: (name: string) => {
+        return {
+          url: `products/search?name=${name}`,
+          method: 'GET',
+        };
+      },
+      transformResponse: (response: any) => {
+        const newResponse: Product[] = response?.data;
+        return newResponse;
+      },
+      providesTags: ['Products', 'Carts'],
+    }),
     getProduct: builder.query({
       query: (_id) => {
         return {
@@ -153,4 +166,5 @@ export const {
   useDecrementItemInCartApiMutation,
   useIncrementItemInCartApiMutation,
   useDeleteItemInCartApiMutation,
+  useSearchProductsQuery,
 } = oliveMarketApi;

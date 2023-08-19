@@ -20,22 +20,19 @@ import FeaturedProducts from '../components/FeaturedProducts.tsx';
 const Product = () => {
   const { state }: { state: any } = useLocation();
   const dispatch = useAppDispatch();
-
   const { data: authUser } = useLoadUserQuery(undefined);
-  const { data: queryProduct, isLoading } = useGetProductQuery(state?.productId);
+  const { data: queryProduct, isLoading } = useGetProductQuery(state.productId);
   const { data: userCart } = useGetUserCartQuery(authUser?.cartId);
   const [incrementItemInCartApi] = useIncrementItemInCartApiMutation();
   const [decrementItemInCartApi] = useDecrementItemInCartApiMutation();
   const [selectedImage, setSelectedImage] = useState('');
   const { data: queryProducts } = useGetProductsQuery(undefined);
   const newArray = queryProducts && queryProducts.slice(0, 10);
+  const { cartItems } = useAppSelector((state: any) => state.cart);
 
-  const itemInCart = useAppSelector((state: any) =>
-    state.cart.cartItems.find((item: any) => item._id === state?.productId),
-  );
-  const itemInCartApi = userCart?.cartItems.find(
-    (item: any) => item.productId === state?.productId,
-  );
+  const itemInCart = cartItems.find((item: any) => item._id === state.productId);
+
+  const itemInCartApi = userCart?.cartItems.find((item: any) => item.productId === state.productId);
 
   const handleSelectedImage = (image: string) => {
     setSelectedImage(image);
@@ -88,12 +85,13 @@ const Product = () => {
                       {queryProduct?.images.map((image: any) => {
                         return (
                           <button
+                            key={image?._id}
                             onClick={() => handleSelectedImage(image?.secureUrl)}
                             className='w-[50px] h-[50px] mr-2 cursor-pointer'
                           >
                             <img
-                              key={image._id}
-                              src={image.secureUrl}
+                              key={image?._id}
+                              src={image?.secureUrl}
                               className='w-full h-full'
                               alt='product_image '
                             />

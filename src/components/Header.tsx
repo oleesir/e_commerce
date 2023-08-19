@@ -5,14 +5,17 @@ import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai';
 import { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { navItems } from '../utils/navItems.ts';
+import { useDebounce } from '@uidotdev/usehooks';
 import {
   useGetUserCartQuery,
   useLoadUserQuery,
   useLogoutMutation,
+  useSearchProductsQuery,
 } from '../features/oliveMarketApi.tsx';
 import { getTotalQuantity } from '../features/oliveMarketSlice.tsx';
 import { useAppDispatch, useAppSelector } from '../reduxHooks.ts';
 import { navItemsMobile } from '../utils/navItemsMobile.ts';
+import SearchResult from './SearchResult.tsx';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -22,6 +25,11 @@ const Header = () => {
   const [show, setShow] = useState(false);
   const [nav, setNav] = useState(false);
   const [logout] = useLogoutMutation();
+  const [queryText, setQueryText] = useState('');
+  const debouncedSearchQuery = useDebounce(queryText, 500);
+  const { data: listedProducts } = useSearchProductsQuery(debouncedSearchQuery, {
+    skip: debouncedSearchQuery == '',
+  });
   const { cartTotalQuantity, cartItems } = useAppSelector((state: any) => state.cart);
 
   useEffect(() => {
@@ -85,12 +93,19 @@ const Header = () => {
               <input
                 type='text'
                 name='search'
-                placeholder='Search'
+                value={queryText}
+                onChange={(e) => setQueryText(e.target.value)}
+                placeholder='Search products, brands and categories'
                 className='bg-white h-9 pl-2  rounded-none text-sm focus:outline-none border-[1px] w-full ml-5'
               />
               <button type='submit' className='absolute -right-5 top-0  bg-[#FD665E] py-2.5 px-5'>
                 <FiSearch color={'#FFF'} />
               </button>
+              {queryText ? (
+                listedProducts && listedProducts.length !== 0 ? (
+                  <SearchResult listedProducts={listedProducts} setQueryText={setQueryText} />
+                ) : null
+              ) : null}
             </div>
             <div className='flex justify-between items-center'>
               <div className='relative'>
@@ -156,9 +171,10 @@ const Header = () => {
               </div>
 
               <div className='w-full grid justify-items-start '>
-                {navItemsMobile.map((item: any) => {
+                {navItemsMobile.map((item: any, i: any) => {
                   return (
                     <button
+                      key={i}
                       onClick={() => {
                         navigate(item.path);
                         setNav(!nav);

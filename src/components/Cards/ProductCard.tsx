@@ -21,7 +21,6 @@ const ProductCard = ({
   const navigate = useNavigate();
 
   const navigateToProduct = () => {
-    console.log('CLICKED');
     navigate(`/${slug}`, { state: { productId } });
   };
   return (
