@@ -32,6 +32,7 @@ const SearchResult = ({
           listedProducts.map((product: Product) => {
             return (
               <div
+                key={product?._id}
                 onClick={() => {
                   navigateToProduct({ products: listedProducts });
                 }}
