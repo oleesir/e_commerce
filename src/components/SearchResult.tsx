@@ -9,14 +9,19 @@ const SearchResult = ({
   setQueryText: any;
 }) => {
   const navigate = useNavigate();
-  const navigateToProduct = ({
-    slug,
-    productId,
-  }: {
-    slug: string | undefined;
-    productId: string;
-  }) => {
-    navigate(`/${slug}`, { state: { productId } });
+  // const navigateToProduct = ({
+  //   slug,
+  //   productId,
+  // }: {
+  //   slug: string | undefined;
+  //   productId: string;
+  // }) => {
+  //   navigate(`/${slug}`, { state: { productId } });
+  //   setQueryText('');
+  // };
+
+  const navigateToProduct = ({ products }: { products: Product[] }) => {
+    navigate(`/shop`, { state: { products } });
     setQueryText('');
   };
 
@@ -28,7 +33,7 @@ const SearchResult = ({
             return (
               <div
                 onClick={() => {
-                  navigateToProduct({ slug: product?.slug, productId: product?._id });
+                  navigateToProduct({ products: listedProducts });
                 }}
                 className='w-full p-2 cursor-pointer hover:bg-[#F6F7FB]'
               >

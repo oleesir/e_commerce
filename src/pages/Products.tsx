@@ -1,8 +1,10 @@
 import Sidebar from '../components/Sidebar.tsx';
 import ProductCard from '../components/Cards/ProductCard.tsx';
 import { useGetProductsQuery } from '../features/oliveMarketApi.tsx';
+import { useLocation } from 'react-router-dom';
 
 const Products = () => {
+  const { state }: { state: any } = useLocation();
   const { data } = useGetProductsQuery(undefined);
 
   return (
@@ -13,21 +15,39 @@ const Products = () => {
             <Sidebar />
           </div>
           <div className='col-span-4'>
-            <div className='grid gap-x-8 gap-y-4 grid-cols-4'>
-              {data &&
-                data.map((item: any) => (
-                  <ProductCard
-                    key={item._id}
-                    productId={item._id}
-                    image={item.images[0].secureUrl}
-                    name={item.name}
-                    rating={item.rating}
-                    price={item.price / 100}
-                    slug={item.slug}
-                    numberOfReviews={item.numberOfReviews}
-                  />
-                ))}
-            </div>
+            {state !== null ? (
+              <div className='grid gap-x-8 gap-y-4 grid-cols-4'>
+                {state.products &&
+                  state.products.map((item: any) => (
+                    <ProductCard
+                      key={item._id}
+                      productId={item._id}
+                      image={item.images[0].secureUrl}
+                      name={item.name}
+                      rating={item.rating}
+                      price={item.price / 100}
+                      slug={item.slug}
+                      numberOfReviews={item.numberOfReviews}
+                    />
+                  ))}
+              </div>
+            ) : (
+              <div className='grid gap-x-8 gap-y-4 grid-cols-4'>
+                {data &&
+                  data.map((item: any) => (
+                    <ProductCard
+                      key={item._id}
+                      productId={item._id}
+                      image={item.images[0].secureUrl}
+                      name={item.name}
+                      rating={item.rating}
+                      price={item.price / 100}
+                      slug={item.slug}
+                      numberOfReviews={item.numberOfReviews}
+                    />
+                  ))}
+              </div>
+            )}
           </div>
         </div>
       </div>
