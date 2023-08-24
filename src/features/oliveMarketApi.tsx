@@ -4,6 +4,7 @@ import {
   DecreaseItemFromCartInput,
   DeleteItemFromCartInput,
   LoginInput,
+  OrderInput,
   Product,
   SignupInput,
   User,
@@ -152,6 +153,31 @@ export const oliveMarketApi = createApi({
 
       invalidatesTags: ['Carts'],
     }),
+    getUser: builder.query({
+      query: (_id) => {
+        return {
+          url: `users/${_id}`,
+          method: 'GET',
+        };
+      },
+      transformResponse: (response: any) => {
+        return response?.data;
+      },
+      providesTags: ['Users'],
+    }),
+    createOrder: builder.mutation<void, OrderInput>({
+      query: (body) => {
+        return {
+          url: 'orders',
+          method: 'POST',
+          body,
+        };
+      },
+      transformResponse: (response: any) => {
+        return response?.data;
+      },
+      invalidatesTags: ['Products', 'Carts', 'Users'],
+    }),
   }),
 });
 
@@ -167,4 +193,6 @@ export const {
   useIncrementItemInCartApiMutation,
   useDeleteItemInCartApiMutation,
   useSearchProductsQuery,
+  useGetUserQuery,
+  useCreateOrderMutation,
 } = oliveMarketApi;

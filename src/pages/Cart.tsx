@@ -6,8 +6,10 @@ import SponsorsBanner from '../components/SponsorsBanner.tsx';
 import { useGetUserCartQuery, useLoadUserQuery } from '../features/oliveMarketApi.tsx';
 import CartItemsApi from '../components/CartItemsApi.tsx';
 import EmptyCart from '../components/EmptyCart.tsx';
+import { useNavigate } from 'react-router-dom';
 
 const Cart = () => {
+  const navigate = useNavigate();
   const { data: authUser } = useLoadUserQuery(undefined);
   const { data: userCart } = useGetUserCartQuery(authUser?.cartId);
   const { cartItems, cartTotalAmount } = useAppSelector((state: any) => state.cart);
@@ -27,6 +29,14 @@ const Cart = () => {
       return cartState?.length === 0;
     } else {
       return userCart?.cartItems.length === 0;
+    }
+  };
+
+  const handleCheckout = () => {
+    if (authUser?._id === undefined) {
+      navigate('/login');
+    } else {
+      navigate('/create_order');
     }
   };
 
@@ -91,6 +101,7 @@ const Cart = () => {
                       <div className='flex w-full'>
                         <button
                           type='button'
+                          onClick={handleCheckout}
                           className='rounded-none bg-[#FD665E] text-[#FFF] text-sm font-bold py-3 px-8 cursor-pointer w-full'
                         >
                           Checkout

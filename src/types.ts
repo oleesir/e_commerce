@@ -101,3 +101,12 @@ export type DeleteItemFromCartInput = {
   productId: string | undefined;
   cartId: string;
 };
+
+export type OrderInput = {
+  cartId?: string;
+  address: string;
+  province: string;
+  city: string;
+  phoneNumber: string;
+  paymentMethod: string;
+};

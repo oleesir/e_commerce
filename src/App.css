@@ -5,6 +5,26 @@
   font-family: 'Inter', sans-serif;
 }
 
+input[type="radio"] + label span {
+  transition: background .2s,
+  transform .2s;
+}
+
+input[type="radio"] + label span:hover,
+input[type="radio"] + label:hover span{
+  transform: scale(1.2);
+}
+
+input[type="radio"]:checked + label span {
+  background-color: #FD665D;
+  color: #FD665D;
+}
+
+input[type="radio"]:checked + label{
+  color: #000000;
+}
+
+
 .checkbox-container input:checked ~ .check-1{
   @apply text-opacity-100;
   animation: check-anime 0.5s 1;

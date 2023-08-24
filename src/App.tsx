@@ -12,6 +12,7 @@ import Home from './pages/Home.tsx';
 import Products from './pages/Products.tsx';
 import Product from './pages/Product.tsx';
 import Cart from './pages/Cart.tsx';
+import CreateOrder from './pages/CreateOrder.tsx';
 // import { oliveMarketApi } from './features/oliveMarketApi.tsx';
 import './App.css';
 
@@ -28,6 +29,7 @@ const router = createBrowserRouter(
         <Route index path='shop' element={<Products />} />
         <Route index path=':slug' element={<Product />} />
         <Route index path='cart' element={<Cart />} />
+        <Route index path='create_order' element={<CreateOrder />} />
       </Route>
     </Route>,
   ),
