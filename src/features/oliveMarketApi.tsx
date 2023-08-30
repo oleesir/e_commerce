@@ -168,7 +168,7 @@ export const oliveMarketApi = createApi({
     createOrder: builder.mutation<void, OrderInput>({
       query: (body) => {
         return {
-          url: 'orders',
+          url: 'orders/create_order',
           method: 'POST',
           body,
         };

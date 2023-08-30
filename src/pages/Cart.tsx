@@ -34,7 +34,7 @@ const Cart = () => {
 
   const handleCheckout = () => {
     if (authUser?._id === undefined) {
-      navigate('/login');
+      navigate('/auth/login');
     } else {
       navigate('/create_order');
     }

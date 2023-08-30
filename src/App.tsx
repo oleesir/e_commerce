@@ -13,7 +13,8 @@ import Products from './pages/Products.tsx';
 import Product from './pages/Product.tsx';
 import Cart from './pages/Cart.tsx';
 import CreateOrder from './pages/CreateOrder.tsx';
-// import { oliveMarketApi } from './features/oliveMarketApi.tsx';
+import TransactionSuccess from './pages/TransactionSuccess.tsx';
+import TransactionFailed from './pages/TransactionFailed.tsx';
 import './App.css';
 
 const router = createBrowserRouter(
@@ -30,13 +31,13 @@ const router = createBrowserRouter(
         <Route index path=':slug' element={<Product />} />
         <Route index path='cart' element={<Cart />} />
         <Route index path='create_order' element={<CreateOrder />} />
+        <Route index path='transaction_success' element={<TransactionSuccess />} />
+        <Route index path='transaction_failed' element={<TransactionFailed />} />
       </Route>
     </Route>,
   ),
 );
 function App() {
-  // oliveMarketApi.useLoadUserQuery(undefined);
-
   return <RouterProvider router={router} />;
 }
 

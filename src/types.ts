@@ -108,5 +108,8 @@ export type OrderInput = {
   province: string;
   city: string;
   phoneNumber: string;
-  paymentMethod: string;
+};
+
+export type PlaceOrderInput = {
+  _id: string;
 };

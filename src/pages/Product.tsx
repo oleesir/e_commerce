@@ -21,7 +21,7 @@ const Product = () => {
   const { state }: { state: any } = useLocation();
   const dispatch = useAppDispatch();
   const { data: authUser } = useLoadUserQuery(undefined);
-  const { data: queryProduct, isLoading } = useGetProductQuery(state.productId);
+  const { data: queryProduct, isLoading } = useGetProductQuery(state?.productId);
   const { data: userCart } = useGetUserCartQuery(authUser?.cartId);
   const [incrementItemInCartApi] = useIncrementItemInCartApiMutation();
   const [decrementItemInCartApi] = useDecrementItemInCartApiMutation();
@@ -30,9 +30,11 @@ const Product = () => {
   const newArray = queryProducts && queryProducts.slice(0, 10);
   const { cartItems } = useAppSelector((state: any) => state.cart);
 
-  const itemInCart = cartItems.find((item: any) => item._id === state.productId);
+  const itemInCart = cartItems.find((item: any) => item._id === state?.productId);
 
-  const itemInCartApi = userCart?.cartItems.find((item: any) => item.productId === state.productId);
+  const itemInCartApi = userCart?.cartItems.find(
+    (item: any) => item.productId === state?.productId,
+  );
 
   const handleSelectedImage = (image: string) => {
     setSelectedImage(image);
@@ -107,13 +109,18 @@ const Product = () => {
                     <p className='text-[12px] font-bold'>Brand: </p>
                     <p className='text-[12px] ml-1'>{queryProduct?.brand} </p>
                   </div>
-                  <div className='flex w-full '>
+                  <div className='flex w-full mb-1'>
                     <p className='text-[20px] font-bold'>Price: </p>
                     <p className='text-[20px] ml-1'>
                       {new Intl.NumberFormat('en-CA', {
                         style: 'currency',
                         currency: 'CAD',
                       }).format(Number(queryProduct?.price) / 100)}
+                    </p>
+                  </div>
+                  <div className='flex items-center mb-2'>
+                    <p className='text-[#B12604] text-xs'>
+                      {queryProduct?.countInStock} left in stock.
                     </p>
                   </div>
                   <div className='flex items-center mb-5'>

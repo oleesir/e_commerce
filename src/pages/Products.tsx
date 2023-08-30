@@ -31,7 +31,7 @@ const Products = () => {
   };
 
   return (
-    <div className='w-full mt-[150px]'>
+    <div className='w-full pt-[150px]'>
       <div className='max-w-5xl  mx-auto'>
         <div className='grid grid-cols-5 gap-8'>
           <div>

@@ -1,7 +1,5 @@
-// import { useNavigate } from 'react-router-dom';
-
 import { yupResolver } from '@hookform/resolvers/yup';
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { State, City } from 'country-state-city';
 import { OrderInput } from '../types.ts';
 import { orderSchema } from '../schema/orderSchema.ts';
@@ -12,12 +10,13 @@ import {
   useLoadUserQuery,
 } from '../features/oliveMarketApi.tsx';
 import { useCallback, useEffect, useState } from 'react';
+import { ClockLoader } from 'react-spinners';
 
 const CreateOrder = () => {
   const { data: authUser } = useLoadUserQuery(undefined);
   const { data: userCart } = useGetUserCartQuery(authUser?.cartId);
   const { data: foundUser } = useGetUserQuery(authUser?._id);
-  const [createOrder] = useCreateOrderMutation();
+  const [createOrder, { data: stripeLink, isLoading }] = useCreateOrderMutation();
   const [provinceIsoCode, setProvinceIsoCode] = useState(() => {
     const provinceDetails = State.getStatesOfCountry('CA').find(
       (item) => item?.name === foundUser?.province,
@@ -28,7 +27,6 @@ const CreateOrder = () => {
 
   const {
     handleSubmit,
-    control,
     register,
     getValues,
     setValue,
@@ -39,6 +37,12 @@ const CreateOrder = () => {
       ...foundUser,
     },
   });
+
+  useEffect(() => {
+    if (stripeLink) {
+      window.location.href = stripeLink;
+    }
+  }, [stripeLink]);
 
   const getAndSetProvinceIsoCode = useCallback((province?: string) => {
     const provinceDetails = State.getStatesOfCountry('CA').find((item) => item?.name === province);
@@ -65,13 +69,12 @@ const CreateOrder = () => {
       province: data?.province,
       city: data?.city,
       phoneNumber: data?.phoneNumber,
-      paymentMethod: data?.paymentMethod,
     });
   };
 
   return (
-    <div className='w-full mt-[100px]'>
-      <div className='flex flex-col max-w-5xl  mx-auto'>
+    <div className='w-full pt-[150px] '>
+      <div className='flex flex-col max-w-5xl  mx-auto mb-56  lg:mb-20'>
         <div className='w-full'>
           <p className='font-bold text-2xl'>Shipping</p>
         </div>
@@ -142,58 +145,6 @@ const CreateOrder = () => {
                 <span className='text-xs text-[#FF0303]'>{errors.phoneNumber?.message}</span>
               </div>
             </div>
-            <div>
-              <div className='w-full flex mt-2'>
-                <Controller
-                  name='paymentMethod'
-                  control={control}
-                  defaultValue=''
-                  render={({ field, fieldState }) => (
-                    <div className='flex flex-col'>
-                      <div className='flex items-center'>
-                        <div className='flex items-center'>
-                          <input
-                            type='radio'
-                            className='form-radio h-4 w-4 text-indigo-600 transition cursor-pointer duration-150 ease-in-out bg-amber-600 aria-checked:text-red-500 hidden'
-                            {...field}
-                            value='stripe'
-                            id='payment1'
-                          />
-                          <label
-                            htmlFor='payment1'
-                            className='ml-3 text-sm flex cursor-pointer font-bold'
-                          >
-                            <span className='w-5 h-5 inline-block mr-2 rounded-full border border-grey flex-no-shrink'></span>
-                            Stripe
-                          </label>
-                        </div>
-                        <div className='flex items-center ml-11'>
-                          <input
-                            type='radio'
-                            className='form-radio h-4 w-4 text-indigo-600 transition duration-150  ease-in-out bg-amber-600 aria-checked:text-red-500 cursor-pointer hidden'
-                            {...field}
-                            value='paypal'
-                            id='payment2'
-                          />
-                          <label
-                            htmlFor='payment2'
-                            className='ml-3 text-sm flex cursor-pointer font-bold'
-                          >
-                            <span className='w-5 h-5 inline-block mr-2 rounded-full border border-grey flex-no-shrink '></span>
-                            Paypal
-                          </label>
-                        </div>
-                      </div>
-                      <div className='h-1'>
-                        <span className='text-xs text-[#FF0303]'>
-                          {fieldState.error && fieldState.error.message}
-                        </span>
-                      </div>
-                    </div>
-                  )}
-                />
-              </div>
-            </div>
           </div>
 
           <div className='w-full'>
@@ -203,14 +154,9 @@ const CreateOrder = () => {
               </div>
               <div className='w-full flex flex-col'>
                 <div className='flex w-full justify-between mb-3'>
-                  <p className='text-sm font-bold'>Subtotal</p>
+                  <p className='text-sm font-bold'>Quantity</p>
 
-                  <p className='text-sm '>
-                    {new Intl.NumberFormat('en-CA', {
-                      style: 'currency',
-                      currency: 'CAD',
-                    }).format(1000000 / 100)}
-                  </p>
+                  <p className='text-sm '>{userCart?.totalQuantity}</p>
                 </div>
                 <div className='flex w-full justify-between mb-3'>
                   <p className='text-sm font-bold'>Shipping</p>
@@ -218,9 +164,24 @@ const CreateOrder = () => {
                   <p className='text-sm '>Free</p>
                 </div>
                 <div className='flex w-full justify-between mb-3'>
+                  <p className='text-sm font-bold'>Total Price</p>
+
+                  <p className='text-sm '>
+                    {new Intl.NumberFormat('en-CA', {
+                      style: 'currency',
+                      currency: 'CAD',
+                    }).format(userCart?.totalPrice / 100)}
+                  </p>
+                </div>
+                <div className='flex w-full justify-between mb-3'>
                   <p className='text-sm font-bold'>Estimated Tax</p>
 
-                  <p className='text-sm '>Free</p>
+                  <p className='text-sm '>
+                    {new Intl.NumberFormat('en-CA', {
+                      style: 'currency',
+                      currency: 'CAD',
+                    }).format(userCart?.totalTax / 100)}
+                  </p>
                 </div>
                 <div className='flex w-full justify-between border-t-[1px] pt-2 mb-5'>
                   <p className='text-sm font-bold'>Total</p>
@@ -229,16 +190,22 @@ const CreateOrder = () => {
                     {new Intl.NumberFormat('en-CA', {
                       style: 'currency',
                       currency: 'CAD',
-                    }).format(1000000 / 100)}
+                    }).format(userCart?.totalPriceAfterTax / 100)}
                   </p>
                 </div>
 
                 <div className='flex w-full'>
                   <button
+                    disabled={isLoading}
                     type='submit'
-                    className='rounded-none bg-[#FD665E] text-[#FFF] text-sm font-bold py-3 px-8 cursor-pointer w-full'
+                    className={
+                      isLoading
+                        ? 'rounded-none bg-[#FD665E] text-[#FFF] text-sm font-bold py-3  cursor-not-allowed w-full flex justify-center'
+                        : 'rounded-none bg-[#FD665E] text-[#FFF] text-sm font-bold py-3 px-8 cursor-pointer w-full'
+                    }
                   >
-                    Order
+                    {isLoading && <ClockLoader color='#fff' size={20} />}
+                    {!isLoading && 'Order'}
                   </button>
                 </div>
               </div>
