@@ -6,7 +6,8 @@ import { useEffect, useState } from 'react';
 
 const Products = () => {
   const { state }: { state: any } = useLocation();
-  const { data: products } = useGetProductsQuery(undefined);
+  const { data } = useGetProductsQuery(undefined);
+  const [products, setProducts] = useState(data);
   const [visibleProducts, setVisibleProducts] = useState(8);
   const [visibleProductsFromState, setVisibleProductsFromState] = useState(8);
 
@@ -17,10 +18,16 @@ const Products = () => {
   }, [state?.products]);
 
   useEffect(() => {
+    if (data) {
+      setProducts(data);
+    }
+  }, [data, setProducts]);
+
+  useEffect(() => {
     if (products) {
       setVisibleProducts(8);
     }
-  }, [products]);
+  }, [products, setVisibleProducts]);
 
   const showMoreProducts = () => {
     setVisibleProducts((prevState) => prevState + 4);
@@ -31,11 +38,11 @@ const Products = () => {
   };
 
   return (
-    <div className='w-full pt-[150px]'>
+    <div className='w-full py-[150px]'>
       <div className='max-w-5xl  mx-auto'>
         <div className='grid grid-cols-5 gap-8'>
           <div>
-            <Sidebar />
+            <Sidebar products={products} setProducts={setProducts} />
           </div>
           <div className='col-span-4'>
             {state !== null ? (
@@ -79,18 +86,20 @@ const Products = () => {
         </div>
 
         {state === null ? (
-          <div className='w-full flex justify-center mt-10'>
-            <button
-              type='button'
-              onClick={showMoreProducts}
-              className='text-[#FFF] text-xs bg-[#FD665E] p-3'
-            >
-              Show more
-            </button>
-          </div>
+          products && products.length <= visibleProducts ? null : (
+            <div className='w-full flex justify-center pt-10'>
+              <button
+                type='button'
+                onClick={showMoreProducts}
+                className='text-[#FFF] text-xs bg-[#FD665E] py-3 px-6'
+              >
+                Show more
+              </button>
+            </div>
+          )
         ) : state?.products.length <= visibleProductsFromState ||
           state?.products.length === undefined ? null : (
-          <div className='w-full flex justify-center mt-10'>
+          <div className='w-full flex justify-center pt-10'>
             <button
               type='button'
               onClick={showMoreProductsFromState}

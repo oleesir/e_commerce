@@ -37,6 +37,16 @@ export type Images = {
   cloudinaryId: string;
 };
 
+export type Category = {
+  categoryId: string;
+  name: string;
+};
+
+export type Brand = {
+  brandId: string;
+  name: string;
+};
+
 export type Product = {
   _id: string;
   name: string;
@@ -44,8 +54,8 @@ export type Product = {
   description: string;
   reviews: Reviews[];
   images: Images[];
-  category: string;
-  brand: string;
+  category: Category;
+  brand: Brand;
   rating: number;
   numberOfReviews: number;
   price: number;
@@ -110,6 +120,4 @@ export type OrderInput = {
   phoneNumber: string;
 };
 
-export type PlaceOrderInput = {
-  _id: string;
-};
+export type FilterProductInput = { category?: string | undefined; brand?: string | undefined };
