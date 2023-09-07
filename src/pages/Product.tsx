@@ -107,7 +107,7 @@ const Product = () => {
                   <p className='text-[24px] mb-5'>{queryProduct?.name}</p>
                   <div className='flex w-full '>
                     <p className='text-[12px] font-bold'>Brand: </p>
-                    <p className='text-[12px] ml-1'>{queryProduct?.brand} </p>
+                    <p className='text-[12px] ml-1'>{queryProduct?.brand?.name} </p>
                   </div>
                   <div className='flex w-full mb-1'>
                     <p className='text-[20px] font-bold'>Price: </p>

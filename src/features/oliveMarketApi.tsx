@@ -16,7 +16,7 @@ const baseQuery = fetchBaseQuery({ baseUrl, credentials: 'include' });
 export const oliveMarketApi = createApi({
   reducerPath: 'oliveMarketApi',
   baseQuery,
-  tagTypes: ['Users', 'Products', 'Carts'],
+  tagTypes: ['Users', 'Products', 'Carts', 'Categories'],
   endpoints: (builder) => ({
     signup: builder.mutation<void, SignupInput>({
       query: (body) => {
@@ -178,6 +178,42 @@ export const oliveMarketApi = createApi({
       },
       invalidatesTags: ['Products', 'Carts', 'Users'],
     }),
+    getFilterProducts: builder.query({
+      query: (params: { brands?: string[]; categories?: string[] }) => {
+        const brandQuery = params.brands ? `brands=${params.brands.join(',')}` : '';
+        const categoryQuery = params.categories ? `categories=${params.categories.join(',')}` : '';
+        return `products/filter?${brandQuery}&${categoryQuery}`;
+      },
+      transformResponse: (response: any) => {
+        const newResponse: Product[] = response?.data;
+        return newResponse;
+      },
+      providesTags: ['Products', 'Carts', 'Users'],
+    }),
+    getCategories: builder.query({
+      query: () => {
+        return {
+          url: `categories`,
+          method: 'GET',
+        };
+      },
+      transformResponse: (response: any) => {
+        return response?.data;
+      },
+      providesTags: ['Products'],
+    }),
+    getBrands: builder.query({
+      query: () => {
+        return {
+          url: `brands`,
+          method: 'GET',
+        };
+      },
+      transformResponse: (response: any) => {
+        return response?.data;
+      },
+      providesTags: ['Products'],
+    }),
   }),
 });
 
@@ -195,4 +231,7 @@ export const {
   useSearchProductsQuery,
   useGetUserQuery,
   useCreateOrderMutation,
+  useGetFilterProductsQuery,
+  useGetCategoriesQuery,
+  useGetBrandsQuery,
 } = oliveMarketApi;
