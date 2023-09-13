@@ -7,7 +7,7 @@ const FeaturedTab = () => {
 
   return (
     <>
-      <div className='hidden md:grid gap-x-8 gap-y-8 md:grid-cols-4'>
+      <div className='hidden md:grid gap-x-8 gap-y-8 md:grid-cols-4 '>
         {data &&
           data.map((item: any) => (
             <ProductCard

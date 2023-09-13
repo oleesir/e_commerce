@@ -1,32 +1,25 @@
+import { ChangeEvent, Dispatch, SetStateAction, useEffect } from 'react';
 import { FaCheck } from 'react-icons/fa';
 import { Product } from '../types.ts';
-import {
-  useGetBrandsQuery,
-  useGetCategoriesQuery,
-  useGetFilterProductsQuery,
-} from '../features/oliveMarketApi.tsx';
-import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { useGetBrandsQuery, useGetCategoriesQuery } from '../features/oliveMarketApi.tsx';
 
 const Sidebar = ({
   products,
-  setProducts, // setProductsFromState,
+  setProducts,
+  selectedCategories,
+  setSelectedCategories,
+  selectedBrands,
+  setSelectedBrands,
 }: {
+  selectedCategories: string[];
+  selectedBrands: string[];
   products: Product[] | undefined;
   setProducts: Dispatch<SetStateAction<Product[] | undefined>>;
+  setSelectedCategories: Dispatch<SetStateAction<string[]>>;
+  setSelectedBrands: Dispatch<SetStateAction<string[]>>;
 }) => {
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
   const { data: categories } = useGetCategoriesQuery(undefined);
   const { data: brands } = useGetBrandsQuery(undefined);
-  const { data: filteredProducts } = useGetFilterProductsQuery({
-    categories: selectedCategories,
-    brands: selectedBrands,
-  });
-
-  // // const category = products && products.map((product) => product.category);
-  // const brand = products && products.map((product) => product.brand);
-  // // const categorySet = [...new Set(category)];
-  // const brandSet = [...new Set(brand)];
 
   useEffect(() => {
     if (products) {
@@ -36,15 +29,8 @@ const Sidebar = ({
     }
   }, [products, setProducts, selectedBrands, selectedCategories]);
 
-  useEffect(() => {
-    if (filteredProducts) {
-      setProducts(filteredProducts);
-    }
-  }, [filteredProducts, setProducts]);
-
   const handleCheckboxCategories = (event: ChangeEvent<HTMLInputElement>) => {
     const { value, checked } = event.target;
-    // setProductsFromState(null);
 
     setSelectedCategories((prevCategories) => {
       if (checked) {

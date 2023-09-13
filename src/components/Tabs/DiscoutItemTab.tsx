@@ -4,7 +4,7 @@ const DiscountItemTab = ({ image }: { image: string }) => {
   return (
     <div className='w-full'>
       <div className=' grid md:grid-cols-2'>
-        <div className='w-full flex flex-col pt-10 pl-2'>
+        <div className='w-full flex flex-col pt-10 pl-2 pb-4'>
           <p className='text-[28px] font-bold mb-5 text-[#151875]'>20% Discount Of All Products</p>
           <p className='text-sm text-gray-500 mb-2'>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Eu eget
@@ -38,8 +38,8 @@ const DiscountItemTab = ({ image }: { image: string }) => {
             </button>
           </div>
         </div>
-        <div className='w-full'>
-          <img src={image} alt='image' className='w-[450px] h-[400px]' />
+        <div className='w-full flex justify-center'>
+          <img src={image} alt='image' className='w-[300px] h-[350px]' />
         </div>
       </div>
     </div>

@@ -32,8 +32,8 @@ const FeaturedProducts = ({ newArray }: { newArray: Product[] | undefined }) => 
         {/*    </button>*/}
         {/*  </div>*/}
         {/*</div>*/}
-        <div className='w-full md:px-10 py-10'>
-          <div className=' pl-8  md:max-w-5xl  md:mx-auto  md:pl-0'>
+        <div className='w-full md:px-10 pt-5 pb-10'>
+          <div className=' pl-8  md:max-w-5xl  md:mx-auto  md:pl-0 md:py-2'>
             <Slider {...carouselSettings} ref={(slider: any) => (customSlider.current = slider)}>
               {newArray &&
                 newArray.map((item: any) => (

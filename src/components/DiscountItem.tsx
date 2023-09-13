@@ -22,9 +22,9 @@ const DiscountItemsTab = () => {
         <p className='text-[30px] font-bold text-[#151875]'>Discount Item</p>
       </div>
       <div className='w-full flex justify-center'>
-        <div className='w-full md:w-[400px] flex  justify-between'>
+        <div className='w-full md:w-[400px] flex  justify-between px-10'>
           <button onClick={handleTab1} className='relative group cursor-pointer'>
-            <span className='text-sm text-[#2C2C2C]'>Wood Chair</span>
+            <span className='text-sm text-[#2C2C2C]'>Iphone</span>
             <span
               className={
                 activeTab === 'tab1'
@@ -34,7 +34,7 @@ const DiscountItemsTab = () => {
             ></span>
           </button>
           <button onClick={handleTab2} className='relative group cursor-pointer'>
-            <span className='text-sm text-[#2C2C2C]'>Plastic Chair</span>
+            <span className='text-sm text-[#2C2C2C]'>Samsung</span>
             <span
               className={
                 activeTab === 'tab2'
@@ -44,7 +44,7 @@ const DiscountItemsTab = () => {
             ></span>
           </button>
           <button onClick={handleTab3} className='relative group cursor-pointer'>
-            <span className='text-sm text-[#2C2C2C]'>Sofa Collections</span>
+            <span className='text-sm text-[#2C2C2C]'>Asus</span>
             <span
               className={
                 activeTab === 'tab3'
@@ -56,11 +56,11 @@ const DiscountItemsTab = () => {
         </div>
       </div>
 
-      <div className='w-full flex mt-10'>
+      <div className='w-full flex pt-2 md:pt-10'>
         <div className='max-w-5xl  mx-auto'>
-          {activeTab === 'tab1' && <DiscountItemTab image={'/discount_chair.png'} />}
-          {activeTab === 'tab2' && <DiscountItemTab image={'/cane_chair.png'} />}
-          {activeTab === 'tab3' && <DiscountItemTab image={'/white_chair.png'} />}
+          {activeTab === 'tab1' && <DiscountItemTab image={'/iphone_yellow.jpeg'} />}
+          {activeTab === 'tab2' && <DiscountItemTab image={'/samsung_gg.jpeg'} />}
+          {activeTab === 'tab3' && <DiscountItemTab image={'/rog.jpeg'} />}
         </div>
       </div>
     </div>

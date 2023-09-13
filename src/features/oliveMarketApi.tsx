@@ -179,10 +179,11 @@ export const oliveMarketApi = createApi({
       invalidatesTags: ['Products', 'Carts', 'Users'],
     }),
     getFilterProducts: builder.query({
-      query: (params: { brands?: string[]; categories?: string[] }) => {
+      query: (params: { brands?: string[]; categories?: string[]; category?: string }) => {
         const brandQuery = params.brands ? `brands=${params.brands.join(',')}` : '';
         const categoryQuery = params.categories ? `categories=${params.categories.join(',')}` : '';
-        return `products/filter?${brandQuery}&${categoryQuery}`;
+        const singleCategoryQuery = params.category ? `category=${params.category}` : '';
+        return `products/filter?${brandQuery}&${categoryQuery}&${singleCategoryQuery}`;
       },
       transformResponse: (response: any) => {
         const newResponse: Product[] = response?.data;

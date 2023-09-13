@@ -1,15 +1,30 @@
 import Sidebar from '../components/Sidebar.tsx';
 import ProductCard from '../components/Cards/ProductCard.tsx';
-import { useGetProductsQuery } from '../features/oliveMarketApi.tsx';
+import { useGetFilterProductsQuery, useGetProductsQuery } from '../features/oliveMarketApi.tsx';
 import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 const Products = () => {
   const { state }: { state: any } = useLocation();
   const { data } = useGetProductsQuery(undefined);
+  const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [products, setProducts] = useState(data);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
+  const { data: filteredProducts } = useGetFilterProductsQuery({
+    categories: selectedCategories,
+    brands: selectedBrands,
+    category: selectedCategory,
+  });
+
   const [visibleProducts, setVisibleProducts] = useState(8);
   const [visibleProductsFromState, setVisibleProductsFromState] = useState(8);
+
+  useEffect(() => {
+    if (state?.name !== undefined) {
+      setSelectedCategory(state?.name);
+    }
+  });
 
   useEffect(() => {
     if (state?.products === undefined) {
@@ -29,6 +44,14 @@ const Products = () => {
     }
   }, [products, setVisibleProducts]);
 
+  useEffect(() => {
+    if (filteredProducts) {
+      setProducts(filteredProducts);
+    } else {
+      setProducts(data);
+    }
+  }, [filteredProducts, setProducts, data]);
+
   const showMoreProducts = () => {
     setVisibleProducts((prevState) => prevState + 4);
   };
@@ -42,27 +65,36 @@ const Products = () => {
       <div className='max-w-5xl  mx-auto'>
         <div className='grid grid-cols-5 gap-8'>
           <div>
-            <Sidebar products={products} setProducts={setProducts} />
+            <Sidebar
+              products={products}
+              setProducts={setProducts}
+              selectedCategories={selectedCategories}
+              setSelectedCategories={setSelectedCategories}
+              selectedBrands={selectedBrands}
+              setSelectedBrands={setSelectedBrands}
+            />
           </div>
           <div className='col-span-4'>
-            {state !== null ? (
-              <div className='grid gap-x-8 gap-y-4 grid-cols-4'>
-                {state.products &&
-                  state.products
-                    .slice(0, visibleProductsFromState)
-                    .map((item: any) => (
-                      <ProductCard
-                        key={item._id}
-                        productId={item._id}
-                        image={item.images[0].secureUrl}
-                        name={item.name}
-                        rating={item.rating}
-                        price={item.price / 100}
-                        slug={item.slug}
-                        numberOfReviews={item.numberOfReviews}
-                      />
-                    ))}
-              </div>
+            {state && state.products !== undefined ? (
+              <>
+                <div className='grid gap-x-8 gap-y-4 grid-cols-4'>
+                  {state.products &&
+                    state.products
+                      .slice(0, visibleProductsFromState)
+                      .map((item: any) => (
+                        <ProductCard
+                          key={item._id}
+                          productId={item._id}
+                          image={item.images[0].secureUrl}
+                          name={item.name}
+                          rating={item.rating}
+                          price={item.price / 100}
+                          slug={item.slug}
+                          numberOfReviews={item.numberOfReviews}
+                        />
+                      ))}
+                </div>
+              </>
             ) : (
               <div className='grid gap-x-8 gap-y-4 grid-cols-4'>
                 {products &&
@@ -85,7 +117,7 @@ const Products = () => {
           </div>
         </div>
 
-        {state === null ? (
+        {state?.products === undefined ? (
           products && products.length <= visibleProducts ? null : (
             <div className='w-full flex justify-center pt-10'>
               <button
@@ -97,17 +129,20 @@ const Products = () => {
               </button>
             </div>
           )
-        ) : state?.products.length <= visibleProductsFromState ||
-          state?.products.length === undefined ? null : (
-          <div className='w-full flex justify-center pt-10'>
-            <button
-              type='button'
-              onClick={showMoreProductsFromState}
-              className='text-[#FFF] text-xs bg-[#FD665E] p-3'
-            >
-              Show more
-            </button>
-          </div>
+        ) : (
+          <>
+            {state?.products.length <= visibleProductsFromState ? null : (
+              <div className='w-full flex justify-center pt-10'>
+                <button
+                  type='button'
+                  onClick={showMoreProductsFromState}
+                  className='text-[#FFF] text-xs bg-[#FD665E] p-3'
+                >
+                  Show more
+                </button>
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>

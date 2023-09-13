@@ -1,13 +1,12 @@
-import LatestProductsTab from '../components/Tabs/LatestProductsTab.tsx';
 import WhatWeOfferAdvert from '../components/WhatWeOfferAdvert.tsx';
 import UniqueFeaturesAdvert from '../components/UniqueFeaturesAdvert.tsx';
-import TrendingProduct from '../components/TrendingProduct.tsx';
 import DiscountItem from '../components/DiscountItem.tsx';
 import SubscribeBanner from '../components/SubscribeBanner.tsx';
 import SponsorsBanner from '../components/SponsorsBanner.tsx';
 import { useGetProductsQuery } from '../features/oliveMarketApi.tsx';
 import Loader from '../components/Loaders/Loader.tsx';
 import FeaturedProducts from '../components/FeaturedProducts.tsx';
+import Categories from '../components/Categories.tsx';
 
 const Home = () => {
   const { data: queryProducts, isLoading } = useGetProductsQuery(undefined);
@@ -20,16 +19,16 @@ const Home = () => {
         <div className='w-full flex flex-col'>
           <div className='flex w-full pt-20 bg-[#F1F0FF]'>
             <div className='flex max-w-5xl  mx-auto'>
-              <img src='/lamp.png' className='w-[200px] h-[200px] lg:flex hidden' alt='lamp' />
               <div className='grid grid-cols-1  md:grid-cols-2'>
                 <div className='flex flex-col pt-[50px] md:pt-[100px]'>
                   <div className='flex flex-col px-5'>
-                    <p className='text-[12px] mb-2 text-[#151875]'>Best furniture for castle...</p>
                     <div>
-                      <p className='text-3xl md:text-xl font-bold text-[#151875]'>
-                        New Furniture Collection
+                      <p className='text-3xl md:text-4xl font-bold text-[#151875]'>
+                        New Gagdets Collections
                       </p>
-                      <p className='text-3xl md:text-xl font-bold text-[#151875]'>Trends in 2023</p>
+                      <p className='text-3xl md:text-4xl font-bold text-[#151875]'>
+                        Trends in 2023
+                      </p>
                     </div>
                     <p className='text-[12px] mt-2 text-[#151875]'>
                       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Magna in est
@@ -43,46 +42,42 @@ const Home = () => {
                     </button>
                   </div>
                 </div>
-                <img src='/couch.png' className='w-[400px] h-[400px] pr-5 ' alt='banner_chair' />
+                <img src='/headies.png' className='w-[400px] h-[400px] pr-5 ' alt='banner_chair' />
               </div>
             </div>
           </div>
+          <div className='w-full flex pt-20 px-5'>
+            <Categories />
+          </div>
           <div className='w-full pt-20'>
-            <div className='w-full flex justify-center mb-5'>
+            <div className='w-full flex justify-center '>
               <p className='text-[30px] font-bold text-[#151875]'>Featured Products</p>
             </div>
             <FeaturedProducts newArray={newArray} />
           </div>
-          <div className='w-full flex pt-20 px-5'>
-            <LatestProductsTab />
-          </div>
-          <div className='w-full flex pt-20 px-5'>
+
+          <div className='w-full flex py-20 px-5'>
             <WhatWeOfferAdvert />
           </div>
-          <div className='w-full  mt-20 bg-[#F1F0FF] '>
+          <div className='w-full  bg-[#F1F0FF] '>
             <UniqueFeaturesAdvert />
           </div>
-          <div className='w-full  mt-20 px-5'>
-            <TrendingProduct />
-            <div className='w-full  mt-20 px-5'>
-              <DiscountItem />
-            </div>
-            <div className='w-full  mt-20 '>
-              <SubscribeBanner />
-            </div>
-            <div className='w-full  mt-20'>
-              <SponsorsBanner />
-            </div>
-            <div className='max-w-5xl  mx-auto'>
-              <div className='w-full flex flex-col mt-20'>
-                <div className='flex mb-5'>
-                  <p className='text-[20px]'>You may also like</p>
-                </div>
 
-                <FeaturedProducts newArray={newArray} />
-              </div>
+          <div className='w-full  pt-20 px-5'>
+            <DiscountItem />
+          </div>
+          <div className='w-full  pt-20 '>
+            <SubscribeBanner />
+          </div>
+          <div className='w-full  pt-20'>
+            <SponsorsBanner />
+          </div>
+          <div className='max-w-5xl  mx-auto'>
+            <div className='w-full pt-20'>
+              <p className='text-[20px] text-[#151875] font-bold'>You may also like</p>
             </div>
           </div>
+          <FeaturedProducts newArray={newArray} />
         </div>
       )}
     </>
