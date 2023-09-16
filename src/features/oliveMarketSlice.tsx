@@ -18,10 +18,10 @@ const cartSlice = createSlice({
       if (isItemInCart) {
         state.cartItems[foundIndex] = {
           ...state.cartItems[foundIndex],
-          cartQuantity: (state.cartItems[foundIndex].cartQuantity += 1),
+          quantity: (state.cartItems[foundIndex].quantity += 1),
         };
       } else {
-        let newItem = { ...action.payload, cartQuantity: 1 };
+        let newItem = { ...action.payload, quantity: 1 };
         state.cartItems.push(newItem);
       }
 
@@ -30,9 +30,9 @@ const cartSlice = createSlice({
     decreaseItem: (state: any, action: PayloadAction<Product>) => {
       const itemIndex = state.cartItems.findIndex((item: any) => item._id === action.payload._id);
 
-      if (state.cartItems[itemIndex].cartQuantity > 1) {
-        state.cartItems[itemIndex].cartQuantity -= 1;
-      } else if (state.cartItems[itemIndex].cartQuantity === 1) {
+      if (state.cartItems[itemIndex].quantity > 1) {
+        state.cartItems[itemIndex].quantity -= 1;
+      } else if (state.cartItems[itemIndex].quantity === 1) {
         let nextCartItems: any;
         nextCartItems = state.cartItems.filter((item: any) => item._id !== action.payload._id);
         state.cartItems = nextCartItems;
@@ -43,19 +43,19 @@ const cartSlice = createSlice({
     getTotalQuantity: (state: any) => {
       let totalQuantity: number;
       totalQuantity = state.cartItems.reduce((acc: any, item: any) => {
-        return acc + item.cartQuantity;
+        return acc + item.quantity;
       }, 0);
 
-      state.cartTotalQuantity = totalQuantity;
+      state.totalQuantity = totalQuantity;
     },
     getTotalAmount: (state: any) => {
       let totalAmount: number;
       totalAmount = state.cartItems.reduce((acc: any, item: any) => {
-        return acc + item.price * item.cartQuantity;
+        return acc + item.price * item.quantity;
       }, 0);
       totalAmount = parseFloat(totalAmount.toFixed(2));
 
-      state.cartTotalAmount = totalAmount;
+      state.totalAmount = totalAmount;
     },
     removeItem: (state: any, action: PayloadAction<Product>) => {
       let nextCartItems: any;
@@ -66,8 +66,8 @@ const cartSlice = createSlice({
     },
     clearLocalStorageData: (state: any) => {
       state.cartItems = [];
-      state.cartTotalQuantity = 0;
-      state.cartTotalAmount = 0;
+      state.totalQuantity = 0;
+      state.totalAmount = 0;
 
       localStorage.setItem('cartItems', JSON.stringify(state.cartItems));
     },

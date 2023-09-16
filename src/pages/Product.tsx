@@ -154,7 +154,7 @@ const Product = () => {
                             <RiSubtractLine size={20} color='#FFF' />
                           </button>
                           <div className='p-3 flex items-center'>
-                            <p className='text-xl'>{itemInCart?.cartQuantity}</p>
+                            <p className='text-xl'>{itemInCart?.quantity}</p>
                           </div>
                           <button
                             type='button'

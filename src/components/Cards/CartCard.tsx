@@ -60,7 +60,7 @@ const CartCard = ({
 
   const isDisabled =
     authUser?._id === undefined
-      ? selectedItem?.cartQuantity === selectedItem?.countInStock
+      ? selectedItem?.quantity === selectedItem?.countInStock
       : quantity === queryProduct?.countInStock;
 
   const handleRemoveItem = async () => {
@@ -85,10 +85,10 @@ const CartCard = ({
                 <div className='flex w-1/3  justify-between'>
                   <button
                     type='button'
-                    disabled={selectedItem?.cartQuantity === 1 || quantity === 1}
+                    disabled={selectedItem?.quantity === 1 || quantity === 1}
                     onClick={handleDecreaseProduct}
                     className={
-                      selectedItem?.cartQuantity === 1 || quantity === 1
+                      selectedItem?.quantity === 1 || quantity === 1
                         ? 'py-[5px] px-[8px] bg-[#FD665E] text-[#FFF] cursor-not-allowed opacity-50'
                         : 'py-[5px] px-[8px] bg-[#FD665E] text-[#FFF] cursor-pointer'
                     }

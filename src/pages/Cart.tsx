@@ -5,14 +5,14 @@ import CartItems from '../components/CartItems.tsx';
 import SponsorsBanner from '../components/SponsorsBanner.tsx';
 import { useGetUserCartQuery, useLoadUserQuery } from '../features/oliveMarketApi.tsx';
 import CartItemsApi from '../components/CartItemsApi.tsx';
-import EmptyCart from '../components/EmptyCart.tsx';
 import { useNavigate } from 'react-router-dom';
+import EmptyPage from '../components/EmptyPage.tsx';
 
 const Cart = () => {
   const navigate = useNavigate();
   const { data: authUser } = useLoadUserQuery(undefined);
   const { data: userCart } = useGetUserCartQuery(authUser?.cartId);
-  const { cartItems, cartTotalAmount } = useAppSelector((state: any) => state.cart);
+  const { cartItems, totalAmount } = useAppSelector((state: any) => state.cart);
   const dispatch = useAppDispatch();
   const [cartState, setCartState] = useState(cartItems);
 
@@ -43,7 +43,7 @@ const Cart = () => {
   return (
     <>
       {cartItemResult() ? (
-        <EmptyCart />
+        <EmptyPage message='Your Cart is Empty' image={'/undraw_empty_cart.png'} />
       ) : (
         <div className='w-full flex pt-[100px]'>
           <div className='py-4 max-w-5xl mx-auto px-2'>
@@ -68,7 +68,7 @@ const Cart = () => {
                             {new Intl.NumberFormat('en-CA', {
                               style: 'currency',
                               currency: 'CAD',
-                            }).format(cartTotalAmount / 100)}
+                            }).format(totalAmount / 100)}
                           </p>
                         ) : (
                           <p className='text-sm '>
@@ -86,7 +86,7 @@ const Cart = () => {
                             {new Intl.NumberFormat('en-CA', {
                               style: 'currency',
                               currency: 'CAD',
-                            }).format(cartTotalAmount / 100)}
+                            }).format(totalAmount / 100)}
                           </p>
                         ) : (
                           <p className='text-sm '>

@@ -30,7 +30,15 @@ const Header = () => {
   const { data: listedProducts } = useSearchProductsQuery(debouncedSearchQuery, {
     skip: debouncedSearchQuery == '',
   });
-  const { cartTotalQuantity, cartItems } = useAppSelector((state: any) => state.cart);
+  const { totalQuantity, cartItems } = useAppSelector((state: any) => state.cart);
+
+  useEffect(() => {
+    if (location.pathname === '/orders') {
+      if (authUser?._id === undefined) {
+        navigate('/auth/login');
+      }
+    }
+  }, [authUser, navigate, location.pathname]);
 
   useEffect(() => {
     if (cartItems) {
@@ -74,6 +82,7 @@ const Header = () => {
             <div className='ml-8 flex'>
               {navItems.map((item: any, i: any) => {
                 const isActive = location.pathname.includes(item.root);
+
                 return (
                   <NavLink to={item.path} key={i} className='relative group cursor-pointer ml-5'>
                     <span
@@ -133,9 +142,9 @@ const Header = () => {
               </div>
               <div className='relative flex items-center cursor-pointer' onClick={navToCart}>
                 {authUser?._id === undefined
-                  ? cartTotalQuantity > 0 && (
+                  ? totalQuantity > 0 && (
                       <div className='absolute rounded-full w-[20px] h-[20px] bg-[#FD665E] text-[#FFF] pt-[3px] left-4 -top-2'>
-                        <p className='text-[10px] text-center'>{cartTotalQuantity}</p>
+                        <p className='text-[10px] text-center'>{totalQuantity}</p>
                       </div>
                     )
                   : userCart?.totalQuantity > 0 && (
@@ -196,9 +205,9 @@ const Header = () => {
 
             <div className='relative flex items-center cursor-pointer mr-5' onClick={navToCart}>
               {authUser?._id === undefined
-                ? cartTotalQuantity > 0 && (
+                ? totalQuantity > 0 && (
                     <div className='absolute rounded-full w-[20px] h-[20px] bg-[#FD665E] text-[#FFF] pt-[3px] left-4 -top-2'>
-                      <p className='text-[10px] text-center'>{cartTotalQuantity}</p>
+                      <p className='text-[10px] text-center'>{totalQuantity}</p>
                     </div>
                   )
                 : userCart?.totalQuantity > 0 && (

@@ -59,28 +59,14 @@ export type Product = {
   rating: number;
   numberOfReviews: number;
   price: number;
-  cartQuantity: number;
+  quantity: number;
   countInStock: number;
 };
 
-// export type data = {
-//   _id: string;
-//   name: string;
-//   slug?: string;
-//   description: string;
-//   reviews: [{ name: string; rating: number; comment: string; user: string }];
-//   images: [{ secureUrl: string; cloudinaryId: string }];
-//   category: string;
-//   brand: string;
-//   rating: number;
-//   numberOfReviews: number;
-//   price: number;
-//   cartQuantity: number;
-//   countInStock: number;
-// };
-
 export type CartState = {
   cartItems: Product[];
+  // totalAmount: number;
+  // totalQuantity: number;
 };
 
 export type CartItemFromApi = {
@@ -119,5 +105,3 @@ export type OrderInput = {
   city: string;
   phoneNumber: string;
 };
-
-export type FilterProductInput = { category?: string | undefined; brand?: string | undefined };
