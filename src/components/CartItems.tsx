@@ -13,7 +13,7 @@ const CartItems = ({ cartState }: { cartState: Product[] }) => {
               price={cartItem?.price}
               name={cartItem?.name}
               images={cartItem?.images[0].secureUrl}
-              quantity={cartItem?.cartQuantity}
+              quantity={cartItem?.quantity}
             />
           );
         })}

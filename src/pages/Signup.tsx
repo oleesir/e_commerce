@@ -162,8 +162,8 @@ const Signup = () => {
                 type='submit'
                 className={
                   isLoading
-                    ? 'bg-[#FD665E] text-[#FFF] text-sm font-bold py-3 px-8 cursor-not-allowed'
-                    : 'bg-[#FD665E] text-[#FFF] text-sm font-bold py-3 px-8 cursor-pointer'
+                    ? 'bg-[#FD665E] text-[#FFF] text-sm font-bold py-3 px-8 cursor-not-allowed flex justify-center w-full'
+                    : 'bg-[#FD665E] text-[#FFF] text-sm font-bold py-3 px-8 cursor-pointer w-full'
                 }
               >
                 {isLoading && <ClockLoader color='#fff' size={20} />}

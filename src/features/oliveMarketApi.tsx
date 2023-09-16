@@ -215,6 +215,18 @@ export const oliveMarketApi = createApi({
       },
       providesTags: ['Products'],
     }),
+    getCustomerOrders: builder.query({
+      query: () => {
+        return {
+          url: `orders`,
+          method: 'GET',
+        };
+      },
+      transformResponse: (response: any) => {
+        return response?.data;
+      },
+      providesTags: ['Products'],
+    }),
   }),
 });
 
@@ -235,4 +247,5 @@ export const {
   useGetFilterProductsQuery,
   useGetCategoriesQuery,
   useGetBrandsQuery,
+  useGetCustomerOrdersQuery,
 } = oliveMarketApi;

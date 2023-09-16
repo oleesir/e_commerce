@@ -9,16 +9,6 @@ const SearchResult = ({
   setQueryText: any;
 }) => {
   const navigate = useNavigate();
-  // const navigateToProduct = ({
-  //   slug,
-  //   productId,
-  // }: {
-  //   slug: string | undefined;
-  //   productId: string;
-  // }) => {
-  //   navigate(`/${slug}`, { state: { productId } });
-  //   setQueryText('');
-  // };
 
   const navigateToProduct = ({ products }: { products: Product[] }) => {
     navigate(`/shop`, { state: { products } });
