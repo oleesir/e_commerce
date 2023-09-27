@@ -24,7 +24,7 @@ const Home = () => {
                   <div className='flex flex-col px-5'>
                     <div>
                       <p className='text-3xl md:text-4xl font-bold text-[#151875]'>
-                        New Gagdets Collections
+                        New Gadgets Collections
                       </p>
                       <p className='text-3xl md:text-4xl font-bold text-[#151875]'>
                         Trends in 2023
