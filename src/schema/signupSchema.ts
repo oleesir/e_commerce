@@ -3,20 +3,28 @@ import * as yup from 'yup';
 export const signupSchema = yup.object({
   firstName: yup
     .string()
-    .test('len', 'Name must be longer than or equal to 2 characters', (val: any) => val.length >= 2)
-    .matches(/^[aA-zZ\s]+$/, 'Input letters only.')
-    .required('Required.'),
+    .required('Required.')
+    .test(
+      'len',
+      'Name must be more than or equal to two characters.',
+      (val: any) => val.length >= 2,
+    )
+    .matches(/^[aA-zZ\s]+$/, 'Input letters only.'),
   lastName: yup
     .string()
-    .test('len', 'Name must be longer than or equal to 2 characters', (val: any) => val.length >= 2)
-    .matches(/^[aA-zZ\s]+$/, 'Input letters only.')
-    .required('Required.'),
-  email: yup.string().required('Email is required.').email('Invalid email address.'),
+    .required('Required.')
+    .test(
+      'len',
+      'Name must be more than or equal to two characters.',
+      (val: any) => val.length >= 2,
+    )
+    .matches(/^[aA-zZ\s]+$/, 'Input letters only.'),
+  email: yup.string().required('Required.').email('Invalid email address.'),
   password: yup
     .string()
-    .required('Please enter your password.')
+    .required('Required.')
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-      'Must Contain 8 Characters,Uppercase, Lowercase,Number and Special Case Character.',
+      'Must contain eight characters, uppercase, lowercase, number and special case character.',
     ),
 });

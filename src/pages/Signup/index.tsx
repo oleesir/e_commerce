@@ -1,16 +1,16 @@
-import { signupSchema } from '../schema/signupSchema.ts';
+import { signupSchema } from '../../schema/signupSchema.ts';
 import { useForm } from 'react-hook-form';
-import { SignupInput } from '../types.ts';
+import { SignupInput } from '../../types.ts';
 import { RiEyeCloseLine, RiEyeLine } from 'react-icons/ri';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect, useState } from 'react';
 import { MdShoppingCartCheckout } from 'react-icons/md';
 import { PiMapPinLineBold } from 'react-icons/pi';
 import { useNavigate } from 'react-router-dom';
-import { useSignupMutation } from '../features/oliveMarketApi.tsx';
+import { useSignupMutation } from '../../features/oliveMarketApi.tsx';
 import { ClockLoader } from 'react-spinners';
-import { useAppDispatch } from '../reduxHooks.ts';
-import { clearLocalStorageData } from '../features/oliveMarketSlice.tsx';
+import { useAppDispatch } from '../../reduxHooks.ts';
+import { clearLocalStorageData } from '../../features/oliveMarketSlice.tsx';
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -22,14 +22,14 @@ const Signup = () => {
   } = useForm<SignupInput>({ resolver: yupResolver(signupSchema) });
   const [show, setShow] = useState(false);
   const [serverError, setServerError] = useState(null);
-  const [signup, { error, isSuccess, isLoading }] = useSignupMutation();
+  const [signup, { data: user, error, isLoading }] = useSignupMutation();
 
   useEffect(() => {
-    if (isSuccess) {
+    if (user) {
       dispatch(clearLocalStorageData());
       navigate('/');
     }
-  }, [isSuccess]);
+  }, [user]);
 
   useEffect(() => {
     if (error) {
@@ -71,14 +71,18 @@ const Signup = () => {
             <p className='text-base text-[#FF0303]'>{serverError}</p>
           </div>
           <form
+            data-testid='signup-form'
             onSubmit={handleSubmit(onSubmit)}
             className='w-full flex justify-center flex-col mb-10'
           >
             <div className='mb-5 lg:mb-8'>
-              <label className='text-sm'>First Name</label>
+              <label htmlFor='firstName' className='text-sm'>
+                First Name
+              </label>
               <input
                 type='text'
-                className='w-full bg-[#fff] text-black py-1 lg:py-2 px-5 outline-none border-[1px] rounded-md'
+                id='firstName'
+                className='w-full bg-[#fff] text-black py-1 lg:py-2 px-5 outline-none border-[1px] rounded-none'
                 {...register('firstName', {
                   onChange: () => {
                     if (error) {
@@ -92,10 +96,13 @@ const Signup = () => {
               </div>
             </div>
             <div className='mb-5 lg:mb-8'>
-              <label className='text-sm'>Last Name</label>
+              <label htmlFor='lastName' className='text-sm'>
+                Last Name
+              </label>
               <input
                 type='text'
-                className='w-full bg-[#fff] text-black py-1 lg:py-2 px-5 outline-none border-[1px] rounded-md'
+                id='lastName'
+                className='w-full bg-[#fff] text-black py-1 lg:py-2 px-5 outline-none border-[1px] rounded-none'
                 {...register('lastName', {
                   onChange: () => {
                     if (error) {
@@ -109,10 +116,13 @@ const Signup = () => {
               </div>
             </div>
             <div className='mb-5 lg:mb-8'>
-              <label className='text-sm'>Email</label>
+              <label htmlFor='email' className='text-sm'>
+                Email
+              </label>
               <input
                 type='email'
-                className='w-full bg-[#fff] text-black py-1 lg:py-2 px-5 outline-none border-[1px] rounded-md'
+                id='email'
+                className='w-full bg-[#fff] text-black py-1 lg:py-2 px-5 outline-none border-[1px] rounded-none'
                 {...register('email', {
                   onChange: () => {
                     if (error) {
@@ -126,10 +136,13 @@ const Signup = () => {
               </div>
             </div>
             <div className='mb-[20px] lg:mb-[80px]'>
-              <label className='text-sm'>Password</label>
+              <label htmlFor='password' className='text-sm'>
+                Password
+              </label>
               <div className='w-full inline-block relative'>
                 <input
                   type={!show ? 'password' : 'text'}
+                  id='password'
                   {...register('password', {
                     onChange: () => {
                       if (error) {
@@ -137,7 +150,7 @@ const Signup = () => {
                       }
                     },
                   })}
-                  className='w-full bg-[#fff] text-black py-1 lg:py-2 px-5 outline-none border-[1px] rounded-md'
+                  className='w-full bg-[#fff] text-black py-1 lg:py-2 px-5 outline-none border-[1px] rounded-none'
                 />
                 <button
                   onClick={handleShow}

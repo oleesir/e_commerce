@@ -11,6 +11,7 @@ import {
 } from '../types.ts';
 
 const baseUrl = import.meta.env.VITE_PUBLIC_BACKEND_API;
+
 const baseQuery = fetchBaseQuery({ baseUrl, credentials: 'include' });
 
 export const oliveMarketApi = createApi({
@@ -26,7 +27,7 @@ export const oliveMarketApi = createApi({
           body,
         };
       },
-      invalidatesTags: ['Users', 'Carts', 'Products'],
+      invalidatesTags: ['Users', 'Products'],
     }),
     login: builder.mutation<void, LoginInput>({
       query: (body) => {

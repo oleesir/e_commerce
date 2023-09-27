@@ -7,7 +7,7 @@ const Order = () => {
 
   return (
     <>
-      {orders.length === 0 ? (
+      {orders && orders.length === 0 ? (
         <EmptyPage message={'No orders start shopping.'} image={'/emptyOrder.png'} />
       ) : (
         <div className='w-full py-[150px]'>

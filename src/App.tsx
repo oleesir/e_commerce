@@ -4,9 +4,9 @@ import {
   Route,
   RouterProvider,
 } from 'react-router-dom';
-import Signup from './pages/Signup.tsx';
+import Signup from './pages/Signup';
 import AuthLayout from './layouts/AuthLayout.tsx';
-import Login from './pages/Login.tsx';
+import Login from './pages/Login';
 import MainLayout from './layouts/MainLayout.tsx';
 import Home from './pages/Home.tsx';
 import Products from './pages/Products.tsx';
@@ -23,18 +23,18 @@ const router = createBrowserRouter(
     <Route>
       <Route path='/auth' element={<AuthLayout />}>
         <Route path='signup' element={<Signup />} />
-        <Route index path='login' element={<Login />} />
+        <Route path='login' element={<Login />} />
       </Route>
 
       <Route element={<MainLayout />}>
-        <Route index path='/' element={<Home />} />
-        <Route index path='shop' element={<Products />} />
-        <Route index path=':slug' element={<Product />} />
-        <Route index path='cart' element={<Cart />} />
-        <Route index path='orders' element={<Order />} />
-        <Route index path='create_order' element={<CreateOrder />} />
-        <Route index path='transaction_success' element={<TransactionSuccess />} />
-        <Route index path='transaction_failed' element={<TransactionFailed />} />
+        <Route path='/' element={<Home />} />
+        <Route path='shop' element={<Products />} />
+        <Route path=':slug' element={<Product />} />
+        <Route path='cart' element={<Cart />} />
+        <Route path='orders' element={<Order />} />
+        <Route path='create_order' element={<CreateOrder />} />
+        <Route path='transaction_success' element={<TransactionSuccess />} />
+        <Route path='transaction_failed' element={<TransactionFailed />} />
       </Route>
     </Route>,
   ),

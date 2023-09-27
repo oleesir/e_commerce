@@ -1,16 +1,16 @@
 import { useForm } from 'react-hook-form';
-import { LoginInput } from '../types.ts';
+import { LoginInput } from '../../types.ts';
 import { RiEyeCloseLine, RiEyeLine } from 'react-icons/ri';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect, useState } from 'react';
 import { MdShoppingCartCheckout } from 'react-icons/md';
 import { PiMapPinLineBold } from 'react-icons/pi';
-import { loginSchema } from '../schema/loginSchema.ts';
+import { loginSchema } from '../../schema/loginSchema.ts';
 import { useNavigate } from 'react-router-dom';
 import { ClockLoader } from 'react-spinners';
-import { useLoginMutation } from '../features/oliveMarketApi.tsx';
-import { useAppDispatch } from '../reduxHooks.ts';
-import { clearLocalStorageData } from '../features/oliveMarketSlice.tsx';
+import { useLoginMutation } from '../../features/oliveMarketApi.tsx';
+import { useAppDispatch } from '../../reduxHooks.ts';
+import { clearLocalStorageData } from '../../features/oliveMarketSlice.tsx';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -22,14 +22,14 @@ const Login = () => {
   } = useForm<LoginInput>({ resolver: yupResolver(loginSchema) });
   const [show, setShow] = useState(false);
   const [serverError, setServerError] = useState(null);
-  const [login, { isSuccess, error, isLoading }] = useLoginMutation();
+  const [login, { data: user, error, isLoading }] = useLoginMutation();
 
   useEffect(() => {
-    if (isSuccess) {
+    if (user) {
       dispatch(clearLocalStorageData());
       navigate('/');
     }
-  }, [isSuccess]);
+  }, [user]);
 
   useEffect(() => {
     if (error) {
@@ -78,14 +78,18 @@ const Login = () => {
             <p className='text-base text-[#FF0303]'>{serverError}</p>
           </div>
           <form
+            data-testid='login-form'
             onSubmit={handleSubmit(onSubmit)}
             className='w-full flex justify-center flex-col mb-10'
           >
             <div className='mb-5 lg:mb-8'>
-              <label className='text-sm'>Email</label>
+              <label htmlFor='email' className='text-sm'>
+                Email
+              </label>
               <input
+                id='email'
                 type='email'
-                className='w-full bg-[#fff] text-black py-1 lg:py-2 px-5 outline-none border-[1px] rounded-md'
+                className='w-full bg-[#fff] text-black py-1 lg:py-2 px-5 outline-none border-[1px] rounded-none'
                 {...register('email', {
                   onChange: () => {
                     if (error) {
@@ -99,9 +103,12 @@ const Login = () => {
               </div>
             </div>
             <div className='mb-[20px] lg:mb-[20px]'>
-              <label className='text-sm'>Password</label>
+              <label htmlFor='password' className='text-sm'>
+                Password
+              </label>
               <div className='w-full inline-block relative'>
                 <input
+                  id='password'
                   type={!show ? 'password' : 'text'}
                   {...register('password', {
                     onChange: () => {
@@ -110,9 +117,10 @@ const Login = () => {
                       }
                     },
                   })}
-                  className='w-full bg-[#fff] text-black py-1 lg:py-2 px-5 outline-none border-[1px] rounded-md'
+                  className='w-full bg-[#fff] text-black py-1 lg:py-2 px-5 outline-none border-[1px] rounded-none'
                 />
                 <button
+                  type='button'
                   onClick={handleShow}
                   className='absolute inset-y-0 right-0 flex items-center pr-5 '
                 >
@@ -150,7 +158,7 @@ const Login = () => {
           <div className='border-t-[1px] pt-5'>
             <div className='flex'>
               <p className='text-sm'>
-                Don&apos;t have an account?{'  '}
+                Don&apos;t have an account?
                 <span onClick={pushToSignup} className='text-[#FD665E] font-medium cursor-pointer'>
                   Create account
                 </span>
