@@ -1,3 +1,5 @@
+import { useCallback, useEffect, useState } from 'react';
+import { ClockLoader } from 'react-spinners';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { State, City } from 'country-state-city';
@@ -9,8 +11,6 @@ import {
   useGetUserQuery,
   useLoadUserQuery,
 } from '../features/oliveMarketApi.tsx';
-import { useCallback, useEffect, useState } from 'react';
-import { ClockLoader } from 'react-spinners';
 
 const CreateOrder = () => {
   const { data: authUser } = useLoadUserQuery(undefined);

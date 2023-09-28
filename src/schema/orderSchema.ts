@@ -6,6 +6,6 @@ export const orderSchema = yup.object({
   city: yup.string().required('Required.'),
   phoneNumber: yup
     .string()
-    .matches(/^\d{10}$/, 'Not a valid phone number')
-    .required('Required'),
+    .required('Required')
+    .matches(/^\d{10}$/, 'Not a valid phone number'),
 });
