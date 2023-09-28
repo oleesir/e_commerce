@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-// import { format, parseISO } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 import { BiChevronDown } from 'react-icons/bi';
 import {
   useGetProductQuery,
@@ -52,8 +52,7 @@ const OrderCard = ({
         <div className='grid grid-cols-3 gap-8'>
           <div>
             <p className='text-xs mb-1 font-bold'>Order Placed</p>
-            {/*<p className='text-xs'>{format(parseISO(OrderDate), 'MMMM d, yyyy')}</p>*/}
-            <p className='text-xs'>{'date-fns'}</p>
+            <p className='text-xs'>{format(parseISO(OrderDate), 'MMMM d, yyyy')}</p>
           </div>
           <div>
             <p className='text-xs mb-1 font-bold'>Total</p>
