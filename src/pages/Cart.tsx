@@ -36,7 +36,7 @@ const Cart = () => {
     if (authUser?._id === undefined) {
       navigate('/auth/login');
     } else {
-      navigate('/create_order');
+      navigate('/order');
     }
   };
 

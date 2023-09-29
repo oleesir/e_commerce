@@ -83,13 +83,13 @@ const Login = () => {
             className='w-full flex justify-center flex-col mb-10'
           >
             <div className='mb-5 lg:mb-8'>
-              <label htmlFor='email' className='text-sm'>
+              <label htmlFor='email' className='text-base'>
                 Email
               </label>
               <input
                 id='email'
                 type='email'
-                className='w-full bg-[#fff] text-black py-4 lg:py-2 px-5 outline-none border-[1px] rounded-none'
+                className='w-full bg-[#fff] text-black py-3 lg:py-2 px-5 outline-none border-[1px] rounded-none text-base '
                 {...register('email', {
                   onChange: () => {
                     if (error) {
@@ -103,7 +103,7 @@ const Login = () => {
               </div>
             </div>
             <div className='mb-[20px] lg:mb-[20px]'>
-              <label htmlFor='password' className='text-sm'>
+              <label htmlFor='password' className='text-base'>
                 Password
               </label>
               <div className='w-full inline-block relative'>
@@ -117,7 +117,7 @@ const Login = () => {
                       }
                     },
                   })}
-                  className='w-full bg-[#fff] text-black py-1 lg:py-2 px-5 outline-none border-[1px] rounded-none'
+                  className='w-full bg-[#fff] text-black py-3 lg:py-2 px-5 outline-none border-[1px] rounded-none text-base'
                 />
                 <button
                   type='button'
@@ -146,8 +146,8 @@ const Login = () => {
                 disabled={isLoading}
                 className={
                   isLoading
-                    ? 'bg-[#FD665E] text-[#FFF] text-sm font-bold py-3 px-8 cursor-not-allowed flex justify-center w-full'
-                    : 'bg-[#FD665E] text-[#FFF] text-sm font-bold py-3 px-8 cursor-pointer w-full'
+                    ? 'bg-[#FD665E] text-[#FFF] text-base font-bold py-4 px-8 cursor-not-allowed flex justify-center w-full'
+                    : 'bg-[#FD665E] text-[#FFF] text-base font-bold py-4 px-8 cursor-pointer w-full'
                 }
               >
                 {isLoading && <ClockLoader color='#fff' size={20} />}
@@ -159,7 +159,10 @@ const Login = () => {
             <div className='flex'>
               <p className='text-sm'>
                 Don&apos;t have an account?
-                <span onClick={pushToSignup} className='text-[#FD665E] font-medium cursor-pointer'>
+                <span
+                  onClick={pushToSignup}
+                  className='text-[#FD665E] font-medium cursor-pointer ml-1'
+                >
                   Create account
                 </span>
               </p>
