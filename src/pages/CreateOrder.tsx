@@ -1,8 +1,8 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { ClockLoader } from 'react-spinners';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-// import { State, City } from 'country-state-city';
+import { State, City } from 'country-state-city';
 import { OrderInput } from '../types.ts';
 import { orderSchema } from '../schema/orderSchema.ts';
 import {
@@ -17,19 +17,19 @@ const CreateOrder = () => {
   const { data: userCart } = useGetUserCartQuery(authUser?.cartId);
   const { data: foundUser } = useGetUserQuery(authUser?._id);
   const [createOrder, { data: stripeLink, isLoading }] = useCreateOrderMutation();
-  // const [provinceIsoCode, setProvinceIsoCode] = useState(() => {
-  //   const provinceDetails = State.getStatesOfCountry('CA').find(
-  //     (item) => item?.name === foundUser?.province,
-  //   );
-  //
-  //   return provinceDetails?.isoCode || '';
-  // });
+  const [provinceIsoCode, setProvinceIsoCode] = useState(() => {
+    const provinceDetails = State.getStatesOfCountry('CA').find(
+      (item) => item?.name === foundUser?.province,
+    );
+
+    return provinceDetails?.isoCode || '';
+  });
 
   const {
     handleSubmit,
     register,
-    // getValues,
-    // setValue,
+    getValues,
+    setValue,
     formState: { errors },
   } = useForm<OrderInput>({
     resolver: yupResolver(orderSchema),
@@ -44,23 +44,23 @@ const CreateOrder = () => {
     }
   }, [stripeLink]);
 
-  // const getAndSetProvinceIsoCode = useCallback((province?: string) => {
-  //   const provinceDetails = State.getStatesOfCountry('CA').find((item) => item?.name === province);
-  //   setProvinceIsoCode(provinceDetails?.isoCode || '');
-  // }, []);
+  const getAndSetProvinceIsoCode = useCallback((province?: string) => {
+    const provinceDetails = State.getStatesOfCountry('CA').find((item) => item?.name === province);
+    setProvinceIsoCode(provinceDetails?.isoCode || '');
+  }, []);
 
-  // useEffect(() => {
-  //   getAndSetProvinceIsoCode(foundUser?.province);
-  // }, [foundUser?.province]);
-  //
-  // const handleChange = (e: any) => {
-  //   const { name, value } = e.target;
-  //   setValue(name, value);
-  //
-  //   if (name === 'province') {
-  //     getAndSetProvinceIsoCode(getValues('province'));
-  //   }
-  // };
+  useEffect(() => {
+    getAndSetProvinceIsoCode(foundUser?.province);
+  }, [foundUser?.province]);
+
+  const handleChange = (e: any) => {
+    const { name, value } = e.target;
+    setValue(name, value);
+
+    if (name === 'province') {
+      getAndSetProvinceIsoCode(getValues('province'));
+    }
+  };
 
   const onSubmit = (data: OrderInput) => {
     createOrder({
@@ -89,12 +89,12 @@ const CreateOrder = () => {
                 <div className='w-full mt-2'>
                   <select
                     {...register('province')}
-                    // onChange={handleChange}
+                    onChange={handleChange}
                     className='w-full bg-[#fff] text-black py-1 lg:py-2 px-5 outline-none border-[1px] rounded-none appearance-none'
                   >
-                    {/*{State.getStatesOfCountry('CA').map((item, i) => (*/}
-                    {/*  <option key={i}>{item.name}</option>*/}
-                    {/*))}*/}
+                    {State.getStatesOfCountry('CA').map((item, i) => (
+                      <option key={i}>{item.name}</option>
+                    ))}
                   </select>
                 </div>
                 <div className='h-1'>
@@ -107,12 +107,12 @@ const CreateOrder = () => {
                 <div className='w-full mt-2'>
                   <select
                     {...register('city')}
-                    // onChange={handleChange}
+                    onChange={handleChange}
                     className='w-full bg-[#fff] text-black py-1 lg:py-2 px-5 outline-none border-[1px] rounded-none appearance-none'
                   >
-                    {/*{City.getCitiesOfState('CA', provinceIsoCode).map((item, i) => (*/}
-                    {/*  <option key={i}>{item.name}</option>*/}
-                    {/*))}*/}
+                    {City.getCitiesOfState('CA', provinceIsoCode).map((item, i) => (
+                      <option key={i}>{item.name}</option>
+                    ))}
                   </select>
                 </div>
                 <div className='h-1'>
@@ -126,7 +126,7 @@ const CreateOrder = () => {
               <input
                 type='text'
                 {...register('address')}
-                // onChange={handleChange}
+                onChange={handleChange}
                 className='w-full bg-[#fff] text-black py-1 lg:py-2 px-5 outline-none border-[1px] rounded-none'
               />
               <div className='h-1'>
@@ -138,7 +138,7 @@ const CreateOrder = () => {
               <input
                 type='text'
                 {...register('phoneNumber')}
-                // onChange={handleChange}
+                onChange={handleChange}
                 className='w-full bg-[#fff] text-black py-1 lg:py-2 px-5 outline-none border-[1px] rounded-none'
               />
               <div className='h-1'>

@@ -27,7 +27,7 @@ const Login = () => {
   useEffect(() => {
     if (user) {
       dispatch(clearLocalStorageData());
-      navigate('/');
+      navigate(-1);
     }
   }, [user]);
 
