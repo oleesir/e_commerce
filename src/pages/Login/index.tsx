@@ -89,7 +89,7 @@ const Login = () => {
               <input
                 id='email'
                 type='email'
-                className='w-full bg-[#fff] text-black py-1 lg:py-2 px-5 outline-none border-[1px] rounded-none'
+                className='w-full bg-[#fff] text-black py-4 lg:py-2 px-5 outline-none border-[1px] rounded-none'
                 {...register('email', {
                   onChange: () => {
                     if (error) {
