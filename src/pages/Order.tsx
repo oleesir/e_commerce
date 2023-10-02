@@ -17,7 +17,7 @@ const Order = () => {
   const { data: userCart } = useGetUserCartQuery(authUser?.cartId);
   const { data: foundUser } = useGetUserQuery(authUser?._id);
   const [createOrder, { data: stripeLink, isLoading }] = useCreateOrderMutation();
-  const [provinceIsoCode, setProvinceIsoCode] = useState<string>(() => {
+  const [_, setProvinceIsoCode] = useState<string>(() => {
     const provinceDetails = State.getStatesOfCountry('CA').find(
       (item) => item?.name === foundUser?.province,
     );
