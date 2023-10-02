@@ -27,14 +27,14 @@ const Login = () => {
   useEffect(() => {
     if (user) {
       dispatch(clearLocalStorageData());
-      navigate(-1);
+      navigate('/');
     }
   }, [user]);
 
   useEffect(() => {
     if (error) {
       // @ts-ignore
-      setServerError(error?.data.message);
+      setServerError(error?.data?.message);
     }
   }, [error]);
 

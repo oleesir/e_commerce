@@ -32,13 +32,13 @@ const Header = () => {
   });
   const { totalQuantity, cartItems } = useAppSelector((state: any) => state.cart);
 
-  useEffect(() => {
-    if (location.pathname === '/orders') {
-      if (authUser?._id === undefined) {
-        navigate('/auth/login');
-      }
-    }
-  }, [authUser, navigate, location.pathname]);
+  // useEffect(() => {
+  //   if (location.pathname === '/orders') {
+  //     if (authUser?._id === undefined) {
+  //       navigate('/auth/login');
+  //     }
+  //   }
+  // }, [authUser, navigate, location.pathname]);
 
   useEffect(() => {
     if (cartItems) {

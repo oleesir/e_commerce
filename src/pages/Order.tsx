@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { ClockLoader } from 'react-spinners';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-import { State, City } from 'country-state-city';
+// import { State, City } from 'country-state-city';
 import { OrderInput } from '../types.ts';
 import { orderSchema } from '../schema/orderSchema.ts';
 import {
@@ -17,18 +17,18 @@ const Order = () => {
   const { data: userCart } = useGetUserCartQuery(authUser?.cartId);
   const { data: foundUser } = useGetUserQuery(authUser?._id);
   const [createOrder, { data: stripeLink, isLoading }] = useCreateOrderMutation();
-  const [provinceIsoCode, setProvinceIsoCode] = useState(() => {
-    const provinceDetails = State.getStatesOfCountry('CA').find(
-      (item) => item?.name === foundUser?.province,
-    );
-
-    return provinceDetails?.isoCode || '';
-  });
+  // const [provinceIsoCode, setProvinceIsoCode] = useState<string>(() => {
+  //   const provinceDetails = State.getStatesOfCountry('CA').find(
+  //     (item) => item?.name === foundUser?.province,
+  //   );
+  //
+  //   return provinceDetails?.isoCode || '';
+  // });
 
   const {
     handleSubmit,
     register,
-    getValues,
+    // getValues,
     setValue,
     formState: { errors },
   } = useForm<OrderInput>({
@@ -37,29 +37,31 @@ const Order = () => {
       ...foundUser,
     },
   });
-
+  //
   useEffect(() => {
     if (stripeLink) {
       window.location.href = stripeLink;
     }
   }, [stripeLink]);
 
-  const getAndSetProvinceIsoCode = useCallback((province?: string) => {
-    const provinceDetails = State.getStatesOfCountry('CA').find((item) => item?.name === province);
-    setProvinceIsoCode(provinceDetails?.isoCode || '');
-  }, []);
+  // console.log('STATES', State.getStatesOfCountry('CA'));
 
-  useEffect(() => {
-    getAndSetProvinceIsoCode(foundUser?.province);
-  }, [foundUser?.province]);
+  // const getAndSetProvinceIsoCode = useCallback((province?: string) => {
+  //   const provinceDetails = State.getStatesOfCountry('CA').find((item) => item?.name === province);
+  //   setProvinceIsoCode(provinceDetails?.isoCode || '');
+  // }, []);
+
+  // useEffect(() => {
+  //   // getAndSetProvinceIsoCode(foundUser?.province);
+  // }, [foundUser?.province]);
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     setValue(name, value);
 
-    if (name === 'province') {
-      getAndSetProvinceIsoCode(getValues('province'));
-    }
+    // if (name === 'province') {
+    //   getAndSetProvinceIsoCode(getValues('province'));
+    // }
   };
 
   const onSubmit = (data: OrderInput) => {
@@ -71,7 +73,7 @@ const Order = () => {
       phoneNumber: data?.phoneNumber,
     });
   };
-
+  // console.log('STATE', State.getStatesOfCountry('CA'));
   return (
     <div className='w-full pt-[150px] '>
       <div className='flex flex-col max-w-5xl  mx-auto mb-56  lg:mb-20'>
@@ -92,9 +94,9 @@ const Order = () => {
                     onChange={handleChange}
                     className='w-full bg-[#fff] text-black py-1 lg:py-2 px-5 outline-none border-[1px] rounded-none appearance-none'
                   >
-                    {State.getStatesOfCountry('CA').map((item, i) => (
-                      <option key={i}>{item.name}</option>
-                    ))}
+                    {/*{State.getStatesOfCountry('CA').map((item, i) => (*/}
+                    {/*  <option key={i}>{item.name}</option>*/}
+                    {/*))}*/}
                   </select>
                 </div>
                 <div className='h-1'>
@@ -110,9 +112,9 @@ const Order = () => {
                     onChange={handleChange}
                     className='w-full bg-[#fff] text-black py-1 lg:py-2 px-5 outline-none border-[1px] rounded-none appearance-none'
                   >
-                    {City.getCitiesOfState('CA', provinceIsoCode).map((item, i) => (
-                      <option key={i}>{item.name}</option>
-                    ))}
+                    {/*{City.getCitiesOfState('CA', provinceIsoCode).map((item, i) => (*/}
+                    {/*  <option key={i}>{item.name}</option>*/}
+                    {/*))}*/}
                   </select>
                 </div>
                 <div className='h-1'>

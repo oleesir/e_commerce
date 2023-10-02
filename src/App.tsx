@@ -15,6 +15,7 @@ import Cart from './pages/Cart.tsx';
 import TransactionSuccess from './pages/TransactionSuccess.tsx';
 import TransactionFailed from './pages/TransactionFailed.tsx';
 import Order from './pages/Order.tsx';
+import Orders from './pages/Orders.tsx';
 import './App.css';
 
 const router = createBrowserRouter(
@@ -30,7 +31,8 @@ const router = createBrowserRouter(
         <Route path='shop' element={<Products />} />
         <Route path=':slug' element={<Product />} />
         <Route path='cart' element={<Cart />} />
-        <Route path='order' element={<Order />} />
+        <Route path='create_order' element={<Order />} />
+        <Route path='orders' element={<Orders />} />
         <Route path='transaction_success' element={<TransactionSuccess />} />
         <Route path='transaction_failed' element={<TransactionFailed />} />
       </Route>
