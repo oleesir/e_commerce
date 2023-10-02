@@ -44,8 +44,6 @@ const Order = () => {
     }
   }, [stripeLink]);
 
-  // console.log('STATES', State.getStatesOfCountry('CA'));
-
   const getAndSetProvinceIsoCode = useCallback((province?: string) => {
     const provinceDetails = State.getStatesOfCountry('CA').find((item) => item?.name === province);
     setProvinceIsoCode(provinceDetails?.isoCode || '');
@@ -94,9 +92,9 @@ const Order = () => {
                     onChange={handleChange}
                     className='w-full bg-[#fff] text-black py-1 lg:py-2 px-5 outline-none border-[1px] rounded-none appearance-none'
                   >
-                    {State.getStatesOfCountry('CA').map((item, i) => (
-                      <option key={i}>{item.name}</option>
-                    ))}
+                    {/*{State.getStatesOfCountry('CA').map((item, i) => (*/}
+                    {/*  <option key={i}>{item.name}</option>*/}
+                    {/*))}*/}
                   </select>
                 </div>
                 <div className='h-1'>
