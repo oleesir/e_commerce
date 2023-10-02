@@ -34,11 +34,11 @@ const Cart = () => {
 
   const handleCheckout = () => {
     navigate('/create_order');
-    // if (authUser?._id === undefined) {
-    //   navigate('/auth/login');
-    // } else {
-    //   navigate('/create_order');
-    // }
+    if (authUser?._id === undefined) {
+      navigate('/auth/login');
+    } else {
+      navigate('/create_order');
+    }
   };
 
   return (
