@@ -17,7 +17,7 @@ const Order = () => {
   const { data: userCart } = useGetUserCartQuery(authUser?.cartId);
   const { data: foundUser } = useGetUserQuery(authUser?._id);
   const [createOrder, { data: stripeLink, isLoading }] = useCreateOrderMutation();
-  const [_, setProvinceIsoCode] = useState<string>(() => {
+  const [provinceIsoCode, setProvinceIsoCode] = useState<string>(() => {
     const provinceDetails = State.getStatesOfCountry('CA').find(
       (item) => item?.name === foundUser?.province,
     );
@@ -37,7 +37,7 @@ const Order = () => {
       ...foundUser,
     },
   });
-  //
+
   useEffect(() => {
     if (stripeLink) {
       window.location.href = stripeLink;
@@ -94,9 +94,9 @@ const Order = () => {
                     onChange={handleChange}
                     className='w-full bg-[#fff] text-black py-1 lg:py-2 px-5 outline-none border-[1px] rounded-none appearance-none'
                   >
-                    {/*{State.getStatesOfCountry('CA').map((item, i) => (*/}
-                    {/*  <option key={i}>{item.name}</option>*/}
-                    {/*))}*/}
+                    {State.getStatesOfCountry('CA').map((item, i) => (
+                      <option key={i}>{item.name}</option>
+                    ))}
                   </select>
                 </div>
                 <div className='h-1'>
