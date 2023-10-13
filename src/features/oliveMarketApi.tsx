@@ -17,7 +17,7 @@ const baseQuery = fetchBaseQuery({ baseUrl, credentials: 'include' });
 export const oliveMarketApi = createApi({
   reducerPath: 'oliveMarketApi',
   baseQuery,
-  tagTypes: ['Users', 'Products', 'Carts', 'Categories'],
+  tagTypes: ['Users', 'Products', 'Carts', 'Categories', 'Provinces', 'Cities'],
   endpoints: (builder) => ({
     signup: builder.mutation<void, SignupInput>({
       query: (body) => {
@@ -164,7 +164,6 @@ export const oliveMarketApi = createApi({
       transformResponse: (response: any) => {
         return response?.data;
       },
-      providesTags: ['Users'],
     }),
     createOrder: builder.mutation<void, OrderInput>({
       query: (body) => {
@@ -228,6 +227,54 @@ export const oliveMarketApi = createApi({
       },
       providesTags: ['Products'],
     }),
+    getProvinces: builder.query({
+      query: () => {
+        return {
+          url: `users/provinces`,
+          method: 'GET',
+        };
+      },
+      transformResponse: (response: any) => {
+        return response?.data;
+      },
+      providesTags: ['Provinces'],
+    }),
+    searchCities: builder.query({
+      query: (name: string) => {
+        return {
+          url: `users/search/cities?name=${name}`,
+          method: 'GET',
+        };
+      },
+      transformResponse: (response: any) => {
+        return response?.data;
+      },
+      providesTags: ['Cities', 'Provinces'],
+    }),
+    getCities: builder.query({
+      query: () => {
+        return {
+          url: `users/cities`,
+          method: 'GET',
+        };
+      },
+      transformResponse: (response: any) => {
+        return response?.data;
+      },
+      providesTags: ['Cities', 'Provinces'],
+    }),
+    getProvince: builder.query({
+      query: (_id) => {
+        return {
+          url: `users/province/${_id}`,
+          method: 'GET',
+        };
+      },
+      transformResponse: (response: any) => {
+        return response?.data;
+      },
+      providesTags: ['Provinces', 'Cities'],
+    }),
   }),
 });
 
@@ -249,4 +296,8 @@ export const {
   useGetCategoriesQuery,
   useGetBrandsQuery,
   useGetCustomerOrdersQuery,
+  useGetCitiesQuery,
+  useGetProvincesQuery,
+  useGetProvinceQuery,
+  useSearchCitiesQuery,
 } = oliveMarketApi;

@@ -10,7 +10,7 @@ const ProductCard = ({
   slug,
   productId,
 }: {
-  image: string;
+  image: string | undefined;
   name: string;
   rating: number;
   price: number;
