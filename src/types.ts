@@ -25,6 +25,60 @@ export type User = {
   cartId: string;
 };
 
+export type UserResponse = {
+  address: string;
+  city: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  province: string;
+  role: string;
+  _id: string;
+};
+
+type CartItemResponse = {
+  image: string;
+  name: string;
+  price: number;
+  priceAfterTax: number;
+  productId: string;
+  quantity: number;
+  taxPrice: number;
+  _id: string;
+};
+
+export type CartResponse = {
+  cartItems: CartItemResponse[];
+  totalPrice: number;
+  totalPriceAfterTax: number;
+  totalQuantity: number;
+  totalTax: number;
+  _id: string;
+};
+
+export type CityStateResponse = {
+  countryCode: string;
+  createdAt: string;
+  latitude: string;
+  longitude: string;
+  name: string;
+  stateCode: string;
+  updatedAt: string;
+  _id: string;
+};
+
+export type ProvincesResponse = {
+  countryCode: string;
+  isoCode: string;
+  createdAt: string;
+  latitude: string;
+  longitude: string;
+  name: string;
+  updatedAt: string;
+  _id: string;
+};
+
 export type Reviews = {
   name: string;
   rating: number;

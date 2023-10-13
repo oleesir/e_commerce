@@ -75,22 +75,22 @@ const Products = () => {
             />
           </div>
           <div className='col-span-4'>
-            {state && state.products !== undefined ? (
+            {state && state?.products !== undefined ? (
               <>
                 <div className='grid gap-x-8 gap-y-4 grid-cols-4'>
-                  {state.products &&
-                    state.products
+                  {state?.products &&
+                    state?.products
                       .slice(0, visibleProductsFromState)
                       .map((item: any) => (
                         <ProductCard
-                          key={item._id}
-                          productId={item._id}
-                          image={item.images[0].secureUrl}
-                          name={item.name}
-                          rating={item.rating}
-                          price={item.price / 100}
-                          slug={item.slug}
-                          numberOfReviews={item.numberOfReviews}
+                          key={item?._id}
+                          productId={item?._id}
+                          image={item?.images[0].secureUrl}
+                          name={item?.name}
+                          rating={item?.rating}
+                          price={item?.price / 100}
+                          slug={item?.slug}
+                          numberOfReviews={item?.numberOfReviews}
                         />
                       ))}
                 </div>
