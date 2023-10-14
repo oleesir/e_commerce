@@ -9,9 +9,4 @@ export const navItems = [
     root: 'orders',
     path: '/orders',
   },
-  {
-    navItem: 'Contacts',
-    root: 'contacts',
-    path: '/contacts',
-  },
 ];
