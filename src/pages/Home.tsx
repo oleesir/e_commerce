@@ -7,10 +7,16 @@ import { useGetProductsQuery } from '../features/oliveMarketApi.tsx';
 import Loader from '../components/Loaders/Loader.tsx';
 import FeaturedProducts from '../components/FeaturedProducts.tsx';
 import Categories from '../components/Categories.tsx';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
+  const navigate = useNavigate();
   const { data: queryProducts, isLoading } = useGetProductsQuery(undefined);
   const newArray = queryProducts && queryProducts.slice(0, 10);
+
+  const onClick = () => {
+    navigate('/shop');
+  };
 
   return (
     <>
@@ -37,7 +43,11 @@ const Home = () => {
                     <p className='text-[12px] text-[#151875]'>phasellus non in justo.</p>
                   </div>
                   <div className='px-5'>
-                    <button className='py-2 px-6 bg-[#FD665E] text-[#FFF] mt-5 rounded-none text-xs'>
+                    <button
+                      onClick={onClick}
+                      type='button'
+                      className='py-2 px-6 bg-[#FD665E] text-[#FFF] mt-5 rounded-none text-sm'
+                    >
                       Shop Now
                     </button>
                   </div>
