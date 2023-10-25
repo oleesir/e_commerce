@@ -140,7 +140,11 @@ const Header = () => {
                   </div>
                 ) : null}
               </div>
-              <div className='relative flex items-center cursor-pointer' onClick={navToCart}>
+              <button
+                type='button'
+                className='relative flex items-center cursor-pointer'
+                onClick={navToCart}
+              >
                 {authUser?._id === undefined
                   ? totalQuantity > 0 && (
                       <div className='absolute rounded-full w-[20px] h-[20px] bg-[#FD665E] text-[#FFF] pt-[3px] left-4 -top-2'>
@@ -153,10 +157,8 @@ const Header = () => {
                       </div>
                     )}
 
-                <button type='button'>
-                  <PiShoppingCartLight size={25} />
-                </button>
-              </div>
+                <PiShoppingCartLight size={25} className='cursor-pointer' />
+              </button>
             </div>
           </div>
         </div>

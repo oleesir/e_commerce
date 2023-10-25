@@ -21,10 +21,12 @@ const Order = () => {
   const navigate = useNavigate();
   const { data: authUser, isLoading: authLoading } = useLoadUserQuery(undefined);
   const { data: foundUser, isLoading: userLoading } = useGetUserQuery(authUser?._id);
+  const { data: userCart } = useGetUserCartQuery(authUser?.cartId);
   const { data: provinces } = useGetProvincesQuery(undefined);
   const [queryText, setQueryText] = useState('');
   const [city, setCity] = useState('');
-  const { data: userCart } = useGetUserCartQuery(authUser?.cartId);
+
+  const [createOrder, { data: stripeLink, isLoading }] = useCreateOrderMutation();
   const {
     handleSubmit,
     register,
@@ -49,20 +51,18 @@ const Order = () => {
   }, [authUser?._id, navigate]);
 
   useEffect(() => {
+    if (stripeLink) {
+      window.location.href = stripeLink;
+    }
+  }, [stripeLink]);
+
+  useEffect(() => {
     if (city) {
       const foundCity = listedCities && listedCities.find((c: any) => c?._id === city);
       const province = provinces && provinces.find((c: any) => c?.isoCode === foundCity?.stateCode);
       setValue('province', province?.name);
     }
   }, [city, setValue]);
-
-  const [createOrder, { data: stripeLink, isLoading }] = useCreateOrderMutation();
-
-  useEffect(() => {
-    if (stripeLink) {
-      window.location.href = stripeLink;
-    }
-  }, [stripeLink]);
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;
