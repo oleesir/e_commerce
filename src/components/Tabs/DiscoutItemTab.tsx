@@ -1,6 +1,12 @@
 import { IoCheckmark } from 'react-icons/io5';
+import { useNavigate } from 'react-router-dom';
 
 const DiscountItemTab = ({ image }: { image: string }) => {
+  const navigate = useNavigate();
+
+  const onClick = () => {
+    navigate('/shop');
+  };
   return (
     <div className='w-full'>
       <div className=' grid md:grid-cols-2'>
@@ -33,7 +39,11 @@ const DiscountItemTab = ({ image }: { image: string }) => {
             </div>
           </div>
           <div>
-            <button className='py-2 px-6 bg-[#FD665E] text-[#FFF] mt-5 rounded-none text-xs'>
+            <button
+              type='button'
+              onClick={onClick}
+              className='py-2 px-6 bg-[#FD665E] text-[#FFF] mt-5 rounded-none text-xs'
+            >
               Shop Now
             </button>
           </div>

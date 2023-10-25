@@ -1,6 +1,13 @@
+import { useNavigate } from 'react-router-dom';
+
 const UniqueFeaturesAdvert = () => {
+  const navigate = useNavigate();
+
+  const onClick = () => {
+    navigate('/shop');
+  };
   return (
-    <div className='py-4 max-w-5xl  mx-auto  px-5'>
+    <div className='py-10 max-w-5xl  mx-auto  px-5'>
       <div className='w-full grid md:grid-cols-2'>
         <div className='w-full grid justify-center items-center'>
           <img src='/watch.png' className='w-[300px] h-[300px]' alt='imagee' />
@@ -31,7 +38,10 @@ const UniqueFeaturesAdvert = () => {
               </p>
             </div>
             <div>
-              <button className='py-2 px-6 bg-[#FD665E] text-[#FFF] mt-5 rounded-none text-xs'>
+              <button
+                onClick={onClick}
+                className='py-2 px-6 bg-[#FD665E] text-[#FFF] mt-5 rounded-none text-sm'
+              >
                 Shop Now
               </button>
             </div>
