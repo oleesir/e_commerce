@@ -1,7 +1,6 @@
 import { MdOutlinePersonOff, MdOutlinePersonOutline } from 'react-icons/md';
 import { PiShoppingCartLight } from 'react-icons/pi';
 import { FiSearch } from 'react-icons/fi';
-// import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai';
 import { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { navItems } from '../utils/navItems.ts';
@@ -14,9 +13,8 @@ import {
 } from '../features/oliveMarketApi.tsx';
 import { getTotalQuantity } from '../features/oliveMarketSlice.tsx';
 import { useAppDispatch, useAppSelector } from '../reduxHooks.ts';
-// import { navItemsMobile } from '../utils/navItemsMobile.ts';
 import SearchResult from './SearchResult.tsx';
-import { MobileSidebar } from '@/components/MobileHeader.tsx';
+import { MobileHeader } from '@/components/MobileHeader.tsx';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -24,7 +22,6 @@ const Header = () => {
   const { data: authUser } = useLoadUserQuery(undefined);
   const { data: userCart } = useGetUserCartQuery(authUser?.cartId);
   const [show, setShow] = useState(false);
-  // const [nav, setNav] = useState(false);
   const [logout] = useLogoutMutation();
   const [queryText, setQueryText] = useState('');
   const debouncedSearchQuery = useDebounce(queryText, 500);
@@ -66,10 +63,6 @@ const Header = () => {
   const navToCart = () => {
     navigate('/cart');
   };
-
-  // const handleMenu = () => {
-  //   setNav(!nav);
-  // };
 
   return (
     <div className='w-full fixed bg-[#FFF] drop-shadow-lg z-10'>
@@ -160,73 +153,7 @@ const Header = () => {
             </div>
           </div>
         </div>
-        <MobileSidebar />
-        {/*<div className='flex lg:hidden inset-0 z-50 w-full justify-between px-5'>*/}
-        {/*  <NavLink to='/'>*/}
-        {/*    <span className='text-2xl mb-0 font-titanOne text-[#FD665E]'>Olive</span>*/}
-        {/*    <span className='text-lg font-titanOne text-[#FD665E]'>market</span>*/}
-        {/*  </NavLink>*/}
-        {/*  <div*/}
-        {/*    className={*/}
-        {/*      nav*/}
-        {/*        ? 'lg:hidden absolute top-0 left-0 right-0 bottom-0 flex  w-full h-screen bg-[#F3F6F9]  ease-in duration-300 z-[1035]'*/}
-        {/*        : 'lg:hidden absolute top-0 right-0 left-[-100%] bottom-0 flex w-full h-screen bg-[#FD665E]  ease-in-out duration-300'*/}
-        {/*    }*/}
-        {/*  >*/}
-        {/*    <div className='w-full flex flex-col'>*/}
-        {/*      <div className='w-full grid justify-items-end mb-5 p-5'>*/}
-        {/*        <button onClick={handleMenu}>*/}
-        {/*          <AiOutlineClose size={28} color='#151875' />*/}
-        {/*        </button>*/}
-        {/*      </div>*/}
-
-        {/*      <div className='w-full grid justify-items-start '>*/}
-        {/*        {navItemsMobile.map((item: any, i: any) => {*/}
-        {/*          return (*/}
-        {/*            <button*/}
-        {/*              key={i}*/}
-        {/*              onClick={() => {*/}
-        {/*                navigate(item.path);*/}
-        {/*                setNav(!nav);*/}
-        {/*              }}*/}
-        {/*              className=' w-full border-t-[1px] flex items-start  py-2 pl-5 border-[#151875]'*/}
-        {/*            >*/}
-        {/*              <p className='text-[#151875] text-[18px]'>{item.navItem}</p>*/}
-        {/*            </button>*/}
-        {/*          );*/}
-        {/*        })}*/}
-        {/*      </div>*/}
-        {/*    </div>*/}
-        {/*  </div>*/}
-
-        {/*  <div className='flex'>*/}
-        {/*    <button className='mr-5'>*/}
-        {/*      <FiSearch size={28} />*/}
-        {/*    </button>*/}
-
-        {/*    <div className='relative flex items-center cursor-pointer mr-5' onClick={navToCart}>*/}
-        {/*      {authUser?._id === undefined*/}
-        {/*        ? totalQuantity > 0 && (*/}
-        {/*            <div className='absolute rounded-full w-[20px] h-[20px] bg-[#FD665E] text-[#FFF] pt-[3px] left-4 -top-2'>*/}
-        {/*              <p className='text-[10px] text-center'>{totalQuantity}</p>*/}
-        {/*            </div>*/}
-        {/*          )*/}
-        {/*        : userCart?.totalQuantity > 0 && (*/}
-        {/*            <div className='absolute rounded-full w-[20px] h-[20px] bg-[#FD665E] text-[#FFF] pt-[3px] left-4 -top-2'>*/}
-        {/*              <p className='text-[10px] text-center'>{userCart?.totalQuantity}</p>*/}
-        {/*            </div>*/}
-        {/*          )}*/}
-
-        {/*      <button type='button'>*/}
-        {/*        <PiShoppingCartLight size={25} />*/}
-        {/*      </button>*/}
-        {/*    </div>*/}
-
-        {/*    <button onClick={handleMenu} className='block lg:hidden '>*/}
-        {/*      {!nav ? <AiOutlineMenu size={28} /> : <AiOutlineClose size={28} />}*/}
-        {/*    </button>*/}
-        {/*  </div>*/}
-        {/*</div>*/}
+        <MobileHeader />
       </div>
     </div>
   );

@@ -4,7 +4,7 @@ const CategoryCard = ({ image, name }: { image: string; name: string }) => {
   const navigate = useNavigate();
 
   const navigateToProducts = (value: string) => {
-    navigate(`/shop`, { state: { name: value } });
+    navigate(`/shop`, { state: { category: value } });
   };
   return (
     <div

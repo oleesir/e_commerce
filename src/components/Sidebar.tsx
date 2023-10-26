@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, SetStateAction, useEffect } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { FaCheck } from 'react-icons/fa';
 import { Product } from '../types.ts';
 import { useGetBrandsQuery, useGetCategoriesQuery } from '../features/oliveMarketApi.tsx';
@@ -20,6 +20,7 @@ const Sidebar = ({
 }) => {
   const { data: categories } = useGetCategoriesQuery(undefined);
   const { data: brands } = useGetBrandsQuery(undefined);
+  const [selectAll, setSelectAll] = useState(false);
 
   useEffect(() => {
     if (products) {
@@ -55,11 +56,45 @@ const Sidebar = ({
     });
   };
 
+  const handleSelectAllChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { checked } = event.target;
+
+    const updatedCheckboxes = categories.map((category: any) => ({
+      ...category,
+      checked,
+    }));
+    const getUpdatedCheckboxes = updatedCheckboxes.map((category: any) => category?.name);
+    setSelectedCategories(getUpdatedCheckboxes);
+    setSelectAll(!selectAll);
+  };
+
   return (
-    <div className='w-full flex flex-col border-r-[1px]'>
+    <div className='hidden w-full  flex-col border-r-[1px] lg:flex'>
       <div className='mb-5  pr-10'>
         <p className='text-sm underline text-[#151875] mb-2'>Categories</p>
         <div className='py-5 px-2 h-[237px] overflow-auto scrollbar-hide shadow-[0_8px_40px_0_rgba(49,32,138,0.05)]'>
+          <>
+            <div className='flex items-center cursor-pointer mb-2'>
+              <label
+                htmlFor={'all'}
+                className='cursor-pointer relative text-xs text-[#7E81A2] checkbox-container flex'
+              >
+                <input
+                  type='checkbox'
+                  checked={selectAll}
+                  id='all'
+                  value='all'
+                  onChange={handleSelectAllChange}
+                  className='appearance-none h-[14px] w-[14px] border-[1px] border-[#FD665E] mr-2 cursor-pointer'
+                />
+                <FaCheck
+                  size={8}
+                  className='absolute left-0.5 top-1 check-1 transition text-[#FD665E] text-opacity-0'
+                />
+                Select All
+              </label>
+            </div>
+          </>
           {categories &&
             categories.map((category: any) => {
               return (
