@@ -2,7 +2,7 @@ import AccordionLayout from '../layouts/AccordionLayout.tsx';
 
 const Footer = () => {
   return (
-    <div className='w-full bg-[#EEEFFB]  md:py-[120px]  mt-auto'>
+    <div className='w-full bg-[#EEEFFB]  md:py-[120px] '>
       <div className=' py-5 max-w-5xl  mx-auto px-3'>
         <div className='flex flex-col md:hidden'>
           <div className='w-full mb-2 flex justify-center'>
@@ -13,7 +13,7 @@ const Footer = () => {
           </div>
           <AccordionLayout title={'Customer Case'}>
             {
-              <div className='w-full flex '>
+              <div className='w-full flex'>
                 <div className='flex flex-col '>
                   <p className='text-xs text-[#8A8FB9] mb-3'>Laptops & Computers</p>
                   <p className='text-xs text-[#8A8FB9] mb-3'>Laptops & Computers</p>

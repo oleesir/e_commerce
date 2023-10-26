@@ -17,7 +17,7 @@ const baseQuery = fetchBaseQuery({ baseUrl, credentials: 'include' });
 export const oliveMarketApi = createApi({
   reducerPath: 'oliveMarketApi',
   baseQuery,
-  tagTypes: ['Users', 'Products', 'Carts', 'Categories', 'Provinces', 'Cities'],
+  tagTypes: ['Users', 'Products', 'Carts', 'Categories', 'Provinces', 'Cities', 'Brands'],
   endpoints: (builder) => ({
     signup: builder.mutation<void, SignupInput>({
       query: (body) => {
@@ -179,17 +179,25 @@ export const oliveMarketApi = createApi({
       invalidatesTags: ['Products', 'Carts', 'Users'],
     }),
     getFilterProducts: builder.query({
-      query: (params: { brands?: string[]; categories?: string[]; category?: string }) => {
+      query: (params: {
+        brands?: string[];
+        categories?: string[];
+        categoryFromState?: string;
+        brandFromState?: string;
+      }) => {
         const brandQuery = params.brands ? `brands=${params.brands.join(',')}` : '';
         const categoryQuery = params.categories ? `categories=${params.categories.join(',')}` : '';
-        const singleCategoryQuery = params.category ? `category=${params.category}` : '';
-        return `products/filter?${brandQuery}&${categoryQuery}&${singleCategoryQuery}`;
+        const singleCategoryQuery = params.categoryFromState
+          ? `category=${params.categoryFromState}`
+          : '';
+        const singleBrandQuery = params.brandFromState ? `brand=${params.brandFromState}` : '';
+        return `products/filter?${brandQuery}&${categoryQuery}&${singleCategoryQuery}&${singleBrandQuery}`;
       },
       transformResponse: (response: any) => {
         const newResponse: Product[] = response?.data;
         return newResponse;
       },
-      providesTags: ['Products', 'Carts', 'Users'],
+      providesTags: ['Products', 'Carts', 'Users', 'Brands'],
     }),
     getCategories: builder.query({
       query: () => {
@@ -261,7 +269,7 @@ export const oliveMarketApi = createApi({
       transformResponse: (response: any) => {
         return response?.data;
       },
-      providesTags: ['Cities', 'Provinces'],
+      providesTags: ['Cities'],
     }),
     getProvince: builder.query({
       query: (_id) => {
@@ -273,7 +281,7 @@ export const oliveMarketApi = createApi({
       transformResponse: (response: any) => {
         return response?.data;
       },
-      providesTags: ['Provinces', 'Cities'],
+      providesTags: ['Provinces'],
     }),
   }),
 });
@@ -296,8 +304,6 @@ export const {
   useGetCategoriesQuery,
   useGetBrandsQuery,
   useGetCustomerOrdersQuery,
-  useGetCitiesQuery,
   useGetProvincesQuery,
-  useGetProvinceQuery,
   useSearchCitiesQuery,
 } = oliveMarketApi;

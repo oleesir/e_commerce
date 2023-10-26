@@ -1,14 +1,18 @@
 export const navItemsMobile = [
   {
-    navItem: 'Home',
-    path: '/',
-  },
-  {
-    navItem: 'Signup',
+    name: 'Signup',
     path: '/auth/signup',
   },
   {
-    navItem: 'Login',
+    name: 'Login',
     path: '/auth/login',
+  },
+  {
+    name: 'Home',
+    path: '/',
+  },
+  {
+    name: 'Shop',
+    path: '/shop',
   },
 ];
