@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { MdShoppingCartCheckout } from 'react-icons/md';
 import { PiMapPinLineBold } from 'react-icons/pi';
 import { loginSchema } from '../../schema/loginSchema.ts';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { ClockLoader } from 'react-spinners';
 import { useLoginMutation } from '../../features/oliveMarketApi.tsx';
 import { useAppDispatch } from '../../reduxHooks.ts';
@@ -69,11 +69,21 @@ const Login = () => {
 
   return (
     <div className='pt-10 w-full max-w-5xl  mx-auto lg:pt-10'>
-      <div className='flex w-full mb-8  px-5 lg:px-0'>
+      <div className='hidden lg:flex w-full mb-8  px-5 lg:px-0'>
         <p className='text-2xl lg:text-3xl font-extrabold'>Welcome back</p>
       </div>
       <div className=' py-2 px-2 grid grid-cols-1 lg:grid-cols-2'>
         <div className='w-full flex flex-col'>
+          <div className='w-full flex flex-col lg:hidden'>
+            <div className='w-full flex justify-center mb-5'>
+              <NavLink to='/' className='cursor-pointer'>
+                <span className='text-3xl mb-0 font-bold text-[#FD665E]'>Olive</span>
+                <span className='text-lg font-titanOne text-[#FD665E]'>market</span>
+              </NavLink>
+            </div>
+
+            <p className='text-lg'>Welcome back</p>
+          </div>
           <div className='w-full flex h-1 justify-center mb-5'>
             <p className='text-base text-[#FF0303]'>{serverError}</p>
           </div>
@@ -83,13 +93,13 @@ const Login = () => {
             className='w-full flex justify-center flex-col mb-10'
           >
             <div className='mb-5 lg:mb-8'>
-              <label htmlFor='email' className='text-base'>
+              <label htmlFor='email' className='text-sm'>
                 Email
               </label>
               <input
                 id='email'
                 type='email'
-                className='w-full bg-[#fff] text-black py-3 lg:py-2 px-5 outline-none border-[1px] rounded-none text-base '
+                className='w-full bg-[#fff] text-black py-3 lg:py-2 px-5 outline-none border-[1px] rounded-none text-[18px] '
                 {...register('email', {
                   onChange: () => {
                     if (error) {
@@ -103,7 +113,7 @@ const Login = () => {
               </div>
             </div>
             <div className='mb-[20px] lg:mb-[20px]'>
-              <label htmlFor='password' className='text-base'>
+              <label htmlFor='password' className='text-sm'>
                 Password
               </label>
               <div className='w-full inline-block relative'>
@@ -117,7 +127,7 @@ const Login = () => {
                       }
                     },
                   })}
-                  className='w-full bg-[#fff] text-black py-3 lg:py-2 px-5 outline-none border-[1px] rounded-none text-base'
+                  className='w-full bg-[#fff] text-black py-3 lg:py-2 px-5 outline-none border-[1px] rounded-none text-[18px]'
                 />
                 <button
                   type='button'

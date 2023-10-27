@@ -6,7 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect, useState } from 'react';
 import { MdShoppingCartCheckout } from 'react-icons/md';
 import { PiMapPinLineBold } from 'react-icons/pi';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useSignupMutation } from '../../features/oliveMarketApi.tsx';
 import { ClockLoader } from 'react-spinners';
 import { useAppDispatch } from '../../reduxHooks.ts';
@@ -61,12 +61,22 @@ const Signup = () => {
 
   return (
     <div className='w-full max-w-5xl  mx-auto lg:pt-10'>
-      <div className='w-full flex mb-8 px-5 lg:px-0'>
+      <div className='hidden w-full lg:flex mb-8 px-5 lg:px-0'>
         <p className='text-3xl font-extrabold'>Create an Account</p>
       </div>
 
       <div className=' py-2 px-2 grid grid-cols-1 lg:grid-cols-2'>
         <div className='w-full flex flex-col'>
+          <div className='w-full flex flex-col lg:hidden'>
+            <div className='w-full flex justify-center mb-5'>
+              <NavLink to='/' className='cursor-pointer'>
+                <span className='text-3xl mb-0 font-bold text-[#FD665E]'>Olive</span>
+                <span className='text-lg font-titanOne text-[#FD665E]'>market</span>
+              </NavLink>
+            </div>
+
+            <p className='text-lg'>Create an Account</p>
+          </div>
           <div className='w-full h-1 flex justify-center mb-5'>
             <p className='text-base text-[#FF0303]'>{serverError}</p>
           </div>
@@ -82,7 +92,7 @@ const Signup = () => {
               <input
                 type='text'
                 id='firstName'
-                className='w-full bg-[#fff] text-black py-1 lg:py-2 px-5 outline-none border-[1px] rounded-none'
+                className='w-full bg-[#fff] text-black py-3 lg:py-2 px-5 outline-none border-[1px] rounded-none text-[18px]'
                 {...register('firstName', {
                   onChange: () => {
                     if (error) {
@@ -102,7 +112,7 @@ const Signup = () => {
               <input
                 type='text'
                 id='lastName'
-                className='w-full bg-[#fff] text-black py-1 lg:py-2 px-5 outline-none border-[1px] rounded-none'
+                className='w-full bg-[#fff] text-black py-3 lg:py-2 px-5 outline-none border-[1px] rounded-none text-[18px] '
                 {...register('lastName', {
                   onChange: () => {
                     if (error) {
@@ -122,7 +132,7 @@ const Signup = () => {
               <input
                 type='email'
                 id='email'
-                className='w-full bg-[#fff] text-black py-1 lg:py-2 px-5 outline-none border-[1px] rounded-none'
+                className='w-full bg-[#fff] text-black py-3 lg:py-2 px-5 outline-none border-[1px] rounded-none text-[18px] '
                 {...register('email', {
                   onChange: () => {
                     if (error) {
@@ -150,7 +160,7 @@ const Signup = () => {
                       }
                     },
                   })}
-                  className='w-full bg-[#fff] text-black py-1 lg:py-2 px-5 outline-none border-[1px] rounded-none'
+                  className='w-full bg-[#fff] text-black py-3 lg:py-2 px-5 outline-none border-[1px] rounded-none text-[18px]'
                 />
                 <button
                   onClick={handleShow}
@@ -175,8 +185,8 @@ const Signup = () => {
                 type='submit'
                 className={
                   isLoading
-                    ? 'bg-[#FD665E] text-[#FFF] text-sm font-bold py-3 px-8 cursor-not-allowed flex justify-center w-full'
-                    : 'bg-[#FD665E] text-[#FFF] text-sm font-bold py-3 px-8 cursor-pointer w-full'
+                    ? 'bg-[#FD665E] text-[#FFF] text-base font-bold py-4 px-8 cursor-not-allowed flex justify-center w-full'
+                    : 'bg-[#FD665E] text-[#FFF] text-base font-bold py-4 px-8 cursor-pointer w-full'
                 }
               >
                 {isLoading && <ClockLoader color='#fff' size={20} />}
