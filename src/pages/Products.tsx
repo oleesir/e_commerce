@@ -69,7 +69,7 @@ const Products = () => {
   };
 
   return (
-    <div className='w-full py-[150px]'>
+    <div className='w-full py-[120px]'>
       {productsLoading && <Loader />}
       {!productsLoading && (
         <div className='max-w-5xl  mx-auto'>

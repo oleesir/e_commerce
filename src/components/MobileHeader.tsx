@@ -4,14 +4,12 @@ import { Sheet, SheetClose, SheetContent, SheetTrigger } from '@/components/ui/s
 import { useLocation, useNavigate } from 'react-router-dom';
 import { navItemsMobile } from '@/utils/navItemsMobile.ts';
 import {
-  // useFilterByCategoryAndBrandQuery,
   useGetBrandsQuery,
   useGetCategoriesQuery,
   useGetUserCartQuery,
   useLoadUserQuery,
 } from '@/features/oliveMarketApi.tsx';
 import { useAppDispatch, useAppSelector } from '@/reduxHooks.ts';
-
 import { getTotalQuantity } from '@/features/oliveMarketSlice.tsx';
 import {
   Accordion,
