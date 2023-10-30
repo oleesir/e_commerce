@@ -1,7 +1,7 @@
 import ReactStars from 'react-rating-star-with-type';
 import Accordion from '../components/Accordion.tsx';
 import SponsorsBanner from '../components/SponsorsBanner.tsx';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
   useDecrementItemInCartApiMutation,
   useGetProductQuery,
@@ -11,13 +11,14 @@ import {
   useLoadUserQuery,
 } from '../features/oliveMarketApi.tsx';
 import Loader from '../components/Loaders/Loader.tsx';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../reduxHooks.ts';
 import { addToCart, decreaseItem } from '../features/oliveMarketSlice.tsx';
 import { RiAddLine, RiSubtractLine } from 'react-icons/ri';
 import FeaturedProducts from '../components/FeaturedProducts.tsx';
 
 const Product = () => {
+  const navigate = useNavigate();
   const { state }: { state: any } = useLocation();
   const dispatch = useAppDispatch();
   const { data: authUser } = useLoadUserQuery(undefined);
@@ -29,8 +30,13 @@ const Product = () => {
   const { data: queryProducts } = useGetProductsQuery(undefined);
   const newArray = queryProducts && queryProducts.slice(0, 10);
   const { cartItems } = useAppSelector((state: any) => state.cart);
-
   const itemInCart = cartItems.find((item: any) => item._id === state?.productId);
+
+  useEffect(() => {
+    if (state?.productId === undefined) {
+      navigate('/404');
+    }
+  }, [state?.productId, navigate]);
 
   const itemInCartApi = userCart?.cartItems.find(
     (item: any) => item.productId === state?.productId,

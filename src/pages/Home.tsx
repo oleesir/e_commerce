@@ -23,7 +23,7 @@ const Home = () => {
       {isLoading && <Loader />}
       {!isLoading && (
         <div className='w-full flex flex-col'>
-          <div className='flex w-full pt-20 bg-[#F1F0FF]'>
+          <div className='flex w-full py-[120px] bg-[#F1F0FF]'>
             <div className='flex max-w-5xl  mx-auto'>
               <div className='grid grid-cols-1  md:grid-cols-2'>
                 <div className='flex flex-col pt-[50px] md:pt-[100px]'>

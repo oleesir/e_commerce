@@ -65,8 +65,8 @@ const Header = () => {
   };
 
   return (
-    <div className='w-full fixed bg-[#FFF] drop-shadow-lg z-10'>
-      <div className='py-4 max-w-5xl  mx-auto'>
+    <div className='w-full fixed bg-[#FFF] drop-shadow-lg z-10 h-[70px] p-4'>
+      <div className=' max-w-5xl  mx-auto'>
         <div className='hidden lg:flex justify-between '>
           <div className='flex justify-between items-center'>
             <NavLink to='/' className='cursor-pointer'>
