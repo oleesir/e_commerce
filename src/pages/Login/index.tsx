@@ -1,15 +1,15 @@
 import { useForm } from 'react-hook-form';
-import { LoginInput } from '../../types.ts';
+import { LoginInput } from '@/types.ts';
 import { RiEyeCloseLine, RiEyeLine } from 'react-icons/ri';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useEffect, useState } from 'react';
 import { MdShoppingCartCheckout } from 'react-icons/md';
 import { PiMapPinLineBold } from 'react-icons/pi';
-import { loginSchema } from '../../schema/loginSchema.ts';
+import { loginSchema } from '@/schema/loginSchema.ts';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { ClockLoader } from 'react-spinners';
 import { useLoginMutation } from '../../features/oliveMarketApi.tsx';
-import { useAppDispatch } from '../../reduxHooks.ts';
+import { useAppDispatch } from '@/reduxHooks.ts';
 import { clearLocalStorageData } from '../../features/oliveMarketSlice.tsx';
 
 const Login = () => {

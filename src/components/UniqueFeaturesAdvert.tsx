@@ -40,7 +40,7 @@ const UniqueFeaturesAdvert = () => {
             <div>
               <button
                 onClick={onClick}
-                className='py-2 px-6 bg-[#FD665E] text-[#FFF] mt-5 rounded-none text-sm'
+                className='py-4 px-6 bg-[#FD665E] text-[#FFF] mt-5 rounded-none text-sm'
               >
                 Shop Now
               </button>

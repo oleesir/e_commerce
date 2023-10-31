@@ -1,5 +1,4 @@
 import ReactStars from 'react-rating-star-with-type';
-import Accordion from '../components/Accordion.tsx';
 import SponsorsBanner from '../components/SponsorsBanner.tsx';
 import { useLocation, useNavigate } from 'react-router-dom';
 import {
@@ -16,6 +15,12 @@ import { useAppDispatch, useAppSelector } from '../reduxHooks.ts';
 import { addToCart, decreaseItem } from '../features/oliveMarketSlice.tsx';
 import { RiAddLine, RiSubtractLine } from 'react-icons/ri';
 import FeaturedProducts from '../components/FeaturedProducts.tsx';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion.tsx';
 
 const Product = () => {
   const navigate = useNavigate();
@@ -76,8 +81,8 @@ const Product = () => {
     <>
       {isLoading && <Loader />}
       {!isLoading && (
-        <div className='w-full mt-[150px] '>
-          <div className='max-w-5xl  mx-auto px-3 md:px-0'>
+        <div className='w-full '>
+          <div className='max-w-5xl  mx-auto px-3 md:px-0 py-[120px]'>
             <div className='w-full flex flex-col'>
               <div className='grid md:grid-cols-2 gap-8'>
                 <div className='flex flex-col'>
@@ -89,7 +94,7 @@ const Product = () => {
                     />
                   </div>
                   <div className='w-full flex justify-center'>
-                    <div className='w-2/3  flex justify-evenly'>
+                    <div className='w-2/5  flex justify-evenly'>
                       {queryProduct?.images.map((image: any) => {
                         return (
                           <button
@@ -110,14 +115,16 @@ const Product = () => {
                   </div>
                 </div>
                 <div className='flex flex-col md:border-l-[1px] md:px-4'>
-                  <p className='text-[24px] mb-5'>{queryProduct?.name}</p>
+                  <p className=' mb-5 max-w-prose text-zinc-800'>{queryProduct?.name}</p>
                   <div className='flex w-full '>
-                    <p className='text-[12px] font-bold'>Brand: </p>
-                    <p className='text-[12px] ml-1'>{queryProduct?.brand?.name} </p>
+                    <p className='text-[12px] font-bold max-w-prose text-zinc-800'>Brand: </p>
+                    <p className='text-[12px] ml-1 max-w-prose text-zinc-800'>
+                      {queryProduct?.brand?.name}{' '}
+                    </p>
                   </div>
                   <div className='flex w-full mb-1'>
-                    <p className='text-[20px] font-bold'>Price: </p>
-                    <p className='text-[20px] ml-1'>
+                    <p className='text-[20px] font-bold max-w-prose text-zinc-800'>Price: </p>
+                    <p className='text-[20px] ml-1 max-w-prose text-zinc-800'>
                       {new Intl.NumberFormat('en-CA', {
                         style: 'currency',
                         currency: 'CAD',
@@ -125,7 +132,7 @@ const Product = () => {
                     </p>
                   </div>
                   <div className='flex items-center mb-2'>
-                    <p className='text-[#B12604] text-xs'>
+                    <p className=' text-xs text-zinc-800'>
                       {queryProduct?.countInStock} left in stock.
                     </p>
                   </div>
@@ -136,14 +143,14 @@ const Product = () => {
                       classNames='mr-1'
                       size={15}
                     />
-                    <p className='text-gray-500 text-xs mt-1'>(120)</p>
+                    <p className='text-zinc-800 text-xs mt-1'>(120)</p>
                   </div>
                   <div className='w-full flex '>
                     {!itemInCart && authUser?._id === undefined ? (
                       <button
                         type='button'
                         onClick={handleIncreaseProduct}
-                        className='rounded-none bg-[#FD665E] text-[#FFF] text-sm font-bold py-3 px-8 cursor-pointer w-full'
+                        className='rounded-none bg-[#FD665E] text-[#FFF] text-base font-bold py-4 px-8 cursor-pointer w-full'
                       >
                         Add to Cart
                       </button>
@@ -177,7 +184,7 @@ const Product = () => {
                       <button
                         type='button'
                         onClick={handleIncreaseProduct}
-                        className='rounded-none bg-[#FD665E] text-[#FFF] text-sm font-bold py-3 px-8 cursor-pointer w-full'
+                        className='rounded-none bg-[#FD665E] text-[#FFF] text-base font-bold py-4 px-8 cursor-pointer w-full'
                       >
                         Add to Cart
                       </button>
@@ -210,11 +217,24 @@ const Product = () => {
                 </div>
               </div>
               <div className='w-full mt-10 px-5'>
-                <Accordion title={'About this product'} description={queryProduct?.description} />
+                <Accordion type='single' collapsible className='pl-5 pr-4 w-full py-2 '>
+                  <AccordionItem value='item-1'>
+                    <AccordionTrigger className='hover:no-underline py-0'>
+                      <p className='text-[#151875] text-[24px] font-semibold max-w-prose'>
+                        About this product
+                      </p>
+                    </AccordionTrigger>
+                    <AccordionContent className='pt-5'>
+                      <p className='max-w-prose text-zinc-700'>{queryProduct?.description}</p>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
               </div>
-              <div className='w-full flex flex-col mt-10 px-5'>
-                <div className='flex'>
-                  <p className='text-[20px]'>You may also like</p>
+              <div className='w-full flex flex-col mt-10 md:px-5'>
+                <div className='flex w-full justify-center'>
+                  <p className='text-[18px] text-[#151875] font-semibold max-w-prose'>
+                    You may also like
+                  </p>
                 </div>
                 <FeaturedProducts newArray={newArray} />
               </div>

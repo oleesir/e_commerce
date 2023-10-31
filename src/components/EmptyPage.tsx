@@ -16,7 +16,7 @@ const EmptyPage = ({ message, image }: { message: string; image: string }) => {
           <img src={image} className='w-[250px] h-[200px]' alt='image' />
         </div>
         <div className='flex flex-col items-center  '>
-          <p className='font-bold text-xl'>{message}</p>
+          <p className='font-semi-bold text-xl max-w-prose text-zinc-800'>{message}</p>
         </div>
       </div>
     </div>

@@ -42,7 +42,7 @@ const DiscountItemTab = ({ image }: { image: string }) => {
             <button
               type='button'
               onClick={onClick}
-              className='py-2 px-6 bg-[#FD665E] text-[#FFF] mt-5 rounded-none text-xs'
+              className='py-4 px-6 bg-[#FD665E] text-[#FFF] mt-5 rounded-none text-base'
             >
               Shop Now
             </button>

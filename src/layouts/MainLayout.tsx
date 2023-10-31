@@ -4,7 +4,7 @@ import Footer from '../components/Footer.tsx';
 
 const MainLayout = () => {
   return (
-    <div className=' relative min-h-100vh'>
+    <div className=' flex flex-col min-h-screen bg-white '>
       <Header />
       <Outlet />
       <Footer />

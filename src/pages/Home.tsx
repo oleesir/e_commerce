@@ -23,7 +23,7 @@ const Home = () => {
       {isLoading && <Loader />}
       {!isLoading && (
         <div className='w-full flex flex-col'>
-          <div className='flex w-full py-[120px] bg-[#F1F0FF]'>
+          <div className='flex w-full py-[40px] md:py-[120px] bg-[#F1F0FF]'>
             <div className='flex max-w-5xl  mx-auto'>
               <div className='grid grid-cols-1  md:grid-cols-2'>
                 <div className='flex flex-col pt-[50px] md:pt-[100px]'>
@@ -46,7 +46,7 @@ const Home = () => {
                     <button
                       onClick={onClick}
                       type='button'
-                      className='py-2 px-6 bg-[#FD665E] text-[#FFF] mt-5 rounded-none text-sm'
+                      className='py-3 px-6 bg-[#FD665E] text-[#FFF] mt-5 rounded-none text-sm'
                     >
                       Shop Now
                     </button>
@@ -59,11 +59,13 @@ const Home = () => {
           <div className='w-full flex pt-20 px-5'>
             <Categories />
           </div>
-          <div className='w-full pt-20'>
+          <div className='w-full pt-20 '>
             <div className='w-full flex justify-center '>
               <p className='text-[30px] font-bold text-[#151875]'>Featured Products</p>
             </div>
-            <FeaturedProducts newArray={newArray} />
+            <div className='w-full flex justify-center  px-3'>
+              <FeaturedProducts newArray={newArray} />
+            </div>
           </div>
 
           <div className='w-full flex py-20 px-5'>
@@ -84,10 +86,12 @@ const Home = () => {
           </div>
           <div className='max-w-5xl  mx-auto'>
             <div className='w-full pt-20'>
-              <p className='text-[20px] text-[#151875] font-bold'>You may also like</p>
+              <p className='text-[18px] text-[#151875] font-bold'>You may also like</p>
             </div>
           </div>
-          <FeaturedProducts newArray={newArray} />
+          <div className='w-full flex justify-center  px-3'>
+            <FeaturedProducts newArray={newArray} />
+          </div>
         </div>
       )}
     </>
