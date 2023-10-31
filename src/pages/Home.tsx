@@ -29,18 +29,18 @@ const Home = () => {
                 <div className='flex flex-col pt-[50px] md:pt-[100px]'>
                   <div className='flex flex-col px-5'>
                     <div>
-                      <p className='text-3xl md:text-4xl font-bold text-[#151875]'>
+                      <p className='text-3xl md:text-4xl font-bold text-[#151875] max-w-prose'>
                         New Gadgets Collections
                       </p>
-                      <p className='text-3xl md:text-4xl font-bold text-[#151875]'>
+                      <p className='text-3xl md:text-4xl font-bold text-[#151875] max-w-prose'>
                         Trends in 2023
                       </p>
                     </div>
-                    <p className='text-[12px] mt-2 text-[#151875]'>
+                    <p className='text-base mt-2 text-[#151875] max-w-prose'>
                       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Magna in est
                       adipiscing in
                     </p>
-                    <p className='text-[12px] text-[#151875]'>phasellus non in justo.</p>
+                    <p className='text-base text-[#151875] max-w-prose'>phasellus non in justo.</p>
                   </div>
                   <div className='px-5'>
                     <button
