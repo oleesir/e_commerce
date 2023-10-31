@@ -17,6 +17,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
+import { ScrollArea } from '@/components/ui/scroll-area';
 
 export const MobileHeader = () => {
   const { state }: { state: any } = useLocation();
@@ -92,7 +93,9 @@ export const MobileHeader = () => {
                         onClick={() => navToPath(item?.path)}
                         className=' w-full  flex items-start  py-2 pl-5 '
                       >
-                        <p className='text-[#151875] font-medium text-[18px]'>{item?.name}</p>
+                        <p className='text-[#151875] font-medium text-[18px] max-w-prose '>
+                          {item?.name}
+                        </p>
                       </SheetClose>
                     );
                   })}
@@ -101,24 +104,27 @@ export const MobileHeader = () => {
                 <Accordion type='single' collapsible className='pl-5 pr-4 w-full py-2 '>
                   <AccordionItem value='item-1' className='border-b-0'>
                     <AccordionTrigger className='hover:no-underline py-0'>
-                      <p className='text-[#151875] text-[18px]'>Categories</p>
+                      <p className='text-[#151875] text-[18px] max-w-prose'>Categories</p>
                     </AccordionTrigger>
                     <AccordionContent>
-                      <div className='overflow-y-auto max-h-80 shadow-inner w-full'>
-                        {categories &&
-                          categories.map((item: any) => {
-                            return (
-                              <SheetClose className='w-full' key={item?._id}>
-                                <button
-                                  type='button'
-                                  onClick={() => navigateToShopUsingCategory(item?.name)}
-                                  className=' w-full flex items-start  py-2 pl-5 '
-                                >
-                                  <p className='text-[#151875] text-base'>{item?.name}</p>
-                                </button>
-                              </SheetClose>
-                            );
-                          })}
+                      <div className=' w-full'>
+                        <ScrollArea className='h-72 w-full rounded-none border-0'>
+                          <div className='p-4'>
+                            {categories &&
+                              categories.map((item: any) => (
+                                <SheetClose className='w-full' key={item?._id}>
+                                  <button
+                                    onClick={() => navigateToShopUsingCategory(item?.name)}
+                                    className=' w-full flex items-start  py-2 pl-5 '
+                                  >
+                                    <p className='text-base max-w-prose text-zinc-800'>
+                                      {item?.name}
+                                    </p>
+                                  </button>
+                                </SheetClose>
+                              ))}
+                          </div>
+                        </ScrollArea>
                       </div>
                     </AccordionContent>
                   </AccordionItem>
@@ -127,23 +133,27 @@ export const MobileHeader = () => {
                 <Accordion type='single' collapsible className='pl-5 pr-4 w-full py-2 '>
                   <AccordionItem value='item-2' className='border-b-0'>
                     <AccordionTrigger className='hover:no-underline py-0'>
-                      <p className='text-[#151875] text-[18px]'>Brands</p>
+                      <p className='text-[#151875] text-[18px] max-w-prose'>Brands</p>
                     </AccordionTrigger>
                     <AccordionContent>
-                      <div className='overflow-y-auto max-h-80 shadow-inner w-full'>
-                        {brands &&
-                          brands.map((item: any) => {
-                            return (
-                              <SheetClose className='w-full' key={item?._id}>
-                                <button
-                                  onClick={() => navigateToShopUsingBrand(item?.name)}
-                                  className=' w-full flex items-start  py-2 pl-5 '
-                                >
-                                  <p className='text-[#151875] text-base'>{item?.name}</p>
-                                </button>
-                              </SheetClose>
-                            );
-                          })}
+                      <div className=' w-full'>
+                        <ScrollArea className='h-72 w-full rounded-none border-0'>
+                          <div className='p-4'>
+                            {brands &&
+                              brands.map((item: any) => (
+                                <SheetClose className='w-full' key={item?._id}>
+                                  <button
+                                    onClick={() => navigateToShopUsingBrand(item?.name)}
+                                    className=' w-full flex items-start  py-2 pl-5 '
+                                  >
+                                    <p className='text-base max-w-prose text-zinc-800'>
+                                      {item?.name}
+                                    </p>
+                                  </button>
+                                </SheetClose>
+                              ))}
+                          </div>
+                        </ScrollArea>
                       </div>
                     </AccordionContent>
                   </AccordionItem>

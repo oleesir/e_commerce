@@ -87,7 +87,7 @@ const Products = () => {
             <div className=' px-5 col-span-5 lg:col-span-4'>
               {state && state?.products !== undefined ? (
                 <>
-                  <div className='grid gap-x-8 gap-y-4 grid-cols-4'>
+                  <div className='grid gap-x-8 gap-y-4 grid-cols-1 md:grid-cols-4'>
                     {state?.products &&
                       state?.products
                         .slice(0, visibleProductsFromState)
@@ -106,7 +106,7 @@ const Products = () => {
                   </div>
                 </>
               ) : (
-                <div className='grid gap-x-8 gap-y-4 grid-cols-4'>
+                <div className='grid gap-x-8 gap-y-4  grid-cols-1 md:grid-cols-4'>
                   {products &&
                     products
                       .slice(0, visibleProducts)
@@ -133,7 +133,7 @@ const Products = () => {
                 <button
                   type='button'
                   onClick={showMoreProducts}
-                  className='text-[#FFF] text-xs bg-[#FD665E] py-3 px-6'
+                  className='text-[#FFF] text-base bg-[#FD665E] py-4 px-6'
                 >
                   Show more
                 </button>
@@ -146,7 +146,7 @@ const Products = () => {
                   <button
                     type='button'
                     onClick={showMoreProductsFromState}
-                    className='text-[#FFF] text-xs bg-[#FD665E] p-3'
+                    className='text-[#FFF] text-base bg-[#FD665E] py-4 px-6'
                   >
                     Show more
                   </button>

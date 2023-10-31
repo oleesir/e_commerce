@@ -1,11 +1,10 @@
-// import { GrFormNextLink, GrFormPreviousLink, GrNext, GrPrevious } from 'react-icons/gr';
 import Slider from 'react-slick';
 import { carouselSettings } from '../utils/carouselSettings.ts';
-import ProductCard from './Cards/ProductCard.tsx';
 import { useRef } from 'react';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { Product } from '../types.ts';
+import CarouselCard from '@/components/Cards/CauroselCard.tsx';
 
 const FeaturedProducts = ({ newArray }: { newArray: Product[] | undefined }) => {
   const customSlider = useRef();
@@ -32,12 +31,12 @@ const FeaturedProducts = ({ newArray }: { newArray: Product[] | undefined }) => 
         {/*    </button>*/}
         {/*  </div>*/}
         {/*</div>*/}
-        <div className='w-full md:px-10 pt-5 pb-10'>
-          <div className=' pl-8  md:max-w-5xl  md:mx-auto  md:pl-0 md:py-2'>
+        <div className='w-full md:px-15  pb-10'>
+          <div className='md:max-w-5xl  md:mx-auto  md:pl-0 md:py-2'>
             <Slider {...carouselSettings} ref={(slider: any) => (customSlider.current = slider)}>
               {newArray &&
                 newArray.map((item: any) => (
-                  <ProductCard
+                  <CarouselCard
                     key={item?._id}
                     slug={item?.slug}
                     productId={item?._id}

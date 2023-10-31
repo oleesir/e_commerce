@@ -80,7 +80,11 @@ const Header = () => {
                 return (
                   <NavLink to={item.path} key={i} className='relative group cursor-pointer ml-5'>
                     <span
-                      className={isActive ? 'text-sm text-[#FD665E]' : 'text-sm text-[#2C2C2C]'}
+                      className={
+                        isActive
+                          ? 'text-sm text-[#FD665E] max-w-prose'
+                          : 'text-sm max-w-prose text-zinc-800'
+                      }
                     >
                       {item.navItem}
                     </span>

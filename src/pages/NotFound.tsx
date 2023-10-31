@@ -6,7 +6,7 @@ const NotFound = () => {
           <img src='/undraw_Page_not_found.png' className='w-[250px] h-[200px]' alt='image' />
         </div>
         <div className='flex flex-col items-center'>
-          <p className='font-bold text-2xl mb-3'>Oops!!!</p>
+          <p className='font-semi-bold text-2xl mb-3 max-w-prose text-zinc-800'>Oops!!!</p>
         </div>
       </div>
     </div>

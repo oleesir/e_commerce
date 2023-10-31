@@ -12,8 +12,8 @@ export const carouselSettings = {
     {
       breakpoint: 1240,
       settings: {
-        slidesToShow: 5,
-        slidesToScroll: 5,
+        slidesToShow: 4,
+        slidesToScroll: 4,
         infinite: true,
         dots: true,
         arrows: false,
@@ -22,9 +22,8 @@ export const carouselSettings = {
     {
       breakpoint: 900,
       settings: {
-        slidesToShow: 4,
-        slidesToScroll: 2,
-        initialSlide: 2,
+        slidesToShow: 3,
+        slidesToScroll: 3,
         infinite: true,
         dots: true,
         arrows: false,

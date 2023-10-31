@@ -10,7 +10,7 @@ const SubscribeBanner = () => {
         </div>
       </div>
       <div>
-        <button className='py-2 px-6 bg-[#FD665E] text-[#FFF] mt-5 rounded-none text-xs'>
+        <button className='py-4 px-6 bg-[#FD665E] text-[#FFF] mt-5 rounded-none text-sm'>
           Subscribe
         </button>
       </div>

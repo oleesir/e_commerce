@@ -103,7 +103,7 @@ const Cart = () => {
                         <button
                           type='button'
                           onClick={handleCheckout}
-                          className='rounded-none bg-[#FD665E] text-[#FFF] text-sm font-bold py-3 px-8 cursor-pointer w-full'
+                          className='rounded-none bg-[#FD665E] text-[#FFF] text-base font-bold py-4 px-8 cursor-pointer w-full'
                         >
                           Checkout
                         </button>

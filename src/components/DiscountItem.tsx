@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import DiscountItemTab from './Tabs/DiscoutItemTab.tsx';
+import DiscountItemTab from '@/components/tabs/DiscountItemTab.tsx';
 
 const DiscountItemsTab = () => {
   const [activeTab, setActiveTab] = useState('tab1');

@@ -1,6 +1,6 @@
-import { RiAddLine, RiDeleteBin6Line, RiSubtractLine } from 'react-icons/ri';
+import { RiDeleteBin6Line } from 'react-icons/ri';
 import { BsBookmark } from 'react-icons/bs';
-import { useAppDispatch, useAppSelector } from '../../reduxHooks.ts';
+import { useAppDispatch, useAppSelector } from '@/reduxHooks.ts';
 import { addToCart, decreaseItem, removeItem } from '../../features/oliveMarketSlice.tsx';
 import {
   useDecrementItemInCartApiMutation,
@@ -9,6 +9,7 @@ import {
   useIncrementItemInCartApiMutation,
   useLoadUserQuery,
 } from '../../features/oliveMarketApi.tsx';
+import { Minus, Plus } from 'lucide-react';
 
 const CartCard = ({
   cartItemId,
@@ -80,7 +81,7 @@ const CartCard = ({
         <div className='col-span-3'>
           <div className='w-full flex justify-between'>
             <div className='flex flex-col w-1/2'>
-              <p className='text-xs mb-5'>{name}</p>
+              <p className='text-sm mb-5'>{name}</p>
               <div className='w-full mb-5'>
                 <div className='flex w-1/3  justify-between'>
                   <button
@@ -89,14 +90,14 @@ const CartCard = ({
                     onClick={handleDecreaseProduct}
                     className={
                       selectedItem?.quantity === 1 || quantity === 1
-                        ? 'py-[5px] px-[8px] bg-[#FD665E] text-[#FFF] cursor-not-allowed opacity-50'
-                        : 'py-[5px] px-[8px] bg-[#FD665E] text-[#FFF] cursor-pointer'
+                        ? 'py-[10px] px-[10px] bg-[#FD665E] text-[#FFF] cursor-not-allowed opacity-50'
+                        : 'py-[10px] px-[10px] bg-[#FD665E] text-[#FFF] cursor-pointer'
                     }
                   >
-                    <RiSubtractLine size={10} color='#FFF' />
+                    <Minus size={20} color='#FFF' />
                   </button>
-                  <div className='p-[5px] flex items-center'>
-                    <p className='text-xs font-bold'>{quantity}</p>
+                  <div className='p-[10px] flex items-center'>
+                    <p className='text-base font-bold'>{quantity}</p>
                   </div>
                   <button
                     type='button'
@@ -104,11 +105,11 @@ const CartCard = ({
                     onClick={handleIncreaseProduct}
                     className={
                       isDisabled
-                        ? 'py-[5px] px-[8px] bg-[#FD665E] text-[#FFF] cursor-not-allowed opacity-50'
-                        : 'py-[5px] px-[8px] bg-[#FD665E] text-[#FFF] cursor-pointer'
+                        ? 'py-[10px] px-[10px] bg-[#FD665E] text-[#FFF] cursor-not-allowed opacity-50'
+                        : 'py-[10px] px-[10px] bg-[#FD665E] text-[#FFF] cursor-pointer'
                     }
                   >
-                    <RiAddLine size={10} color='#FFF' />
+                    <Plus size={20} color='#FFF' />
                   </button>
                 </div>
               </div>
