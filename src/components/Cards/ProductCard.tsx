@@ -25,7 +25,7 @@ const ProductCard = ({
   };
   return (
     <>
-      <div className='hidden  relative group md:flex flex-col w-[160px] md:w-[180px] h-[280px]  cursor-pointer pb-2  border-[1px] md:shadow-[0_8px_40px_0_rgba(49,32,138,0.05)]'>
+      <div className='hidden  relative group md:flex flex-col w-[160px] md:w-[180px] h-[280px]  cursor-pointer p-2  border-[1px] shadow-[0_8px_40px_0_rgba(49,32,138,0.05)]'>
         <img src={image} className='w-full h-[140px] md:h-[150px] ' alt='image ' />
         <div className='hidden absolute top-0 left-0 w-full h-full md:flex justify-center items-center opacity-0 hover:opacity-100'>
           <div className='w-full h-full flex justify-center items-end p-2'>
@@ -39,17 +39,17 @@ const ProductCard = ({
             </div>
           </div>
         </div>
-        <div className='p-3'>
+        <div className='w-full'>
           <p className='text-xs mb-1 text-zinc-700'>
-            {name.length > 40 ? name.slice(0, 20) : name}
-            {name.length >= 40 && '...'}
+            {name.length > 50 ? name.slice(0, 30) : name}
+            {name.length >= 50 && '...'}
           </p>
           <div className='mb-1 flex items-center'>
             <ReactStars value={rating} activeColors={['orange']} classNames='mr-1' size={15} />
             <p className=' text-xs text-zinc-700'>({numberOfReviews})</p>
           </div>
 
-          <p className='text-xs mb-1 text-zinc-700'>
+          <p className='text-sm font-semibold mb-1 max-w-prose text-zinc-800'>
             {new Intl.NumberFormat('en-CA', {
               style: 'currency',
               currency: 'CAD',
