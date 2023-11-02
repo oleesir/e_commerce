@@ -63,7 +63,7 @@ const Home = () => {
             <div className='w-full flex justify-center '>
               <p className='text-[30px] font-bold text-[#151875]'>Featured Products</p>
             </div>
-            <div className='w-full flex justify-center  px-3'>
+            <div className='w-full flex   px-3'>
               <FeaturedProducts newArray={newArray} />
             </div>
           </div>
