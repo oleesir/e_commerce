@@ -10,7 +10,7 @@ const Orders = () => {
       {orders && orders.length === 0 ? (
         <EmptyPage message={'No orders start shopping.'} image={'/emptyOrder.png'} />
       ) : (
-        <div className='w-full py-[150px]'>
+        <div className='w-full pt-[120px]'>
           <div className='max-w-5xl  mx-auto  flex flex-col justify-center  pb-10 px-20'>
             {orders &&
               orders.map((order: any) => (

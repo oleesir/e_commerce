@@ -87,7 +87,7 @@ const Order = () => {
     <>
       {userLoading && <Loader />}
       {!userLoading && (
-        <div className='w-full pt-[150px] '>
+        <div className='w-full pt-[120px] px-5'>
           <div className='flex flex-col max-w-5xl  mx-auto mb-56  lg:mb-20'>
             <div className='w-full'>
               <p className='font-bold text-2xl'>Shipping</p>
@@ -175,7 +175,7 @@ const Order = () => {
                 </div>
               </div>
 
-              <div className='w-full'>
+              <div className='w-full '>
                 <div className='flex w-full flex-col shadow-[0_8px_40px_0_rgba(49,32,138,0.05)] border-[1px] p-4'>
                   <div className='mb-5'>
                     <p className='text-lg font-bold'>Order Summary</p>

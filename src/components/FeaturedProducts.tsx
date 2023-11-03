@@ -5,7 +5,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { Product } from '../types.ts';
 import CarouselCard from '@/components/Cards/CauroselCard.tsx';
-import { GrNext, GrPrevious } from 'react-icons/gr';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const FeaturedProducts = ({ newArray }: { newArray: Product[] | undefined }) => {
   const customSlider = useRef();
@@ -21,21 +21,21 @@ const FeaturedProducts = ({ newArray }: { newArray: Product[] | undefined }) => 
   };
 
   return (
-    <div className=' w-full md:max-w-4xl  md:mx-auto py-10'>
-      <div className=' w-full flex'>
-        <div className='hidden  md:flex items-center'>
+    <div className=' w-full md:max-w-5xl  md:mx-auto py-10'>
+      <div className='relative w-full flex'>
+        <div className='hidden  lg:flex items-center lg:absolute lg:h-full lg:top-0 lg:left-0 z-10 bg-white'>
           <button
             onClick={handleNextSlide}
             className='rounded-full w-full flex justify-center items-center '
           >
-            <GrPrevious className='text-3xl' />
+            <ChevronLeft size={40} />
           </button>
         </div>
         <div className='w-full md:px-15 '>
           <Slider
             {...carouselSettings}
             ref={(slider: any) => (customSlider.current = slider)}
-            className=' pl-6 '
+            className=' md:pl-12  '
           >
             {newArray &&
               newArray.map((item: any) => (
@@ -53,12 +53,12 @@ const FeaturedProducts = ({ newArray }: { newArray: Product[] | undefined }) => 
           </Slider>
         </div>
 
-        <div className='hidden md:flex items-center'>
+        <div className='hidden lg:flex items-center lg:absolute lg:h-full lg:top-0 lg:right-0 z-10 bg-white'>
           <button
             onClick={handlePrevSlide}
             className='rounded-full h-full w-full flex justify-center items-center '
           >
-            <GrNext className='text-3xl' />
+            <ChevronRight size={40} />
           </button>
         </div>
       </div>

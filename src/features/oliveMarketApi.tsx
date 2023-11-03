@@ -50,6 +50,7 @@ export const oliveMarketApi = createApi({
         const newResponse: User = response?.data;
         return {
           _id: newResponse?._id,
+          firstName: newResponse?.firstName,
           email: newResponse?.email,
           role: newResponse?.role,
           cartId: newResponse?.cartId,
@@ -164,6 +165,7 @@ export const oliveMarketApi = createApi({
       transformResponse: (response: any) => {
         return response?.data;
       },
+      providesTags: ['Users'],
     }),
     createOrder: builder.mutation<void, OrderInput>({
       query: (body) => {

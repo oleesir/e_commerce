@@ -7,11 +7,16 @@ import { useGetUserCartQuery, useLoadUserQuery } from '../features/oliveMarketAp
 import CartItemsApi from '../components/CartItemsApi.tsx';
 import { useNavigate } from 'react-router-dom';
 import EmptyPage from '../components/EmptyPage.tsx';
+import { Loader } from 'lucide-react';
 
 const Cart = () => {
   const navigate = useNavigate();
-  const { data: authUser } = useLoadUserQuery(undefined);
-  const { data: userCart } = useGetUserCartQuery(authUser?.cartId);
+  const { data: authUser } = useLoadUserQuery(undefined, { refetchOnMountOrArgChange: true });
+  const {
+    data: userCart,
+    isFetching: cartFetching,
+    isLoading: cartLoading,
+  } = useGetUserCartQuery(authUser?.cartId);
   const { cartItems, totalAmount } = useAppSelector((state: any) => state.cart);
   const dispatch = useAppDispatch();
   const [cartState, setCartState] = useState(cartItems);
@@ -32,6 +37,14 @@ const Cart = () => {
     }
   };
 
+  if (cartLoading || cartFetching) {
+    return (
+      <>
+        <Loader />
+      </>
+    );
+  }
+
   const handleCheckout = () => {
     navigate('/create_order');
     if (authUser?._id === undefined) {
@@ -46,78 +59,80 @@ const Cart = () => {
       {cartItemResult() ? (
         <EmptyPage message='Your Cart is Empty' image={'/undraw_empty_cart.png'} />
       ) : (
-        <div className='w-full flex pt-[100px]'>
-          <div className='py-4 max-w-5xl mx-auto px-2'>
-            <div className='flex flex-col w-full'>
-              <div className='grid grid-cols-1 md:grid-cols-4 md:gap-4'>
-                {authUser?._id === undefined ? (
-                  <CartItems cartState={cartState} />
-                ) : (
-                  <CartItemsApi cartFromApi={userCart?.cartItems} />
-                )}
+        <>
+          <div className='w-full flex pt-[100px]'>
+            <div className='py-4 max-w-5xl mx-auto px-2'>
+              <div className='flex flex-col w-full'>
+                <div className='grid grid-cols-1 md:grid-cols-4 md:gap-4'>
+                  {authUser?._id === undefined ? (
+                    <CartItems cartState={cartState} />
+                  ) : (
+                    <CartItemsApi cartFromApi={userCart?.cartItems} />
+                  )}
 
-                <div className='w-full'>
-                  <div className='flex w-full flex-col shadow-[0_8px_40px_0_rgba(49,32,138,0.05)] border-[1px] p-4'>
-                    <div className='mb-5'>
-                      <p className='text-lg font-bold'>Order Summary</p>
-                    </div>
-                    <div className='w-full flex flex-col'>
-                      <div className='flex w-full justify-between mb-3'>
-                        <p className='text-sm font-bold'>Subtotal</p>
-                        {authUser?._id === undefined ? (
-                          <p className='text-sm '>
-                            {new Intl.NumberFormat('en-CA', {
-                              style: 'currency',
-                              currency: 'CAD',
-                            }).format(totalAmount / 100)}
-                          </p>
-                        ) : (
-                          <p className='text-sm '>
-                            {new Intl.NumberFormat('en-CA', {
-                              style: 'currency',
-                              currency: 'CAD',
-                            }).format(userCart?.totalPrice / 100)}
-                          </p>
-                        )}
+                  <div className='w-full'>
+                    <div className='flex w-full flex-col shadow-[0_8px_40px_0_rgba(49,32,138,0.05)] border-[1px] p-4'>
+                      <div className='mb-5'>
+                        <p className='text-lg font-bold'>Order Summary</p>
                       </div>
-                      <div className='flex w-full justify-between border-t-[1px] pt-2 mb-5'>
-                        <p className='text-sm font-bold'>Total</p>
-                        {authUser?._id === undefined ? (
-                          <p className='text-sm '>
-                            {new Intl.NumberFormat('en-CA', {
-                              style: 'currency',
-                              currency: 'CAD',
-                            }).format(totalAmount / 100)}
-                          </p>
-                        ) : (
-                          <p className='text-sm '>
-                            {new Intl.NumberFormat('en-CA', {
-                              style: 'currency',
-                              currency: 'CAD',
-                            }).format(userCart?.totalPrice / 100)}
-                          </p>
-                        )}
-                      </div>
+                      <div className='w-full flex flex-col'>
+                        <div className='flex w-full justify-between mb-3'>
+                          <p className='text-sm font-bold'>Subtotal</p>
+                          {authUser?._id === undefined ? (
+                            <p className='text-sm '>
+                              {new Intl.NumberFormat('en-CA', {
+                                style: 'currency',
+                                currency: 'CAD',
+                              }).format(totalAmount / 100)}
+                            </p>
+                          ) : (
+                            <p className='text-sm '>
+                              {new Intl.NumberFormat('en-CA', {
+                                style: 'currency',
+                                currency: 'CAD',
+                              }).format(userCart?.totalPrice / 100)}
+                            </p>
+                          )}
+                        </div>
+                        <div className='flex w-full justify-between border-t-[1px] pt-2 mb-5'>
+                          <p className='text-sm font-bold'>Total</p>
+                          {authUser?._id === undefined ? (
+                            <p className='text-sm '>
+                              {new Intl.NumberFormat('en-CA', {
+                                style: 'currency',
+                                currency: 'CAD',
+                              }).format(totalAmount / 100)}
+                            </p>
+                          ) : (
+                            <p className='text-sm '>
+                              {new Intl.NumberFormat('en-CA', {
+                                style: 'currency',
+                                currency: 'CAD',
+                              }).format(userCart?.totalPrice / 100)}
+                            </p>
+                          )}
+                        </div>
 
-                      <div className='flex w-full'>
-                        <button
-                          type='button'
-                          onClick={handleCheckout}
-                          className='rounded-none bg-[#FD665E] text-[#FFF] text-base font-bold py-4 px-8 cursor-pointer w-full'
-                        >
-                          Checkout
-                        </button>
+                        <div className='flex w-full'>
+                          <button
+                            type='button'
+                            onClick={handleCheckout}
+                            className='rounded-none bg-[#FD665E] text-[#FFF] text-base font-bold py-4 px-8 cursor-pointer w-full'
+                          >
+                            Checkout
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className='w-full  mt-20 '>
-                <SponsorsBanner />
+                <div className='w-full  mt-20 '>
+                  <SponsorsBanner />
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        </>
       )}
     </>
   );

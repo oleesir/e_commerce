@@ -69,7 +69,7 @@ const Sidebar = ({
   };
 
   return (
-    <div className='hidden w-full  flex-col border-r-[1px] lg:flex'>
+    <div className='hidden w-full  flex-col  lg:flex'>
       <div className='mb-5  pr-10'>
         <p className='text-sm underline text-[#151875] mb-2'>Categories</p>
         <div className='py-5 px-2 h-[237px] overflow-auto scrollbar-hide shadow-[0_8px_40px_0_rgba(49,32,138,0.05)]'>
