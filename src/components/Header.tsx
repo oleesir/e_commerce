@@ -1,4 +1,3 @@
-import { MdOutlinePersonOff, MdOutlinePersonOutline } from 'react-icons/md';
 import { PiShoppingCartLight } from 'react-icons/pi';
 import { FiSearch } from 'react-icons/fi';
 import { useEffect, useState } from 'react';
@@ -7,6 +6,7 @@ import { navItems } from '../utils/navItems.ts';
 import { useDebounce } from '@uidotdev/usehooks';
 import {
   useGetUserCartQuery,
+  useGetUserQuery,
   useLoadUserQuery,
   useLogoutMutation,
   useSearchProductsQuery,
@@ -15,20 +15,36 @@ import { getTotalQuantity } from '../features/oliveMarketSlice.tsx';
 import { useAppDispatch, useAppSelector } from '../reduxHooks.ts';
 import SearchResult from './SearchResult.tsx';
 import { MobileHeader } from '@/components/MobileHeader.tsx';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { DoorClosed, DoorOpen, User } from 'lucide-react';
+import { Skeleton } from '@/components/ui/skeleton.tsx';
+import Loader from '@/components/Loaders/Loader.tsx';
 
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { data: authUser } = useLoadUserQuery(undefined);
+  const {
+    data: authUser,
+    isLoading: authUserLoading,
+    isFetching: authUserFetching,
+  } = useLoadUserQuery(undefined);
+  const { data: user, isLoading: userLoading } = useGetUserQuery(authUser?._id);
   const { data: userCart } = useGetUserCartQuery(authUser?.cartId);
-  const [show, setShow] = useState(false);
-  const [logout] = useLogoutMutation();
+  const [logout, { isLoading: logoutLoading }] = useLogoutMutation();
   const [queryText, setQueryText] = useState('');
   const debouncedSearchQuery = useDebounce(queryText, 500);
   const { data: listedProducts } = useSearchProductsQuery(debouncedSearchQuery, {
     skip: debouncedSearchQuery == '',
   });
   const { totalQuantity, cartItems } = useAppSelector((state: any) => state.cart);
+
+  useEffect(() => {}, [authUser?._id]);
 
   useEffect(() => {
     if (location.pathname === '/orders') {
@@ -44,19 +60,21 @@ const Header = () => {
     }
   }, [cartItems, dispatch]);
 
+  if (authUserLoading || authUserFetching || logoutLoading) {
+    return (
+      <>
+        <Loader />
+      </>
+    );
+  }
+
   const handleLogout = async () => {
     await logout(null);
-    setShow(false);
-    if (location.pathname === '/cart') {
-      navigate('/');
-    }
   };
 
   const navToLogin = () => {
     if (authUser?._id === undefined) {
       navigate('/auth/login');
-    } else {
-      setShow((prevState) => !prevState);
     }
   };
 
@@ -65,7 +83,7 @@ const Header = () => {
   };
 
   return (
-    <div className='w-full fixed bg-[#FFF] drop-shadow-lg z-10 h-[70px] p-4'>
+    <div className='w-full fixed bg-[#FFF] drop-shadow-lg z-20 h-[70px] p-4'>
       <div className=' max-w-5xl  mx-auto'>
         <div className='hidden lg:flex justify-between '>
           <div className='flex justify-between items-center'>
@@ -115,26 +133,44 @@ const Header = () => {
               ) : null}
             </div>
             <div className='flex justify-between items-center'>
-              <div className='relative'>
-                <button
-                  onClick={navToLogin}
-                  className='flex items-center justify-start overflow-hidden transition-all duration-500  bg-[#FD665E] rounded-none text-[#FFF] group py-1.5 px-4 ml-8 mr-5'
-                >
+              <DropdownMenu>
+                {userLoading && (
+                  <Skeleton className='flex items-center bg-[#FD665E] rounded-none text-[#FFF] group h-9 w-24 ml-8 mr-5 focus:outline-none' />
+                )}
+                {!userLoading && (
+                  <DropdownMenuTrigger className='flex items-center bg-[#FD665E] rounded-none text-[#FFF] group py-1.5 px-4 ml-8 mr-5 focus:outline-none'>
+                    {authUser?._id !== undefined ? <p>Hi,{user?.firstName}</p> : <p>Account</p>}
+                  </DropdownMenuTrigger>
+                )}
+
+                <DropdownMenuContent className='rounded-none'>
                   {authUser?._id === undefined ? (
-                    <MdOutlinePersonOff size={20} className='mr-1' />
+                    <DropdownMenuItem
+                      className='flex items-center cursor-pointer'
+                      onClick={navToLogin}
+                    >
+                      <DoorOpen size={15} className='mr-1' />
+                      <p className='text-sm'>Login</p>
+                    </DropdownMenuItem>
                   ) : (
-                    <MdOutlinePersonOutline size={20} className='mr-1' />
+                    <>
+                      <DropdownMenuItem className='flex items-center cursor-pointer'>
+                        <User size={15} className='mr-1' />
+                        <p className='text-sm'>Profile</p>
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem
+                        onClick={handleLogout}
+                        className='flex items-center cursor-pointer'
+                      >
+                        <DoorClosed size={15} className='mr-1' />
+                        <p className='text-sm'>Logout</p>
+                      </DropdownMenuItem>
+                    </>
                   )}
-                  Account
-                </button>
-                {show ? (
-                  <div className='w-[110px] h-[50px] bg-[#FFF] absolute shadow-2xl right-5 top-10'>
-                    <button onClick={handleLogout} className=' w-full p-4 text-[#FD665E]'>
-                      Logout
-                    </button>
-                  </div>
-                ) : null}
-              </div>
+                </DropdownMenuContent>
+              </DropdownMenu>
+
               <button
                 type='button'
                 className='relative flex items-center cursor-pointer'

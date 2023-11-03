@@ -24,15 +24,15 @@ const CarouselCard = ({
     navigate(`/${slug}`, { state: { productId } });
   };
   return (
-    <div className='  relative group flex flex-col w-[160px] md:w-[190px] h-[280px]  cursor-pointer py-2 px-[5px]  border-[1px]  overflow-x-auto mx-0 '>
+    <div
+      onClick={navigateToProduct}
+      className='relative group flex flex-col w-[160px] md:w-[190px] h-[280px]  cursor-pointer py-2 px-[5px]  border-[1px]  overflow-x-auto mx-0 '
+    >
       <img src={image} className='w-full h-[120px] md:h-[140px] ' alt='image ' />
-      <div className='hidden absolute top-0 left-0 w-full h-full md:flex justify-center items-center opacity-0 hover:opacity-100'>
+      <div className='hidden absolute top-0 left-0 w-full h-full md:flex justify-center items-center lg:opacity-0 opacity-100 lg:hover:opacity-100'>
         <div className='w-full h-full flex justify-center items-end p-2'>
           <div className='w-full'>
-            <button
-              onClick={navigateToProduct}
-              className='py-2 px-4 bg-[#FD665E] text-[#FFF] mt-2 rounded-none text-xs w-full'
-            >
+            <button className='py-2 px-4 bg-[#FD665E] text-[#FFF] mt-2 rounded-none text-xs w-full'>
               Add to cart
             </button>
           </div>
@@ -59,7 +59,7 @@ const CarouselCard = ({
             <button
               type='button'
               onClick={navigateToProduct}
-              className='py-4 px-4 bg-[#FD665E] text-[#FFF] mt-2 rounded-none text-sm w-full'
+              className='py-3 px-4 bg-[#FD665E] text-[#FFF] mt-2 rounded-none text-sm w-full'
             >
               Add to cart
             </button>

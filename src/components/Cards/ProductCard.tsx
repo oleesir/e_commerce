@@ -25,15 +25,15 @@ const ProductCard = ({
   };
   return (
     <>
-      <div className='hidden  relative group md:flex flex-col w-[160px] md:w-[180px] h-[280px]  cursor-pointer p-2  border-[1px] shadow-[0_8px_40px_0_rgba(49,32,138,0.05)]'>
+      <div
+        onClick={navigateToProduct}
+        className='hidden  relative group md:flex flex-col w-[160px] md:w-[180px] h-[280px]  cursor-pointer p-2  border-[1px] shadow-[0_8px_40px_0_rgba(49,32,138,0.05)]'
+      >
         <img src={image} className='w-full h-[140px] md:h-[150px] ' alt='image ' />
-        <div className='hidden absolute top-0 left-0 w-full h-full md:flex justify-center items-center opacity-0 hover:opacity-100'>
+        <div className='hidden absolute top-0 left-0 w-full h-full md:flex justify-center items-center lg:opacity-0 opacity-100 lg:hover:opacity-100'>
           <div className='w-full h-full flex justify-center items-end p-2'>
             <div className='w-full'>
-              <button
-                onClick={navigateToProduct}
-                className='py-2 px-4 bg-[#FD665E] text-[#FFF] mt-2 rounded-none text-xs w-full'
-              >
+              <button className='py-2 px-4 bg-[#FD665E] text-[#FFF] mt-2 rounded-none text-xs w-full'>
                 Add to cart
               </button>
             </div>
@@ -60,7 +60,7 @@ const ProductCard = ({
               <button
                 type='button'
                 onClick={navigateToProduct}
-                className='py-3 px-4 bg-[#FD665E] text-[#FFF] mt-2 rounded-none text-sm w-full'
+                className='py-2 px-4 bg-[#FD665E] text-[#FFF] mt-2 rounded-none text-sm w-full'
               >
                 Add to cart
               </button>
@@ -78,16 +78,16 @@ const ProductCard = ({
         </div>
 
         <div className='col-span-2 p-3'>
-          <p className='text-sm mb-2 text-zinc-700'>
-            {name.length > 800 ? name.slice(0, 50) : name}
-            {name.length >= 80 && '...'}
+          <p className='text-xs mb-2 text-zinc-700'>
+            {name.length > 100 ? name.slice(0, 80) : name}
+            {name.length >= 100 && '...'}
           </p>
           <div className='mb-2 flex items-center'>
             <ReactStars value={rating} activeColors={['orange']} classNames='mr-1' size={15} />
             <p className='text-zinc-700 text-xs'>({numberOfReviews})</p>
           </div>
 
-          <p className='text-xs font-bold mb-1 text-zinc-700'>
+          <p className='text-base font-semibold mb-1 text-zinc-700'>
             {new Intl.NumberFormat('en-CA', {
               style: 'currency',
               currency: 'CAD',

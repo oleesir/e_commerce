@@ -84,7 +84,7 @@ const Products = () => {
                 setSelectedBrands={setSelectedBrands}
               />
             </div>
-            <div className=' px-5 col-span-5 lg:col-span-4'>
+            <div className=' px-5 col-span-5 lg:col-span-4 border-l-[1px]'>
               {state && state?.products !== undefined ? (
                 <>
                   <div className='grid gap-x-8 gap-y-4 grid-cols-1 md:grid-cols-4'>
