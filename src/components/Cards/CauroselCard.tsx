@@ -26,7 +26,7 @@ const CarouselCard = ({
   return (
     <div
       onClick={navigateToProduct}
-      className='relative group flex flex-col w-[160px] md:w-[190px] h-[280px]  cursor-pointer py-2 px-[5px]  border-[1px]  overflow-x-auto mx-0 '
+      className='relative group flex flex-col w-[160px] md:w-[190px] h-[280px]  cursor-pointer py-2 px-[5px]  border-[1px]  overflow-x-auto mx-0 shadow-[0_8px_40px_0_rgba(49,32,138,0.05)]'
     >
       <img src={image} className='w-full h-[120px] md:h-[140px] ' alt='image ' />
       <div className='hidden absolute top-0 left-0 w-full h-full md:flex justify-center items-center lg:opacity-0 opacity-100 lg:hover:opacity-100'>

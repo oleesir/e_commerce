@@ -20,7 +20,11 @@ import { useDebounce } from '@uidotdev/usehooks';
 const Order = () => {
   const navigate = useNavigate();
   const { data: authUser, isLoading: authLoading } = useLoadUserQuery(undefined);
-  const { data: foundUser, isLoading: userLoading } = useGetUserQuery(authUser?._id);
+  const {
+    data: foundUser,
+    isLoading: userLoading,
+    isFetching: userFetching,
+  } = useGetUserQuery(authUser?._id);
   const { data: userCart } = useGetUserCartQuery(authUser?.cartId);
   const { data: provinces } = useGetProvincesQuery(undefined);
   const [queryText, setQueryText] = useState('');
@@ -45,9 +49,7 @@ const Order = () => {
   });
 
   useEffect(() => {
-    if (!authLoading) {
-      authUser?._id === undefined && navigate('/auth/login');
-    }
+    authUser?._id === undefined && navigate('/auth/login');
   }, [authUser?._id, navigate]);
 
   useEffect(() => {
@@ -63,6 +65,14 @@ const Order = () => {
       setValue('province', province?.name);
     }
   }, [city, setValue]);
+
+  if (userLoading || userFetching || authLoading) {
+    return (
+      <>
+        <Loader />
+      </>
+    );
+  }
 
   const handleChange = (e: any) => {
     const { name, value } = e.target;

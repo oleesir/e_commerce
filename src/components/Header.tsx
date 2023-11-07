@@ -22,7 +22,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { DoorClosed, DoorOpen, User } from 'lucide-react';
+import { ChevronDown, DoorClosed, DoorOpen, User } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton.tsx';
 import Loader from '@/components/Loaders/Loader.tsx';
 
@@ -43,8 +43,6 @@ const Header = () => {
     skip: debouncedSearchQuery == '',
   });
   const { totalQuantity, cartItems } = useAppSelector((state: any) => state.cart);
-
-  useEffect(() => {}, [authUser?._id]);
 
   useEffect(() => {
     if (location.pathname === '/orders') {
@@ -81,6 +79,9 @@ const Header = () => {
   const navToCart = () => {
     navigate('/cart');
   };
+
+  const capitalizeFirstLetter = (value: string) =>
+    value ? value.charAt(0).toUpperCase() + value.slice(1) : value;
 
   return (
     <div className='w-full fixed bg-[#FFF] drop-shadow-lg z-20 h-[70px] p-4'>
@@ -135,11 +136,18 @@ const Header = () => {
             <div className='flex justify-between items-center'>
               <DropdownMenu>
                 {userLoading && (
-                  <Skeleton className='flex items-center bg-[#FD665E] rounded-none text-[#FFF] group h-9 w-24 ml-8 mr-5 focus:outline-none' />
+                  <Skeleton className='flex items-center group rounded-none h-9 w-[90px] ml-8 mr-3 focus:outline-none' />
                 )}
                 {!userLoading && (
-                  <DropdownMenuTrigger className='flex items-center bg-[#FD665E] rounded-none text-[#FFF] group py-1.5 px-4 ml-8 mr-5 focus:outline-none'>
-                    {authUser?._id !== undefined ? <p>Hi,{user?.firstName}</p> : <p>Account</p>}
+                  <DropdownMenuTrigger className='flex items-center group w-26 ml-8 mr-3 focus:outline-none'>
+                    {authUser?._id !== undefined ? (
+                      <p className='text-[#FD665E] font-semibold text-[16px]'>
+                        Hi,{capitalizeFirstLetter(user?.firstName)}
+                      </p>
+                    ) : (
+                      <p className='text-[#FD665E] font-semibold text-base'>Account</p>
+                    )}
+                    <ChevronDown className='text-[#FD665E] font-semibold' size={18} />
                   </DropdownMenuTrigger>
                 )}
 
